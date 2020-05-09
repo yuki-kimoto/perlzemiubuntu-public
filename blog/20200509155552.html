@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>Ubuntuの利用方法 - Ubuntuサーバー入門</title>
+<meta name="description" content="Ubuntuの利用方法について解説します。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー入門</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200509155552.html">Ubuntuの利用方法</a></h2>
+<p>
+  Ubuntuの利用方法について解説します。
+</p>
+<h3>Ubuntuの利用方法</h3>
+<h4>無料でPC上でUbuntuを使いたい</h4>
+<p>
+  無料でPC上で、Ubuntuを使う簡単な方法は、Windows 10上で、開発者用のWSLという機能を使うことです。まだまだ、進歩の途上ですが、期待は高いです。
+</p>
+<p>
+  VM Wareなどのバーチャルマシンをインストールして、その上でUbuntuを動かすこともできますが、重い、インストールがややこしい、PCとバーチャルマシン上でのファイルのやり取りが困難など、いくつかの点を受け入れる必要があります。
+</p>
+<h4>安価にUbuntuを使いたい</h4>
+<p>
+  安価でUbuntuを使いたい場合は、さくらインターネットやGMOのVPS(バーチャルプライベートサーバー)というサービスに申し込みましょう。
+</p>
+<p>
+  VPSサービスを使えば、UbuntuなどのLinuxサーバーを、インターネット上で安価に利用できます。
+</p>
+<p>
+  手続きを進めていくとOSの選択でUbuntuを選択できます。
+</p>
+<p>
+  本番サーバーとして利用する場合は、VPSはメンテナンスで、数時間から半日程度、止まるということがありますので、自社のサービスの要件から許容できるかどうかを判断してください。
+</p>
+<p>
+  アプリケーションサーバーは、技術的に差し替えは可能ですが、大変ですし、DBサーバーは「うぉー」という感じです。
+</p>
+<h4>クラウドサービスでUbuntuを使いたい</h4>
+<p>
+  AWS、Microsoft Azure、gcpなどの、従量課金型のクラウドサービスに申し込みましょう。
+</p>
+<p>
+  クラウドサービスを使えば、UbuntuなどのLinuxサーバーを、GUI画面を使って、インターネット上で手軽に運用できます。
+</p>
+<p>
+  OSのインストールで、Ubuntuの選択ができます。
+</p>
+<p>
+  クラウドサービスの一つの注意点ですが、画像や動画を大量に利用することが分かっている場合は、オンプレミスにする方が、コストが安くなると思われます。
+</p>
+<p>
+  オブジェクトストレージS3互換のAPIを持つオンプレミスのサービスもあるので、大量の画像・動画を配信することが分かっている場合は、コスト比較をお勧めします。
+</p>
+<p>
+  またいざというときは、即時対応可能というのも、オンプレミスの魅力です。
+</p>
+<p>
+  テキスト処理がメインのサービスであれば、クラウドサービスを使うのが、費用対効果が高いでしょう。
+</p>
+<h3>コンソールまでたどりつく</h3>
+<p>
+  Ubuntuのインストールが終わったら、各種サービスのコーンソールの画面まで、頑張ってたどりついてください。
+</p>
+<p>
+  コンソールというのは、あの真っ黒な、CUIでコマンドを打てる画面です。
+</p>
+<p>
+  WSLの場合は、bashの画面が開けていればOKです。
+</p>
+<p>
+  バーチャルマシンの場合は、バーチャルマシンの中のbashの画面が開けていればOKです。
+</p>
+<p>
+  VPSとクラウドサービスの場合は、Web上で、コンソールにアクセスできるものがあるので、そこに頑張ってたどり着いてください。
+</p>
+<p>
+  コンソールで、コマンドを打てる状態になれば、準備完了です。
+</p>
+<h3>もう少し詳しい手順とはないですか?</h3>
+<p>
+  移り変わりが激しいので、検索エンジンで、各種サービスのUbuntuのインストール方法は、検索してみてください。
+</p>
+<p>
+  独学の場合は、検索して乗り越えていきます。現場でも一人で解決しないといけないことは多いので、がんばってください。
+</p>
+<p>
+  入門でのお勧めは、VPSが安価で簡単、利便性が高いですね。
+</p>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    Side Bar
+  </div>
+  <ul>
+    <li><a href="/list.html">Entries</a></li>
+    <li>Bar</li>
+    <li>Baz</li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <!-- footer -->
+<a href="https://github.com/yuki-kimoto/giblog">Giblog</a>
+
+      </div>
+    </div>
+  </body>
+</html>
