@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>Ubuntuサーバー管理入門</title>
-<meta name="description" content="Ubuntuサーバー管理入門です。Ubuntu 18を使った、Webシステム開発の環境構築を解説します。">
+<title>useraddコマンド - ユーザーの追加 - Ubuntuサーバー管理入門</title>
+<meta name="description" content="useraddコマンドを使用すると、ユーザーを追加できます。">
   </head>
   <body>
     <div class="container">
@@ -29,19 +29,28 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/">Ubuntuサーバー管理入門</a></h2>
+    <h2><a href="/blog/20200511173052.html">useraddコマンド - ユーザーの追加</a></h2>
 <p>
-  Ubuntuサーバー管理入門です。Ubuntu 18を使った、Webシステム開発の環境構築を解説します。
+  <b>useradd</b>コマンドを使用すると、ユーザーを追加できます。
 </p>
-<h3>Ubuntuの利用方法</h3>
-<ul>
-  <li><a href="/blog/20200509155552.html">Ubuntuの利用方法</a></li>
-</ul>
-<h3>ユーザー管理</h3>
-<ul>
-  <li><a href="/blog/20200511173052.html">useraddコマンド - ユーザーの追加</a></li>
-  <li><a href="/blog/20200510173052.html">passwdコマンド - パスワードの設定</a></li>
-</ul>
+<p>
+  ユーザーを追加するにはroot権限を持っている必要があります。sudoを使って、root権限で、作業しましょう。sudoを使う場合は、ルートパスワードを聞かれますので、ルートパスワードを入力してください。
+</p>
+<p>
+  ユーザーを追加するには<b>useradd</b>コマンドを使用します。
+</p>
+<pre>
+sudo useradd kimoto
+</pre>
+<p>
+  ユーザーを追加したらパスワードも設定します。<a href="/blog/20200510173052.html">passwdコマンド</a>を使用します。
+</p>
+<pre>
+sudo passwd kimoto
+</pre>
+<p>
+  パスワードの入力と確認のための再入力を求められるので設定します。
+</p>
 
   </div>
   <div class="bottom">

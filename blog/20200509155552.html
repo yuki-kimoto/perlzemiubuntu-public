@@ -7,7 +7,7 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>Ubuntuの利用方法 - Ubuntuサーバー入門</title>
+<title>Ubuntuの利用方法 - Ubuntuサーバー管理入門</title>
 <meta name="description" content="Ubuntuの利用方法について解説します。">
   </head>
   <body>
@@ -16,7 +16,7 @@
         <!-- header -->
 <div class="main">
   <h1>
-    <a href="/">Ubuntuサーバー入門</a>
+    <a href="/">Ubuntuサーバー管理入門</a>
   </h1>
 </div>
 
@@ -79,6 +79,27 @@
 <p>
   テキスト処理がメインのサービスであれば、クラウドサービスを使うのが、費用対効果が高いでしょう。
 </p>
+<h3>初期設定</h3>
+<p>
+  初期設定でよくあるパターンです。
+</p>
+<h4>rootパスワード</h4>
+<p>
+  クラウドサービスやVPSの場合は、rootパスワードを設定する手順があると思います。rootパスワードを設定しましょう。
+</p>
+<p>
+  rootは、最も高い権限を持つ特別なユーザーです。
+</p>
+<h4>ポートの設定</h4>
+<p>
+  クラウドサービスやVPSの場合は、開いておくポートを聞かれる場合があると思います。
+</p>
+<p>
+  少なくとも、SSH(22), HTTP(80), HTTPS(443)のポートは開いておきましょう。
+</p>
+<p>
+  <a href="https://web.perlzemi.com/">Webシステム開発</a>を行う場合は、<a href="https://mojolicious.perlzemi.com/">Mojolicious</a>の開発用ポートである3000番を開いておくと、よいでしょう。
+</p>
 <h3>コンソールまでたどりつく</h3>
 <p>
   Ubuntuのインストールが終わったら、各種サービスのコーンソールの画面まで、頑張ってたどりついてください。
@@ -97,6 +118,25 @@
 </p>
 <p>
   コンソールで、コマンドを打てる状態になれば、準備完了です。
+</p>
+<h3>ubuntuユーザーでログイン</h3>
+<p>
+  コンソールにたどり着いたらubuntuユーザーでログインします。
+</p>
+<pre>
+login:
+</pre>
+<p>
+  と表示されているので「ubuntu」と入力してEnter。
+</p>
+<pre>
+Pawwsord:
+</pre>
+<p>
+  と表示されるので、rootパスワードを入力してください。
+</p>
+<p>
+  ログインができたら、準備完了です。<a href="/blog/20200511173052.html">ユーザーの追加</a>に進みましょう。
 </p>
 <h3>もう少し詳しい手順とはないですか?</h3>
 <p>
@@ -121,12 +161,10 @@
           <!-- side -->
 <div class="side-list">
   <div class="side-list-title">
-    Side Bar
+    目次
   </div>
   <ul>
-    <li><a href="/list.html">Entries</a></li>
-    <li>Bar</li>
-    <li>Baz</li>
+    <li><a href="/list.html">新着情報</a></li>
   </ul>
 </div>
 
