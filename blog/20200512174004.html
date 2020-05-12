@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>Ubuntuサーバー管理入門</title>
-<meta name="description" content="Ubuntuサーバー管理入門です。Ubuntu 18を使ってPerlでWebシステム開発を行うための環境構築を解説します。">
+<title>Webシステム開発環境を構築する手順 - Ubuntuサーバー管理入門</title>
+<meta name="description" content="Webシステム開発環境構築の手順をここに書いていきます。">
   </head>
   <body>
     <div class="container">
@@ -29,24 +29,42 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/">Ubuntuサーバー管理入門</a></h2>
+    <h2><a href="/blog/20200512174004.html">Webシステム開発環境を構築する手順</a></h2>
 <p>
-  Ubuntuサーバー管理入門です。Ubuntu 18を使ってPerlでWebシステム開発を行うための環境構築を解説します。
+  Webシステム開発環境構築の手順をここに書いていきます。
 </p>
-<h3>初めての方へ</h3>
-<ul>
-  <li><a href="/blog/20200512074242.html">Ubuntuサーバー管理入門とは</a></li>
-  <li><a href="/blog/20200512174004.html">Webシステム開発環境を構築する手順</a></li>
-</ul>
-<h3>Ubuntuの利用方法</h3>
+<h3>Ubuntuを利用できるようにする</h3>
+<p>
+  まず最初に、Ubuntuを利用できるようにしましょう。
+</p>
+<p>
+  VPSと呼ばれるサービスが価格が安く始めやすいです。
+</p>
+<p>
+  Windows 10であれば、WSLを使うことで、手元のPCでUbuntuを試すことができます。
+</p>
 <ul>
   <li><a href="/blog/20200509155552.html">Ubuntuの利用方法</a></li>
 </ul>
-<h3>ユーザー管理</h3>
+<p>
+  コマンドを実行できるコンソール画面を表示するところまで進んで、初期ユーザーでログインするところまで進めましたか。
+</p>
+<h3>ユーザーの作成</h3>
+<p>
+  次は、コンソール画面でユーザーを作成します。Webアプリケーションの実行ユーザー(たとえばwebapp)を作成するのと、自分自身のユーザー(たとえばkimoto)の二つを作成してみましょう。
+</p>
 <ul>
   <li><a href="/blog/20200511173052.html">useraddコマンド - ユーザーの追加</a></li>
+</ul>
+<p>
+  パスワードも設定しましょう。
+</p>
+<ul>
   <li><a href="/blog/20200510173052.html">passwdコマンド - パスワードの設定</a></li>
 </ul>
+<p>
+  Webアプリケーションの実行ユーザーと、あなた自身のユーザーを作成することができましたか?
+</p>
 
   </div>
   <div class="bottom">
