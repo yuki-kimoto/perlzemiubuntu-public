@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>ロケールの確認と変更 - localeコマンド - Ubuntuサーバー管理入門</title>
-<meta name="description" content="ロケールの確認と変更は、localeコマンドで行えます。">
+<title>ロケールの確認と変更 - localectlコマンド - Ubuntuサーバー管理入門</title>
+<meta name="description" content="ロケールの確認と変更は、localectlコマンドで行えます。ロケールは、ロケール対応のソフトウェアがあった場合に、どの国の言語で画面に出力するか、どの文字コードで出力するかを指定するものです。">
   </head>
   <body>
     <div class="container">
@@ -29,50 +29,44 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200513083020.html">ロケールの確認と変更 - localeコマンド</a></h2>
+    <h2><a href="/blog/20200513083020.html">ロケールの確認と変更 - localectlコマンド</a></h2>
 <p>
-  ロケールの確認と変更は、localeコマンドで行えます。
+  ロケールの確認と変更は、<b>localectlコマンド</b>で行えます。ロケールは、ロケール対応のソフトウェアがあった場合に、どの国の言語で画面に出力するか、どの文字コードで出力するかを指定するものです。
+</p>
+<p>
+  PerlでWebシステム開発環境を構築する場合は、ロケールの設定は、デフォルトの設定でよく、必要がないと感じます。
+</p>
+<p>
+  その理由は、<a href="https://tutorial.perlzemi.com/">Perlプログラミング言語</a>は、文字コードに関して、OSフラット、ロケールフラットだからです。
+</p>
+<p>
+  (本当に大丈夫かどうかは、2020年5月13日時点では未確認。)
 </p>
 <h3>ロケールの確認</h3>
 <p>
-  localeコマンドで、現在のロケールを確認できます。
+  localectlコマンドで、現在のロケールを確認できます。
 </p>
 <pre>
-locale
+localectl
 </pre>
 <p>
-  以下のように現在設定されているロケールが表示されます。
+  以下のように現在設定されているロケールが表示されます。デフォルトでは「C.UTF-8」です。初期インストールの状態で、シェルでは、UTF-8で入力・出力が行えます。
 </p>
 <pre>
-LANG=C.UTF-8
-admins@development-batch:/$ locale
-LANG=C.UTF-8
-LANGUAGE=
-LC_CTYPE="C.UTF-8"
-LC_NUMERIC="C.UTF-8"
-LC_TIME="C.UTF-8"
-LC_COLLATE="C.UTF-8"
-LC_MONETARY="C.UTF-8"
-LC_MESSAGES="C.UTF-8"
-LC_PAPER="C.UTF-8"
-LC_NAME="C.UTF-8"
-LC_ADDRESS="C.UTF-8"
-LC_TELEPHONE="C.UTF-8"
-LC_MEASUREMENT="C.UTF-8"
-LC_IDENTIFICATION="C.UTF-8"
-LC_ALL=
+   System Locale: LANG=C.UTF-8
+       VC Keymap: n/a
+      X11 Layout: us
+       X11 Model: pc105
 </pre>
 <h3>利用可能なロケールの一覧</h3>
 <p>
-  利用可能なロケールの一覧を表示するには「-a」オプションを使用します。availableの略でしょうか。
+  利用可能なロケールの一覧を表示するには「localectl list-locales」コマンドを使用します。
 </p>
 <pre>
-locale -a
+localectl list-locales
 </pre>
 <pre>
-C
 C.UTF-8
-POSIX
 en_US.utf8
 </pre>
 <p>
@@ -84,6 +78,26 @@ en_US.utf8
 </p>
 <pre>
 sudo apt install language-pack-ja
+</pre>
+<p>
+  もう一度利用可能なロケールを確認。
+</p>
+<pre>
+localectl list-locales&lt;/pre&gt;
+
+「ja_JP.utf8」が追加されています。
+
+&lt;pre&gt;
+C.UTF-8
+en_US.utf8
+ja_JP.utf8
+</pre>
+<h3>ロケールの変更</h3>
+<p>
+  ロケールを変更しましょう。ロケールを変更するには「localectl set-locale」コマンドを使用します。
+</p>
+<pre>
+localectl set-locale LANG=ja_JP.UTF-8
 </pre>
 
   </div>
