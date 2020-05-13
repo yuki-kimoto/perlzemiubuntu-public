@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>ロケールの確認と変更 - localeコマンド - Ubuntuサーバー管理入門</title>
+<meta name="description" content="ロケールの確認と変更は、localeコマンドで行えます。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー管理入門</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200513083020.html">ロケールの確認と変更 - localeコマンド</a></h2>
+<p>
+  ロケールの確認と変更は、localeコマンドで行えます。
+</p>
+<h3>ロケールの確認</h3>
+<p>
+  localeコマンドで、現在のロケールを確認できます。
+</p>
+<pre>
+locale
+</pre>
+<p>
+  以下のように現在設定されているロケールが表示されます。
+</p>
+<pre>
+LANG=C.UTF-8
+admins@development-batch:/$ locale
+LANG=C.UTF-8
+LANGUAGE=
+LC_CTYPE="C.UTF-8"
+LC_NUMERIC="C.UTF-8"
+LC_TIME="C.UTF-8"
+LC_COLLATE="C.UTF-8"
+LC_MONETARY="C.UTF-8"
+LC_MESSAGES="C.UTF-8"
+LC_PAPER="C.UTF-8"
+LC_NAME="C.UTF-8"
+LC_ADDRESS="C.UTF-8"
+LC_TELEPHONE="C.UTF-8"
+LC_MEASUREMENT="C.UTF-8"
+LC_IDENTIFICATION="C.UTF-8"
+LC_ALL=
+</pre>
+<h3>利用可能なロケールの一覧</h3>
+<p>
+  利用可能なロケールの一覧を表示するには「-a」オプションを使用します。availableの略でしょうか。
+</p>
+<pre>
+locale -a
+</pre>
+<pre>
+C
+C.UTF-8
+POSIX
+en_US.utf8
+</pre>
+<p>
+  どうやら日本語で利用可能なロケールは、ないようです。
+</p>
+<h3>ロケールのインストール</h3>
+<p>
+  ロケールをインストールしてみましょう。aptコマンドで、日本語パッケージをダウンロードします。sodoを使って管理者権限でインストールします。
+</p>
+<pre>
+sudo apt install language-pack-ja
+</pre>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <!-- footer -->
+<a href="https://github.com/yuki-kimoto/giblog">Giblog</a>
+
+      </div>
+    </div>
+  </body>
+</html>
