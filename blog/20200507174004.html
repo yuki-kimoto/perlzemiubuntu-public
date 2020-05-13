@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>タイムゾーンの確認と設定 - timedatectlコマンド - Ubuntuサーバー管理入門</title>
+<meta name="description" content="タイムゾーンの確認と変更は、timedatectlコマンドで行えます。タイムゾーンは、UTC時刻(協定世界時)を基準として、各国の時刻がどの程度進んでいるかを設定するものです。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー管理入門</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200507174004.html">タイムゾーンの確認と設定 - timedatectlコマンド</a></h2>
+<p>
+  タイムゾーンの確認と変更は、<b>timedatectlコマンド</b>で行えます。タイムゾーンは、UTC時刻(協定世界時)を基準として、各国の時刻がどの程度進んでいるかを設定するものです。
+</p>
+<p>
+  日本の場合は、9時間進んでいます。
+</p>
+<h3>タイムゾーンの確認</h3>
+<p>
+  timedatectlコマンドで、現在のタイムゾーンを確認できます。
+</p>
+<pre>
+timedatectl
+</pre>
+<p>
+  以下のように現在設定されているタイムゾーンが表示されます。デフォルトでは「UTC」です。
+</p>
+<pre>
+                      Local time: Wed 2020-05-13 03:44:55 UTC
+                  Universal time: Wed 2020-05-13 03:44:55 UTC
+                        RTC time: Wed 2020-05-13 03:44:55
+                       Time zone: Etc/UTC (UTC, +0000)
+       System clock synchronized: yes
+systemd-timesyncd.service active: yes
+                 RTC in local TZ: no
+</pre>
+<h3>利用可能なタイムゾーンの一覧</h3>
+<p>
+  利用可能なタイムゾーンの一覧を表示するには「timedatectl list-timezones」コマンドを使用します。
+</p>
+<pre>
+timedatectl list-timezones
+</pre>
+<p>
+  たくさん表示されます。日本の場合は「Asia/Tokyo」です。
+</p>
+<pre>
+Asia/Tashkent
+Asia/Tbilisi
+Asia/Tehran
+Asia/Thimphu
+Asia/Tokyo
+Asia/Tomsk
+Asia/Ulaanbaatar
+Asia/Urumqi
+Asia/Ust-Nera
+Asia/Vientiane
+Asia/Vladivostok
+</pre>
+<h3>タイムゾーンの変更</h3>
+<p>
+  タイムゾーンを変更しましょう。タイムゾーンを変更するには「timedatectl set-timezone」コマンドを使用します。ここ日本の場合は「Asia/Tokyo」を設定します。sudoコマンドで管理者権限で実行します。
+</p>
+<pre>
+sudo timedatectl set-timezone Asia/Tokyo
+</pre>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <!-- footer -->
+<a href="https://github.com/yuki-kimoto/giblog">Giblog</a>
+
+      </div>
+    </div>
+  </body>
+</html>

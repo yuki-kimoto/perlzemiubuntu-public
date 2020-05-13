@@ -74,7 +74,7 @@ en_US.utf8
 </p>
 <h3>ロケールのインストール</h3>
 <p>
-  ロケールをインストールしてみましょう。aptコマンドで、日本語パッケージをダウンロードします。sodoを使って管理者権限でインストールします。
+  ロケールをインストールしてみましょう。aptコマンドで、日本語パッケージをダウンロードします。sodoを使って管理者権限で実行します。
 </p>
 <pre>
 sudo apt install language-pack-ja
@@ -94,10 +94,10 @@ ja_JP.utf8
 </pre>
 <h3>ロケールの変更</h3>
 <p>
-  ロケールを変更しましょう。ロケールを変更するには「localectl set-locale」コマンドを使用します。
+  ロケールを変更しましょう。ロケールを変更するには「localectl set-locale」コマンドを使用します。sudoコマンドで管理者権限で実行します。
 </p>
 <pre>
-localectl set-locale LANG=ja_JP.UTF-8
+sudo localectl set-locale LANG=ja_JP.UTF-8
 </pre>
 
   </div>
