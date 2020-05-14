@@ -40,6 +40,40 @@
 <pre>
 /usr/include
 </pre>
+<h3>ヘッダーファイルの読み込みパスを調べる</h3>
+<p>
+  ヘッダーファイルの読み込みパスは、C言語のプリプロセッサに書き込まれています。
+</p>
+<p>
+  まず、gccが使っているプリプロセッサのパスを調べます。
+</p>
+<pre>
+gcc -print-prog-name=cc1
+</pre>
+<p>
+  以下のように出力されます。
+</p>
+<pre>
+/usr/lib/gcc/x86_64-linux-gnu/7/cc1
+</pre>
+<p>
+  プリプロセッサのバージョンを表示すると、インクルードパスをが表示されます。
+</p>
+<pre>
+/usr/lib/gcc/x86_64-linux-gnu/7/cc1 -v
+</pre>
+<p>
+  デフォルトのヘッダーファイルの読み込みパスが表示されます。
+</p>
+<pre>
+ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/7/../../../../x86_64-linux-gnu/include"
+#include "..." search starts here:
+#include &lt;...&gt; search starts here:
+ /usr/lib/gcc/x86_64-linux-gnu/7/include
+ /usr/local/include
+ /usr/lib/gcc/x86_64-linux-gnu/7/include-fixed
+ /usr/include
+</pre>
 
   </div>
   <div class="bottom">
