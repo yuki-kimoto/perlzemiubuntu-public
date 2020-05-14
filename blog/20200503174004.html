@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>g++のインストール - Ubuntuサーバー管理入門</title>
+<meta name="description" content="g++のインストール方法を解説します。aptコマンドを使って、g++をインストールします。sudoを使って管理者権限で実行します。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー管理入門</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200503174004.html">g++のインストール</a></h2>
+<p>
+  g++のインストール方法を解説します。aptコマンドを使って、g++をインストールします。sudoを使って管理者権限で実行します。
+</p>
+<pre>
+sudo apt install g++
+</pre>
+<h3>g++の主な用途</h3>
+<p>
+  g++の用途は、C++コンパイルです。C++のソースファイルをコンパイルして、オブジェクトファイルを作成できます。
+</p>
+<p>
+  オブジェクトファイルというのは、一つまたは複数のC言語ファイルに対応する処理を含む機械語になったファイルです。
+</p>
+<p>
+  g++はリンカも含んでいます。リンカ機能で、オブジェクトファイルを結合して、実行ファイル、静的ライブラリ、共有ライブラリを作成できます。
+</p>
+<p>
+  g++は、<a href="https://tutorial.perlzemi.com/blog/20100504127089.html">CPAN</a>からC++ソースファイルを含んでいる<a href="https://tutorial.perlzemi.com/blog/20100809127859.html">XSモジュール</a>をインストールするときに必要です。
+</p>
+<h3>C言語のコンパイラ gcc</h3>
+<p>
+  PerlのXSモジュールでは、C言語が使われているので、C言語のコンパイラであるgccもインストールしておきましょう。
+</p>
+<ul>
+  <li><a href="/blog/20200504174004.html">gccのインストール</a></li>
+</ul>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <!-- footer -->
+<a href="https://github.com/yuki-kimoto/giblog">Giblog</a>
+
+      </div>
+    </div>
+  </body>
+</html>
