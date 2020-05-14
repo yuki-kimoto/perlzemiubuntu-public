@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>makeのインストール - Ubuntuサーバー管理入門</title>
+<meta name="description" content="makeのインストール方法を解説します。aptコマンドを使って、makeをインストールします。sudoを使って管理者権限で実行します。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー管理入門</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200514084132.html">makeのインストール</a></h2>
+<p>
+  makeのインストール方法を解説します。aptコマンドを使って、makeをインストールします。sudoを使って管理者権限で実行します。
+</p>
+<pre>
+sudo apt install make
+</pre>
+<h3>makeの主な用途</h3>
+<p>
+  makeは、主な用途として、C言語のソースファイルをコンパイルするときに、ソースファイルの依存関係を調べて、再コンパイルが必要なソースファイルだけをコンパイルするためのツールです。
+</p>
+<p>
+  また、makeのサブコマンド(本当はサブコマンドという名前ではない)「make test」や「make install」などを作って、一連のシェルコマンドやプログラムを実行できます。
+</p>
+<p>
+  makeは、<a href="https://tutorial.perlzemi.com/blog/20100504127089.html">CPAN</a>からPerlのモジュールをインストールするときにも必要となります。C言語ソースコードを含んでいる<a href="https://tutorial.perlzemi.com/blog/20100809127859.html">XSモジュール</a>の場合は、もちろん必要ですが、C言語ソースコードを含んでいないモジュールでも、多くの場合は必要です。
+</p>
+<p>
+  多くの場合はというのは、<a href="https://tutorial.perlzemi.com/blog/20170210150108.html">ExtUtils::MakeMaker</a>が使われている場合のことです。Module::BuildやModule::Build::Tinyが使われている場合はいらない。
+</p>
+<p>
+  以下のような手順を実行するだけで、モジュールをコンパイルして、ファイルをディレクトリに配置、テストを行って、インストールするということができます。
+</p>
+<pre>
+make
+make test
+make install
+</pre>
+<p>
+  これがCPANモジュールのインストールにおいて行われています。
+</p>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <!-- footer -->
+<a href="https://github.com/yuki-kimoto/giblog">Giblog</a>
+
+      </div>
+    </div>
+  </body>
+</html>
