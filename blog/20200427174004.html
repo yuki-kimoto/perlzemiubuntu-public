@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>パッケージの依存関係を調べる - Ubuntuサーバー管理入門</title>
+<meta name="description" content="パッケージの依存関係を調べるには「apt-cache depends」コマンドを使用します。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー管理入門</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200427174004.html">パッケージの依存関係を調べる</a></h2>
+<p>
+  パッケージの依存関係を調べるには「apt-cache depends」コマンドを使用します。
+</p>
+<pre>
+apt-cache depends libpng-dev
+</pre>
+<p>
+  上記は「libpng-dev」がどのようのパッケージに依存しているかを調べるものです。出力結果は以下のようになります。
+</p>
+<pre>
+libpng-dev
+  Depends: libpng16-16
+  Depends: zlib1g-dev
+  Conflicts: &lt;libpng12-0-dev&gt;
+  Conflicts: &lt;libpng12-dev&gt;
+  Conflicts: &lt;libpng2-dev&gt;
+  Conflicts: &lt;libpng3-dev&gt;
+  Breaks: &lt;libpng16-dev&gt;
+  Breaks: &lt;libpng16-devtools&gt;
+  Recommends: libpng-tools
+  Replaces: &lt;libpng16-dev&gt;
+  Replaces: &lt;libpng16-devtools&gt;
+</pre>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <!-- footer -->
+<a href="https://github.com/yuki-kimoto/giblog">Giblog</a>
+
+      </div>
+    </div>
+  </body>
+</html>

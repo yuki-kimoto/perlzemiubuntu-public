@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>libpng-devのインストール - Ubuntuサーバー管理入門</title>
+<meta name="description" content="libpng-devのインストール方法を解説します。aptコマンドを使って、libpng-devをインストールします。sudoを使って管理者権限で実行します。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー管理入門</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200501174004.html">libpng-devのインストール</a></h2>
+<p>
+  libpng-devのインストール方法を解説します。aptコマンドを使って、libpng-devをインストールします。sudoを使って管理者権限で実行します。
+</p>
+<pre>
+sudo apt install libpng-dev
+</pre>
+<h3>libpng-devとは</h3>
+<p>
+  (以下の記述は2020年5月14日時点で未確認)
+</p>
+<p>
+  libpng-devは、PNG画像を読み込み・書き込み・編集するためのライブラリのひとつです。
+</p>
+<p>
+  C言語ソースファイルの中で「png.h」を読み込むために必要です。
+</p>
+<p>
+  Perlでは、PNG画像の読み書きに「png.h」が利用されているモジュールがあります。例として、ImagerのPNG画像の読み書きモジュールであるImager::File::PNGがあります。
+</p>
+<p>
+  Imager::File::PNGをインストールするためには「png.h」がインクルードディレクトリに、対応する共有ライブラリ「libpng.so」が、ライブラリのディレクトリにインストールされている必要があります。
+</p>
+<p>
+  libpng-devをインストールすると、「png.h」ヘッダと、それに対応する共有ライブラリがインストールされます。
+</p>
+<p>
+  Webでは、PNG,GIF,JPEGの画像アップロードが良く行われるので、PNGのライブラリをインストールしておきます。
+</p>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <!-- footer -->
+<a href="https://github.com/yuki-kimoto/giblog">Giblog</a>
+
+      </div>
+    </div>
+  </body>
+</html>

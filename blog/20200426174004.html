@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>libjpeg-devのインストール - Ubuntuサーバー管理入門</title>
+<meta name="description" content="libjpeg-devのインストール方法を解説します。aptコマンドを使って、libjpeg-devをインストールします。sudoを使って管理者権限で実行します。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー管理入門</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200426174004.html">libjpeg-devのインストール</a></h2>
+<p>
+  libjpeg-devのインストール方法を解説します。aptコマンドを使って、libjpeg-devをインストールします。sudoを使って管理者権限で実行します。
+</p>
+<pre>
+sudo apt install libjpeg-dev
+</pre>
+<h3>libjpeg-devとは</h3>
+<p>
+  (以下の記述は2020年5月14日時点で未確認)
+</p>
+<p>
+  libjpeg-devは、JPEG画像を読み込み・書き込み・編集するためのライブラリのひとつです。
+</p>
+<p>
+  C言語ソースファイルの中で「jpeglib.h」を読み込むために必要です。
+</p>
+<p>
+  Perlでは、JPEG画像の読み書きに「jpeglib.h」が利用されているモジュールがあります。例として、ImagerのJPEG画像の読み書きモジュールであるImager::File::JPEGがあります。
+</p>
+<p>
+  Imager::File::JPEGをインストールするためには「jpeglib.h」がインクルードディレクトリに、対応する共有ライブラリ「libjpeg.so」が、ライブラリのディレクトリにインストールされている必要があります。
+</p>
+<p>
+  libjpeg-devをインストールすると、「jpeglib.h」ヘッダと、それに対応する共有ライブラリがインストールされます。
+</p>
+<p>
+  Webでは、PNG,GIF,JPEGの画像アップロードが良く行われるので、JPEGのライブラリをインストールしておきます。
+</p>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <!-- footer -->
+<a href="https://github.com/yuki-kimoto/giblog">Giblog</a>
+
+      </div>
+    </div>
+  </body>
+</html>

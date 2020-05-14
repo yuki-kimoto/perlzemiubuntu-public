@@ -36,6 +36,9 @@
 <pre>
 sudo apt install libgif-dev
 </pre>
+<p>
+  libgif-devをインストールすると「libgif7」も一緒にインストールされます。「libgif7」は「libgif」のバージョン7という意味のようです。
+</p>
 <h3>libgif-devとは</h3>
 <p>
   (以下の記述は2020年5月14日時点で未確認)
@@ -50,7 +53,7 @@ sudo apt install libgif-dev
   Perlでは、GIF画像の読み書きに「gif_lib.h」が利用されているモジュールがあります。例として、ImagerのGIF画像の読み書きモジュールであるImager::File::GIFがあります。
 </p>
 <p>
-  Imager::File::GIFをインストールするためには「gif_lib.h」がインクルードディレクトリに、対応する共有ライブラリが、ライブラリのディレクトリにインストールされている必要があります。
+  Imager::File::GIFをインストールするためには「gif_lib.h」がヘッダーファイルの読み込みパスにインストールされており、対応する共有ライブラリ「libgif.so」が、ライブラリの読み込みパスにインストールされている必要があります。
 </p>
 <p>
   libgif-devをインストールすると、「gif_lib.h」ヘッダと、それに対応する共有ライブラリがインストールされます。
@@ -58,6 +61,13 @@ sudo apt install libgif-dev
 <p>
   Webでは、PNG,GIF,JPEGの画像アップロードが良く行われるので、GIFのライブラリをインストールしておきます。
 </p>
+<p>
+  ヘッダーファイルの読み込みパスと、ライブラリの読み込みパスについては、以下を参考にしてください。
+</p>
+<ul>
+  <li><a href="/blog/20200429174004.html">ヘッダーファイルの読み込みパス</a></li>
+  <li><a href="/blog/20200428174004.html">ライブラリの読み込みパス</a></li>
+</ul>
 
   </div>
   <div class="bottom">
