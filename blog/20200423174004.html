@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>postfixのインストール - メール送信 sendmailコマンド - Ubuntuサーバー構築の手引き</title>
+<meta name="description" content="メールを送信するためのsendmailコマンドを使うためにpostfixをインストールしましょう。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー構築の手引き - Perl Webシステム基盤</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200423174004.html">postfixのインストール - メール送信 sendmailコマンド</a></h2>
+<p>
+  メールを送信するためのsendmailコマンドを使うためにpostfixをインストールしましょう。
+</p>
+<pre>
+sudo apt install postfix
+</pre>
+<p>
+  Webシステム開発では、postfixは受信メールサーバーになる必要はないです。postfixのインストールは、送信メールを配送するサーバーとして機能することと、sendmailコマンドが使えるようにすることが、主な目的です。
+</p>
+<p>
+  メール送信は、お問い合わせフォームにおけるメール送信や、アカウント登録機能のメール認証で利用します。
+</p>
+<p>
+  インストールコマンドを実行すると、GUIの画面が立ち上がってびっくりします。
+</p>
+<p>
+  (CUIで行う方法知っておられましたら「kimoto.yuki@gmail.com」まで、お願いします。)
+</p>
+<p>
+  キーボードの右を押すと、Okが光ります。Enterを押します。
+</p>
+<p>
+  上下キーで「No configuration」を選択します。右キーを押すとOkに勧めるので、Enterを押します。
+</p>
+<p>
+  インストールが始まります。
+</p>
+<h4>sendmailコマンドが使えることの確認</h4>
+<p>
+  sendmailがインストールされたことを確認しましょう。
+</p>
+<pre>
+sendmail
+</pre>
+<p>
+  postfixの設定ファイル「mail.cf」がないよと怒られます。
+</p>
+<pre>
+sendmail: fatal: open /etc/postfix/main.cf: No such file or directory
+</pre>
+<p>
+  postfixの設定については、後程解説します。この記事では、postfixのインストールまで。
+</p>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <!-- footer -->
+<a href="https://github.com/yuki-kimoto/giblog">Giblog</a>
+
+      </div>
+    </div>
+  </body>
+</html>

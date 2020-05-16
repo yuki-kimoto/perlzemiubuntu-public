@@ -7,7 +7,7 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>Ubuntu 18.04 LTSにデフォルトでインストールされているソフトウェアパッケージ - Ubuntuサーバー管理入門</title>
+<title>Ubuntu 18.04 LTSにデフォルトでインストールされているソフトウェアパッケージ - Ubuntuサーバー構築の手引き</title>
 <meta name="description" content="Perl Webシステム開発を行う場合に、必要・便利なソフトウェアの中で、Ubuntuにデフォルトでインストールされているソフトウェアパッケージを列挙します。">
   </head>
   <body>
@@ -16,7 +16,7 @@
         <!-- header -->
 <div class="main">
   <h1>
-    <a href="/">Ubuntuサーバー管理入門</a>
+    <a href="/">Ubuntuサーバー構築の手引き - Perl Webシステム基盤</a>
   </h1>
 </div>
 
@@ -52,17 +52,20 @@
   <li>libxml</li>
   <li>vim</li>
   <li>sudo</li>
+  <li>cron</li>
 </ul>
 <h3>デフォルトでインストールされていないもの</h3>
 <p>
-  デフォルトでインストールされていないものは以下でした。
+  Perl Webシステム開発で必要だが、デフォルトでインストールされていないものは以下でした。
 </p>
 <ul>
   <li>make</li>
   <li>gcc</li>
   <li>apache2</li>
-  <li>libjpeg</li>
-  <li>giflib</li>
+  <li>postfix</li>
+  <li>libpng-dev</li>
+  <li>libgif-dev</li>
+  <li>libjpeg-dev</li>
 </ul>
 <h3>インストールされていたりされていなかったりしたもの</h3>
 <p>
@@ -1008,6 +1011,9 @@ ii  xz-utils
 ii  zlib1g:amd64                                         
 </pre>
 <p>
+  以下、Azureとの違い。
+</p>
+<p>
   以下がAzureに比べて少ない。
 </p>
 <ul>
@@ -1015,6 +1021,9 @@ ii  zlib1g:amd64
   <li>net-tools</li>
   <li>libreadline</li>
 </ul>
+<p>
+  cronとanacronの両方がインストールされている。どういう動きをするのかは、まだ未チェック(2020年5月16日)。
+</p>
 
   </div>
   <div class="bottom">
