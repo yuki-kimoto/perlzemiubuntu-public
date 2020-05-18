@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>passwdコマンド - パスワードの設定 - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
-<meta name="description" content="ユーザーを追加したらパスワードも設定します。passwdコマンドを使用します。パスワード設定などのユーザー管理は、sudoを使ってrootユーザーとして実行します。">
+<title>mariadb-clientのインストール - MariaDBデータベースクライアント - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="MariaDBデータベースのクライアントアプリケーションである「mysql」を使えるように「mariadb-client」をインストールしましょう。">
   </head>
   <body>
     <div class="container">
@@ -29,27 +29,33 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200510173052.html">passwdコマンド - パスワードの設定</a></h2>
+    <h2><a href="/blog/20200422174004.html">mariadb-clientのインストール - MariaDBデータベースクライアント</a></h2>
 <p>
-  ユーザーを追加したらパスワードも設定します。<b>passwd</b>コマンドを使用します。パスワード設定などのユーザー管理は、sudoを使ってrootユーザーとして実行します。
+  <a href="https://mariadb.perlzemi.com/">MariaDBデータベース</a>のクライアントアプリケーションである「mysql」を使えるように「mariadb-client」をインストールしましょう。
 </p>
 <pre>
-sudo passwd kimoto
+sudo apt install mariadb-client
 </pre>
+<h4>mysqlコマンドがインストールされたことの確認</h4>
 <p>
-  パスワードの入力と確認のための再入力を求められるので設定します。
-</p>
-<h3>rootユーザーのパスワードを変更するには?</h3>
-<p>
-  ユーザー名をrootにするか、ユーザー名を指定しないでpasswdコマンドを実行します。
+  MariaDBのmysqlコマンドがインストールされたことを確認しましょう。
 </p>
 <pre>
-sudo passwd root
-
-あるいは
-
-sudo passwd
+mysql --version
 </pre>
+<p>
+  以下のようにバージョン情報が表示されるとインストールされています。
+</p>
+<pre>
+mysql  Ver 15.1 Distrib 10.1.44-MariaDB, for debian-linux-gnu (x86_64) using readline 5.2
+</pre>
+<h3>DBD::MySQLを使える用にするには</h3>
+<p>
+  (2020年5月18日時点で、確認未)
+</p>
+<p>
+  PerlのDBD::MySQLを使るようにするには「libmariadb-dev」パッケージが必要になります。
+</p>
 
   </div>
   <div class="bottom">

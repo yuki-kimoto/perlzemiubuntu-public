@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>passwdコマンド - パスワードの設定 - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
-<meta name="description" content="ユーザーを追加したらパスワードも設定します。passwdコマンドを使用します。パスワード設定などのユーザー管理は、sudoを使ってrootユーザーとして実行します。">
+<title>libmariadb-devのインストール - MariaDBデータベースのヘッダとライブラリ - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="PerlのDBD::MySQLをインストールに成功するために、MariaDBクライアントのヘッダやライブラリを含む「libmariadb-dev」をインストールしましょう。">
   </head>
   <body>
     <div class="container">
@@ -29,26 +29,12 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200510173052.html">passwdコマンド - パスワードの設定</a></h2>
+    <h2><a href="/blog/20200419174004.html">libmariadb-devのインストール - MariaDBデータベースのヘッダとライブラリ</a></h2>
 <p>
-  ユーザーを追加したらパスワードも設定します。<b>passwd</b>コマンドを使用します。パスワード設定などのユーザー管理は、sudoを使ってrootユーザーとして実行します。
+  PerlのDBD::MySQLをインストールに成功するために、MariaDBクライアントのヘッダやライブラリを含む「libmariadb-dev」をインストールしましょう。
 </p>
 <pre>
-sudo passwd kimoto
-</pre>
-<p>
-  パスワードの入力と確認のための再入力を求められるので設定します。
-</p>
-<h3>rootユーザーのパスワードを変更するには?</h3>
-<p>
-  ユーザー名をrootにするか、ユーザー名を指定しないでpasswdコマンドを実行します。
-</p>
-<pre>
-sudo passwd root
-
-あるいは
-
-sudo passwd
+sudo apt install libmariadb-dev
 </pre>
 
   </div>

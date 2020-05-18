@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>passwdコマンド - パスワードの設定 - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
-<meta name="description" content="ユーザーを追加したらパスワードも設定します。passwdコマンドを使用します。パスワード設定などのユーザー管理は、sudoを使ってrootユーザーとして実行します。">
+<title>mariadb-serverのインストール - MariaDBデータベースサーバー - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="MariaDBデータベースサーバーを使えるように「mariadb-server」をインストールしましょう。MariaDBは、オープンソースでMySQLと互換性の高いMySQLからフォークされたプロジェクトです。">
   </head>
   <body>
     <div class="container">
@@ -29,26 +29,34 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200510173052.html">passwdコマンド - パスワードの設定</a></h2>
+    <h2><a href="/blog/20200421174004.html">mariadb-serverのインストール - MariaDBデータベースサーバー</a></h2>
 <p>
-  ユーザーを追加したらパスワードも設定します。<b>passwd</b>コマンドを使用します。パスワード設定などのユーザー管理は、sudoを使ってrootユーザーとして実行します。
+  MariaDBデータベースサーバーを使えるように「mariadb-server」をインストールしましょう。<a href="https://mariadb.perlzemi.com/">MariaDB</a>は、オープンソースでMySQLと互換性の高いMySQLからフォークされたプロジェクトです。
 </p>
 <pre>
-sudo passwd kimoto
+sudo apt install mariadb-server
+</pre>
+<h4>MariaDBデータベースサーバーがインストールされたことの確認</h4>
+<p>
+  MariaDBデータベースサーバーがインストールされたことをsystemctlコマンドのstatusを使って、確認しましょう。
+</p>
+<pre>
+systemctl status mariadb
 </pre>
 <p>
-  パスワードの入力と確認のための再入力を求められるので設定します。
-</p>
-<h3>rootユーザーのパスワードを変更するには?</h3>
-<p>
-  ユーザー名をrootにするか、ユーザー名を指定しないでpasswdコマンドを実行します。
+  次のように状態が表示されます。
 </p>
 <pre>
-sudo passwd root
-
-あるいは
-
-sudo passwd
+● mariadb.service - MariaDB 10.1.44 database server
+   Loaded: loaded (/lib/systemd/system/mariadb.service; enabled; vendor preset:
+   Active: active (running) since Mon 2020-05-18 12:38:49 JST; 58s ago
+     Docs: man:mysqld(8)
+           https://mariadb.com/kb/en/library/systemd/
+ Main PID: 33941 (mysqld)
+   Status: "Taking your SQL requests now..."
+    Tasks: 27 (limit: 9479)
+   CGroup: /system.slice/mariadb.service
+           mq33941 /usr/sbin/mysqld
 </pre>
 
   </div>
