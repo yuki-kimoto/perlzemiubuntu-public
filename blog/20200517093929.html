@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>ライブラリの読み込みパス - Ubuntuサーバー構築の手引き</title>
-<meta name="description" content="Ubuntuのライブラリの読み込みパスについての情報です。">
+<title>nfs-commonのインストール - NFSクライアント ネットワークファイル共有 - Ubuntuサーバー構築の手引き</title>
+<meta name="description" content="複数サーバー間で、ネットワークファイル共有をするにはNFSサーバーにマウントするための機能を提供する「nfs-common」を、インストールしましょう。">
   </head>
   <body>
     <div class="container">
@@ -29,43 +29,23 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200428174004.html">ライブラリの読み込みパス</a></h2>
+    <h2><a href="/blog/20200517093929.html">nfs-commonのインストール - NFSクライアント ネットワークファイル共有</a></h2>
 <p>
-  Ubuntuのライブラリの読み込みパスについての情報です。
-</p>
-<h4>aptでインストールしたパッケージのライブラリの読み込みパス</h4>
-<p>
-  aptでインストールしたパッケージのライブラリは「/usr/lib/x86_64-linux-gnu」にあります。
+  複数サーバー間で、ネットワークファイル共有をするにはNFSサーバーにマウントするための機能を提供する「nfs-common」を、インストールしましょう。
 </p>
 <pre>
-/usr/lib/x86_64-linux-gnu
-</pre>
-<h4>ライブラリの読み込みパスの確認</h4>
-<p>
-  ライブラリの読み込みパスを確認するには「/etc/ld.so.conf」の中を見ます。
-</p>
-<pre>
-cat /etc/ld.so.conf
+sudo apt install nfs-common
 </pre>
 <p>
-  中身を見てみると、さらにincludeされています。
+  NFSは、ネットワークファイルシステムの略です。
 </p>
-<pre>
-include ld.so.conf.d/*.conf
-</pre>
+<h3>NFSサーバー</h3>
 <p>
-  ですので、<a href="https://linux.perlzemi.com/blog/20200113083613.html">catコマンド</a>で、すべての読み込みファイルを出力してみましょう。
+  NFSサーバーになる場合は、NFSサーバーをインストールしましょう。
 </p>
-<pre>
-$ cat /etc/ld.so.conf.d/*.conf
-
-# libc default configuration
-/usr/local/lib
-# Multiarch support
-/usr/local/lib/x86_64-linux-gnu
-/lib/x86_64-linux-gnu
-/usr/lib/x86_64-linux-gnu
-</pre>
+<p>
+  <a href="/blog/20200518093929.html">nfs-kernel-serverのインストール - NFSサーバー ネットワークファイル共有</a>
+</p>
 
   </div>
   <div class="bottom">

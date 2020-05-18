@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>ライブラリの読み込みパス - Ubuntuサーバー構築の手引き</title>
-<meta name="description" content="Ubuntuのライブラリの読み込みパスについての情報です。">
+<title>nfs-kernel-serverのインストール - NFSサーバー ネットワークファイル共有 - Ubuntuサーバー構築の手引き</title>
+<meta name="description" content="複数サーバー間で、ネットワークファイル共有をするにはNFSサーバーをである「nfs-kernel-server」を、インストールしましょう。">
   </head>
   <body>
     <div class="container">
@@ -29,42 +29,36 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200428174004.html">ライブラリの読み込みパス</a></h2>
+    <h2><a href="/blog/20200518093929.html">nfs-kernel-serverのインストール - NFSサーバー ネットワークファイル共有</a></h2>
 <p>
-  Ubuntuのライブラリの読み込みパスについての情報です。
-</p>
-<h4>aptでインストールしたパッケージのライブラリの読み込みパス</h4>
-<p>
-  aptでインストールしたパッケージのライブラリは「/usr/lib/x86_64-linux-gnu」にあります。
+  複数サーバー間で、ネットワークファイル共有をするにはNFSサーバーをである「nfs-kernel-server」を、インストールしましょう。
 </p>
 <pre>
-/usr/lib/x86_64-linux-gnu
-</pre>
-<h4>ライブラリの読み込みパスの確認</h4>
-<p>
-  ライブラリの読み込みパスを確認するには「/etc/ld.so.conf」の中を見ます。
-</p>
-<pre>
-cat /etc/ld.so.conf
+sudo apt install nfs-kernel-server
 </pre>
 <p>
-  中身を見てみると、さらにincludeされています。
+  NFSは、ネットワークファイルシステムの略です。
+</p>
+<p>
+  NFSクライアントとしてNFSサーバーにマウントする機能を提供する<a href="/blog/20200517093929.html">nfs-common</a>も一緒にインストールされます。
+</p>
+<h4>NFSサーバーがインストールできたことの確認</h4>
+<p>
+  NFSサーバーがインストールできたことをsystemctlコマンドのstatusを使って確認しましょう。
 </p>
 <pre>
-include ld.so.conf.d/*.conf
+systemctl status nfs-kernel-server
 </pre>
 <p>
-  ですので、<a href="https://linux.perlzemi.com/blog/20200113083613.html">catコマンド</a>で、すべての読み込みファイルを出力してみましょう。
+  以下のように表示されればインストールされています。
 </p>
 <pre>
-$ cat /etc/ld.so.conf.d/*.conf
-
-# libc default configuration
-/usr/local/lib
-# Multiarch support
-/usr/local/lib/x86_64-linux-gnu
-/lib/x86_64-linux-gnu
-/usr/lib/x86_64-linux-gnu
+● nfs-server.service - NFS server and services
+   Loaded: loaded (/lib/systemd/system/nfs-server.service; enabled; vendor prese
+   Active: active (exited) since Mon 2020-05-18 09:51:35 JST; 2min 47s ago
+ Main PID: 20222 (code=exited, status=0/SUCCESS)
+    Tasks: 0 (limit: 9479)
+   CGroup: /system.slice/nfs-server.service
 </pre>
 
   </div>
