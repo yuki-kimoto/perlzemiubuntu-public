@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>Aapacheの起動・停止・再起動・状態確認 - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="Aapacheの起動・停止・再起動・状態確認について解説します。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200519084454.html">Aapacheの起動・停止・再起動・状態確認</a></h2>
+<p>
+  Aapacheの起動・停止・再起動・状態確認について解説します。
+</p>
+<h4>Aapacheの状態確認</h4>
+<p>
+  Aapacheの状態確認は、systemctlコマンドの「status」を使って行います。
+</p>
+<pre>
+systemctl status apache2
+</pre>
+<h5>起動している場合</h5>
+<p>
+  起動している場合は、以下のように表示されます。
+</p>
+<pre>
+● apache2.service - The Apache HTTP Server
+   Loaded: loaded (/lib/systemd/system/apache2.service; enabled; vendor preset: enabled)
+  Drop-In: /lib/systemd/system/apache2.service.d
+           mqapache2-systemd.conf
+   Active: active (running) since Tue 2020-05-19 08:59:09 JST; 9s ago
+  Process: 120415 ExecStop=/usr/sbin/apachectl stop (code=exited, status=0/SUCCESS)
+  Process: 120947 ExecStart=/usr/sbin/apachectl start (code=exited, status=0/SUCCESS)
+ Main PID: 120968 (apache2)
+    Tasks: 55 (limit: 9479)
+   CGroup: /system.slice/apache2.service
+           tq120968 /usr/sbin/apache2 -k start
+           tq120971 /usr/sbin/apache2 -k start
+           mq120972 /usr/sbin/apache2 -k start
+</pre>
+<h5>停止している場合</h5>
+<p>
+  停止している場合は、以下のように表示されます。
+</p>
+<pre>
+● apache2.service - The Apache HTTP Server
+   Loaded: loaded (/lib/systemd/system/apache2.service; enabled; vendor preset:
+  Drop-In: /lib/systemd/system/apache2.service.d
+           mqapache2-systemd.conf
+   Active: inactive (dead) since Tue 2020-05-19 08:52:07 JST; 3min 51s ago
+  Process: 120415 ExecStop=/usr/sbin/apachectl stop (code=exited, status=0/SUCCE
+ Main PID: 104579 (code=exited, status=0/SUCCESS)
+</pre>
+<h4>Aapacheの起動</h4>
+<p>
+  Aapacheの起動は、systemctlコマンドの「start」を使って行います。sudoコマンドを使って、root権限で実行します。
+</p>
+<pre>
+sudo systemctl start apache2
+</pre>
+<p>
+  起動が成功しても、成功したというメッセージは返ってきません。状態確認を行ってください。
+</p>
+<h4>Aapacheの停止</h4>
+<p>
+  Aapacheの停止は、systemctlコマンドの「stop」を使って行います。sudoコマンドを使って、root権限で実行します。
+</p>
+<pre>
+sudo systemctl stop apache2
+</pre>
+<p>
+  停止が成功しても、成功したというメッセージは何も返ってきません。状態確認を行ってください。
+</p>
+<h4>Aapacheの再起動</h4>
+<p>
+  Aapacheの再起動は、systemctlコマンドの「restart」を使って行います。sudoコマンドを使って、root権限で実行します。
+</p>
+<pre>
+sudo systemctl restart apache2
+</pre>
+<p>
+  restartは単に、stopコマンドを実行して、startコマンドを実行します。HTTPクライアントからの処理を切断してしまうので、通常はreloadコマンドを使用しましょう
+</p>
+<p>
+  再起動が成功しても、成功したというメッセージは返ってきません。状態確認を行ってください。
+</p>
+<h4>Aapacheのグレースフル(graceful)再起動</h4>
+<p>
+  Aapacheのグレースフル(graceful)再起動は、systemctlコマンドの「reload」を使って行います。sudoコマンドを使って、root権限で実行します。
+</p>
+<pre>
+sudo systemctl reload apache2
+</pre>
+<p>
+  グレイスフル(graceful, 優美な)再起動と呼ばれている再起動は、Apacheに接続しているHTTPクライアントに対して、正しくHTTPレスポンスを返しつつ、Aapacheを再起動できる技術を使った再起動です。すべてのHTTPクライアントの処理を正しく処理できるので、通常はこちらの再起動を使いましょう。
+</p>
+<p>
+  再起動が成功しても、成功したというメッセージは返ってきません。状態確認を行ってください。
+</p>
+<h3>Apacheの起動・停止のログを見るには</h3>
+<p>
+  Apacheなどのサーバーは、systemdというプログラムによって集中的に管理されています。
+</p>
+<p>
+  systemdのログにApacheの起動・停止ログが出力されています。
+</p>
+<p>
+  systemdのログを見るにはjournalctlコマンドを使ます。grepコマンドで「apache」を絞り込みます。大文字・小文字を区別しない「-i」オプションを使うと「Apache」「apache」の両方が拾えます。sudoで実行しないとapache2のログが見れないので注意してください。
+</p>
+<pre>
+sudo journalctl | grep -i apache
+</pre>
+<p>
+  ログの最後の部分だけ見たい場合は<a href="https://linux.perlzemi.com/blog/20200203124238.html">tailコマンド</a>を組み合わせましょう。
+</p>
+<pre>
+sudo journalctl | grep -i apache | tail -20;
+</pre>
+<p>
+  ログのサンプルです。
+</p>
+<pre>
+May 16 08:17:42 development-batch sshd[89734]: Invalid user apache2 from 13.66.3.11 port 43506
+May 16 08:17:48 development-batch sshd[89734]: Failed password for invalid user apache2 from 13.66.3.11 port 43506 ssh2
+May 16 08:17:54 development-batch sshd[89734]: Connection closed by invalid user apache2 13.66.3.11 port 43506 [preauth]
+May 16 10:42:06 development-batch sudo[104035]:   admins : TTY=pts/0 ; PWD=/home/admins ; USER=root ; COMMAND=/usr/bin/apt install apache2
+May 19 08:51:33 development-batch sudo[120356]:   admins : TTY=pts/0 ; PWD=/home/admins ; USER=root ; COMMAND=/bin/systemctl start apache2
+May 19 08:51:40 development-batch sudo[120383]:   admins : TTY=pts/0 ; PWD=/home/admins ; USER=root ; COMMAND=/bin/systemctl start apache2
+May 19 08:52:07 development-batch sudo[120412]:   admins : TTY=pts/0 ; PWD=/home/admins ; USER=root ; COMMAND=/bin/systemctl stop apache2
+May 19 08:59:09 development-batch sudo[120944]:   admins : TTY=pts/0 ; PWD=/home/admins ; USER=root ; COMMAND=/bin/systemctl start apache2
+May 19 09:04:13 development-batch sudo[121384]:   admins : TTY=pts/0 ; PWD=/home/admins ; USER=root ; COMMAND=/bin/systemctl restart apache2
+May 19 09:21:13 development-batch sudo[122691]:   admins : TTY=pts/0 ; PWD=/home/admins ; USER=root ; COMMAND=/bin/systemctl reload apache2
+May 19 09:45:41 development-batch sudo[124545]:   admins : TTY=pts/0 ; PWD=/home/admins ; USER=root ; COMMAND=/bin/systemctl reload apache2
+May 19 09:51:51 development-batch sudo[125080]:   admins : TTY=pts/0 ; PWD=/home/admins ; USER=root ; COMMAND=/bin/systemctl reload apache2
+May 19 09:51:58 development-batch sudo[125154]:   admins : TTY=pts/0 ; PWD=/home/admins ; USER=root ; COMMAND=/bin/systemctl status apache2
+</pre>
+<h3>再起動前にApacheの設定ファイルが正しいか確認する</h3>
+<p>
+  Apacheの再起動(グレースフル再起動)を行う前には「apachectl -t」で、Apacheの設定ファイルが正しいことを確認します。これを忘れると、再起動に失敗して、Webシステムが止まることがあります。よくやりがちなので、注意します。
+</p>
+<pre>
+# Apacheの設定ファイルの試験
+apachectl -t
+</pre>
+<h3>Apacheのsystemdの設定ファイルを見るには</h3>
+<p>
+  Apacheのsystemdの設定ファイルは「systemctl status apache2」で見れます。
+</p>
+<p>
+  設定ファイルを<a href="https://linux.perlzemi.com/blog/20200113083613.html">catコマンド</a>で見てみましょう。
+</p>
+<pre>
+cat /lib/systemd/system/apache2.service
+</pre>
+<p>
+  start、stop、reloadのコマンド定義などが確認できます。
+</p>
+<pre>
+[Unit]
+Description=The Apache HTTP Server
+After=network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=forking
+Environment=APACHE_STARTED_BY_SYSTEMD=true
+ExecStart=/usr/sbin/apachectl start
+ExecStop=/usr/sbin/apachectl stop
+ExecReload=/usr/sbin/apachectl graceful
+PrivateTmp=true
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+</pre>
+<h3>Apacheの他の情報</h3>
+<h4>Apacheをインストールするには</h4>
+<p>
+  Apacheのインストールについては、以下の記事で解説しています。
+</p>
+<p>
+  <a href="/blog/20200424174004.html">apache2のインストール - WebサーバーであるApacheのバージョン2系</a>
+</p>
+<h4>Apacheの設定ファイル</h4>
+<p>
+  Apacheの設定ファイルについては、別の記事で解説します。
+</p>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発を学ぶ
+  </div>
+  <ul>
+    <li><a href="https://tutorial.perlzemi.com/">Perlプログラミングを学ぶ</a></li>
+    <li><a href="https://linux.perlzemi.com/">Linuxの仕組み・コマンドを学ぶ</a></li>
+    <li><a href="https://web.perlzemi.com/">Webシステム開発を学ぶ</a></li>
+  </ul>
+
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発の見積もり
+  </div>
+  <ul>
+    <li><a href="https://kimoto-system.co.jp/">Perl Webシステム開発の<br>木本システム株式会社</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="kimoto_system_link">
+  <a href="https://kimoto-system.co.jp">
+    <img src="https://kimoto-system.co.jp/images/kimoto-system-logo.png" alt="Perl Webシステム開発">
+    Perl Webシステム開発の木本システム
+  </a>
+</div>
+
+<div class="copyright">
+  Copyright © Yuki Kimoto
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>
