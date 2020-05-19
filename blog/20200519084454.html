@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>Aapacheの起動・停止・再起動・状態確認 - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
-<meta name="description" content="Aapacheの起動・停止・再起動・状態確認について解説します。">
+<title>Apacheの起動・停止・再起動・状態確認 - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="Apacheの起動・停止・再起動・状態確認について解説します。">
   </head>
   <body>
     <div class="container">
@@ -29,13 +29,13 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200519084454.html">Aapacheの起動・停止・再起動・状態確認</a></h2>
+    <h2><a href="/blog/20200519084454.html">Apacheの起動・停止・再起動・状態確認</a></h2>
 <p>
-  Aapacheの起動・停止・再起動・状態確認について解説します。
+  Apacheの起動・停止・再起動・状態確認について解説します。
 </p>
-<h4>Aapacheの状態確認</h4>
+<h4>Apacheの状態確認</h4>
 <p>
-  Aapacheの状態確認は、systemctlコマンドの「status」を使って行います。
+  Apacheの状態確認は、systemctlコマンドの「status」を使って行います。
 </p>
 <pre>
 sudo systemctl status apache2
@@ -72,9 +72,9 @@ sudo systemctl status apache2
   Process: 120415 ExecStop=/usr/sbin/apachectl stop (code=exited, status=0/SUCCE
  Main PID: 104579 (code=exited, status=0/SUCCESS)
 </pre>
-<h4>Aapacheの起動</h4>
+<h4>Apacheの起動</h4>
 <p>
-  Aapacheの起動は、systemctlコマンドの「start」を使って行います。sudoコマンドを使って、root権限で実行します。
+  Apacheの起動は、systemctlコマンドの「start」を使って行います。sudoコマンドを使って、root権限で実行します。
 </p>
 <pre>
 sudo systemctl start apache2
@@ -82,9 +82,9 @@ sudo systemctl start apache2
 <p>
   起動が成功しても、成功したというメッセージは返ってきません。状態確認を行ってください。
 </p>
-<h4>Aapacheの停止</h4>
+<h4>Apacheの停止</h4>
 <p>
-  Aapacheの停止は、systemctlコマンドの「stop」を使って行います。sudoコマンドを使って、root権限で実行します。
+  Apacheの停止は、systemctlコマンドの「stop」を使って行います。sudoコマンドを使って、root権限で実行します。
 </p>
 <pre>
 sudo systemctl stop apache2
@@ -92,9 +92,9 @@ sudo systemctl stop apache2
 <p>
   停止が成功しても、成功したというメッセージは何も返ってきません。状態確認を行ってください。
 </p>
-<h4>Aapacheの再起動</h4>
+<h4>Apacheの再起動</h4>
 <p>
-  Aapacheの再起動は、systemctlコマンドの「restart」を使って行います。sudoコマンドを使って、root権限で実行します。
+  Apacheの再起動は、systemctlコマンドの「restart」を使って行います。sudoコマンドを使って、root権限で実行します。
 </p>
 <pre>
 sudo systemctl restart apache2
@@ -105,15 +105,15 @@ sudo systemctl restart apache2
 <p>
   再起動が成功しても、成功したというメッセージは返ってきません。状態確認を行ってください。
 </p>
-<h4>Aapacheのグレースフル(graceful)再起動</h4>
+<h4>Apacheのグレースフル(graceful)再起動</h4>
 <p>
-  Aapacheのグレースフル(graceful)再起動は、systemctlコマンドの「reload」を使って行います。sudoコマンドを使って、root権限で実行します。
+  Apacheのグレースフル(graceful)再起動は、systemctlコマンドの「reload」を使って行います。sudoコマンドを使って、root権限で実行します。
 </p>
 <pre>
 sudo systemctl reload apache2
 </pre>
 <p>
-  グレイスフル(graceful, 優美な)再起動と呼ばれている再起動は、Apacheに接続しているHTTPクライアントに対して、正しくHTTPレスポンスを返しつつ、Aapacheを再起動できる技術を使った再起動です。すべてのHTTPクライアントの処理を正しく処理できるので、通常はこちらの再起動を使いましょう。
+  グレイスフル(graceful, 優美な)再起動と呼ばれている再起動は、Apacheに接続しているHTTPクライアントに対して、正しくHTTPレスポンスを返しつつ、Apacheを再起動できる技術を使った再起動です。すべてのHTTPクライアントの処理を正しく処理できるので、通常はこちらの再起動を使いましょう。
 </p>
 <p>
   再起動が成功しても、成功したというメッセージは返ってきません。状態確認を行ってください。
