@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>cronの起動・停止・再起動・状態確認, cronの実行ログ - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="cronの起動・停止・再起動・状態確認について解説します。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200520084454.html">cronの起動・停止・再起動・状態確認, cronの実行ログ</a></h2>
+<p>
+  cronの起動・停止・再起動・状態確認について解説します。
+</p>
+<p>
+  cronはジョブの定期自動実行を行うサーバーです。
+</p>
+<h4>cronの状態確認</h4>
+<p>
+  cronの状態確認は、systemctlコマンドの「status」を使って行います。
+</p>
+<pre>
+sudo systemctl status cron
+</pre>
+<h5>起動している場合</h5>
+<p>
+  起動している場合は、以下のように表示されます。
+</p>
+<pre>
+● cron.service - Regular background program processing daemon
+   Loaded: loaded (/lib/systemd/system/cron.service; enabled; vendor preset: enabled)
+   Active: active (running) since Tue 2020-05-12 11:51:51 JST; 1 weeks 0 days ago
+     Docs: man:cron(8)
+ Main PID: 1349 (cron)
+    Tasks: 1 (limit: 9479)
+   CGroup: /system.slice/cron.service
+           mq1349 /usr/sbin/cron -f
+
+May 20 07:17:01 development-batch CRON[88341]: pam_unix(cron:session): session closed for user root
+May 20 08:17:01 development-batch CRON[92378]: pam_unix(cron:session): session opened for user root by (uid=0)
+May 20 08:17:01 development-batch CRON[92379]: (root) CMD (   cd / &amp;&amp; run-parts --report /etc/cron.hourly)
+May 20 08:17:01 development-batch CRON[92378]: pam_unix(cron:session): session closed for user root
+May 20 09:17:01 development-batch CRON[96646]: pam_unix(cron:session): session opened for user root by (uid=0)
+May 20 09:17:01 development-batch CRON[96647]: (root) CMD (   cd / &amp;&amp; run-parts --report /etc/cron.hourly)
+May 20 09:17:01 development-batch CRON[96646]: pam_unix(cron:session): session closed for user root
+May 20 10:17:01 development-batch CRON[100899]: pam_unix(cron:session): session opened for user root by (uid=0)
+May 20 10:17:01 development-batch CRON[100900]: (root) CMD (   cd / &amp;&amp; run-parts --report /etc/cron.hourly)
+May 20 10:17:01 development-batch CRON[100899]: pam_unix(cron:session): session closed for user root
+</pre>
+<h5>停止している場合</h5>
+<p>
+  停止している場合は、以下のように表示されます。
+</p>
+<pre>
+● cron.service - Regular background program processing daemon
+   Loaded: loaded (/lib/systemd/system/cron.service; enabled; vendor preset: enabled)
+   Active: inactive (dead) since Wed 2020-05-20 11:04:56 JST; 1min 22s ago
+     Docs: man:cron(8)
+  Process: 1349 ExecStart=/usr/sbin/cron -f $EXTRA_OPTS (code=killed, signal=TERM)
+ Main PID: 1349 (code=killed, signal=TERM)
+
+May 20 08:17:01 development-batch CRON[92379]: (root) CMD (   cd / &amp;&amp; run-parts --report /etc/cron.hourly)
+May 20 08:17:01 development-batch CRON[92378]: pam_unix(cron:session): session closed for user root
+May 20 09:17:01 development-batch CRON[96646]: pam_unix(cron:session): session opened for user root by (uid=0)
+May 20 09:17:01 development-batch CRON[96647]: (root) CMD (   cd / &amp;&amp; run-parts --report /etc/cron.hourly)
+May 20 09:17:01 development-batch CRON[96646]: pam_unix(cron:session): session closed for user root
+May 20 10:17:01 development-batch CRON[100899]: pam_unix(cron:session): session opened for user root by (uid=0)
+May 20 10:17:01 development-batch CRON[100900]: (root) CMD (   cd / &amp;&amp; run-parts --report /etc/cron.hourly)
+May 20 10:17:01 development-batch CRON[100899]: pam_unix(cron:session): session closed for user root
+May 20 11:04:56 development-batch systemd[1]: Stopping Regular background program processing daemon...
+May 20 11:04:56 development-batch systemd[1]: Stopped Regular background program processing daemon.
+</pre>
+<h4>cronの起動</h4>
+<p>
+  cronの起動は、systemctlコマンドの「start」を使って行います。sudoコマンドを使って、root権限で実行します。
+</p>
+<pre>
+sudo systemctl start cron
+</pre>
+<p>
+  起動が成功しても、成功したというメッセージは返ってきません。状態確認を行ってください。
+</p>
+<h4>cronの停止</h4>
+<p>
+  cronの停止は、systemctlコマンドの「stop」を使って行います。sudoコマンドを使って、root権限で実行します。
+</p>
+<pre>
+sudo systemctl stop cron
+</pre>
+<p>
+  停止が成功しても、成功したというメッセージは何も返ってきません。状態確認を行ってください。
+</p>
+<h4>cronの再起動</h4>
+<p>
+  cronの再起動は、systemctlコマンドの「restart」を使って行います。sudoコマンドを使って、root権限で実行します。
+</p>
+<pre>
+sudo systemctl restart cron
+</pre>
+<p>
+  restartは単に、stopコマンドを実行して、startコマンドを実行します。HTTPクライアントからの処理を切断してしまうので、通常はreloadコマンドを使用しましょう
+</p>
+<p>
+  再起動が成功しても、成功したというメッセージは返ってきません。状態確認を行ってください。
+</p>
+<h3>cronの実行ログを見るには</h3>
+<p>
+  cronなどのサーバーは、systemdというプログラムによって集中的に管理されています。
+</p>
+<p>
+  systemdのログにcronの起動・停止ログが出力されています。
+</p>
+<p>
+  systemdのログを見るにはjournalctlコマンドを使ます。grepコマンドで「cron」を絞り込みます。大文字・小文字を区別しない「-i」オプションを使うと「cron」「cron」の両方が拾えます。sudoで実行しないとcronのログが見れないので注意してください。
+</p>
+<pre>
+sudo journalctl | grep -i cron
+</pre>
+<p>
+  ログの最後の部分だけ見たい場合は<a href="https://linux.perlzemi.com/blog/20200203124238.html">tailコマンド</a>を組み合わせましょう。
+</p>
+<pre>
+sudo journalctl | grep -i cron | tail -20;
+</pre>
+<p>
+  ログのサンプルです。
+</p>
+<pre>
+May 20 10:50:01 tk2-261-40258.vs.sakura.ne.jp CROND[15947]: (root) CMD (/usr/lib64/sa/sa1 1 1)
+May 20 10:50:01 tk2-261-40258.vs.sakura.ne.jp CROND[15948]: (admins) CMD ($HOME/$SDIR/customer/osasoi_many_view_bukken.pl)
+May 20 10:54:01 tk2-261-40258.vs.sakura.ne.jp CROND[15958]: (root) CMD (run-parts /etc/cron.hourly)
+May 20 10:55:01 tk2-261-40258.vs.sakura.ne.jp CROND[15967]: (admins) CMD ($HOME/$SDIR/customer/write_osasoi_message.pl)
+May 20 10:55:01 tk2-261-40258.vs.sakura.ne.jp CROND[15968]: (admins) CMD ($HOME/$SDIR/customer/write_oshirase_message.pl)
+May 20 10:55:01 tk2-261-40258.vs.sakura.ne.jp CROND[15969]: (admins) CMD ($HOME/$SDIR/customer/oshirase_osusume_bukken.pl)
+May 20 11:00:01 tk2-261-40258.vs.sakura.ne.jp CROND[15985]: (root) CMD (/usr/lib64/sa/sa1 1 1)
+May 20 11:00:01 tk2-261-40258.vs.sakura.ne.jp CROND[15986]: (admins) CMD ($HOME/$SDIR/customer/osasoi_many_view_bukken.pl)
+May 20 11:05:01 tk2-261-40258.vs.sakura.ne.jp CROND[16000]: (admins) CMD ($HOME/$SDIR/customer/oshirase_osusume_bukken.pl)
+May 20 11:05:01 tk2-261-40258.vs.sakura.ne.jp CROND[15998]: (admins) CMD ($HOME/$SDIR/customer/write_osasoi_message.pl)
+May 20 11:05:01 tk2-261-40258.vs.sakura.ne.jp CROND[15999]: (admins) CMD ($HOME/$SDIR/customer/write_oshirase_message.pl)
+</pre>
+<p>
+  自動実行されたジョブを確認できます。
+</p>
+<h3>cronの設定ファイル</h3>
+<p>
+  cronの設定ファイルについては、別の記事で解説します。
+</p>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発を学ぶ
+  </div>
+  <ul>
+    <li><a href="https://tutorial.perlzemi.com/">Perlプログラミングを学ぶ</a></li>
+    <li><a href="https://linux.perlzemi.com/">Linuxの仕組み・コマンドを学ぶ</a></li>
+    <li><a href="https://web.perlzemi.com/">Webシステム開発を学ぶ</a></li>
+  </ul>
+
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発の見積もり
+  </div>
+  <ul>
+    <li><a href="https://kimoto-system.co.jp/">Perl Webシステム開発の<br>木本システム株式会社</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="kimoto_system_link">
+  <a href="https://kimoto-system.co.jp">
+    <img src="https://kimoto-system.co.jp/images/kimoto-system-logo.png" alt="Perl Webシステム開発">
+    Perl Webシステム開発の木本システム
+  </a>
+</div>
+
+<div class="copyright">
+  Copyright © Yuki Kimoto
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>
