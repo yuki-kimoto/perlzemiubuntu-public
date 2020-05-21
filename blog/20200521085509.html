@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>SendGridを使う理由、SendGridの価格と申し込み方法 - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="SendGridは、メール配信のためのクラウドサービスです。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200521085509.html">SendGridを使う理由、SendGridの価格と申し込み方法</a></h2>
+<p>
+  SendGridは、メール配信のためのクラウドサービスです。
+</p>
+<h3>SendGridを使う理由</h3>
+<p>
+  SendGridを使う理由です。SendGridは、メール配信のためのクラウドサービスで、月に1万2000通を超えると、月額の料金がかかります。
+</p>
+<p>
+  無料でメール配信しようとする場合、postfixを使って、SMTPサーバーを立てて、sendmailを使って送信する方法が考えられます。
+</p>
+<p>
+  ただし、クラウドサーバーでポート25番のSMTPでメールを送れなかったり、メールの配信数が増えてきたり、ブラックリストに登録されたくない、という課題に突き当たります。
+</p>
+<h4>クラウドサーバーでポート25番のSMTPでメールを送れない</h4>
+<p>
+  パブリックなクラウドサーバーの構成として、外部に対して、動的にIPアドレスを見せている場合、もし選択されたIPアドレスが、ブラックリストに登録されていたら、メールは到着しません。
+</p>
+<p>
+  このような予期しな不具合があるため、デフォルトで、25番ポートからのメール送信を禁止しているという場合があります。
+</p>
+<p>
+  このような場合は、SendGridとメールのWeb API、あるいは、postfixのリレー機能を使って、SengGridに接続するという方法があります。
+</p>
+<p>
+  既存のシステムから移行する場合は、リレー機能を使うと、アプリケーションの修正なしで、移行できるようです。
+</p>
+<h4>メールの通数が増えて処理に時間がかかる</h4>
+<p>
+  メールの通数が増えてきて処理に時間がかかる場合は、SendGridを使うと、処理が速く終わるようです。
+</p>
+<p>
+  「メール送信にかかっていた時間を大幅に短縮できました。それまで8時間近くかかっていた宛先約16万件のメルマガ送信が、SendGridを利用するようになってからは3～4分で完了するようになりました。」
+</p>
+<p>
+  という体験談が書かれています。
+</p>
+<h4>ブラックリストに登録されたくない</h4>
+<p>
+  もし、メール送信元のIPアドレスがブラックリストに登録されてしまった場合、メールが到達しなくなります。
+</p>
+<p>
+  SendGridを使うと、そのようなことが、もしSendGrid内で起こったとしても、SendGrid側で、解決してくれて、高い到達率を実現してくれるようです。
+</p>
+<h3>SendGridの価格</h3>
+<p>
+  価格は以下のようになっています。
+</p>
+<p>
+  <a href="https://sendgrid.kke.co.jp/plan/">SendGrid価格(2020年5月21日現在)</a>
+</p>
+<p>
+  <a href="https://sendgrid.kke.co.jp/plan/"><img src="/images/sendgrid/sendgrid-price.png" width="100%"></a>
+</p>
+<h3>SendGridの申し込み</h3>
+<p>
+  トップページから、メールアドレスを入力して申し込みます。
+</p>
+<p>
+  <a href="https://sendgrid.kke.co.jp">SendGrid申し込み</a>
+</p>
+<p>
+  <a href="https://sendgrid.kke.co.jp"><img src="/images/sendgrid/sendgrid-top.png" width="100%"></a>
+</p>
+<h3>Web APIやリレーメールを送るために必要なSendGridの情報</h3>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発を学ぶ
+  </div>
+  <ul>
+    <li><a href="https://tutorial.perlzemi.com/">Perlプログラミングを学ぶ</a></li>
+    <li><a href="https://linux.perlzemi.com/">Linuxの仕組み・コマンドを学ぶ</a></li>
+    <li><a href="https://web.perlzemi.com/">Webシステム開発を学ぶ</a></li>
+  </ul>
+
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発の見積もり
+  </div>
+  <ul>
+    <li><a href="https://kimoto-system.co.jp/">Perl Webシステム開発の<br>木本システム株式会社</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="kimoto_system_link">
+  <a href="https://kimoto-system.co.jp">
+    <img src="https://kimoto-system.co.jp/images/kimoto-system-logo.png" alt="Perl Webシステム開発">
+    Perl Webシステム開発の木本システム
+  </a>
+</div>
+
+<div class="copyright">
+  Copyright © Yuki Kimoto
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>
