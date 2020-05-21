@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>UbuntuとCentOSの違うところ・共通化されたところ - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="UbuntuとCentOSの違うところをここでまとめておきます。両方で動くようになるのがよいですね。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200410174004.html">UbuntuとCentOSの違うところ・共通化されたところ</a></h2>
+<p>
+  UbuntuとCentOSの違うところをここでまとめておきます。両方で動くようになるのがよいですね。
+</p>
+<h3>CentOSでは「/bin/sh」は「/bin/bash」にシンボリックリンクが張られている</h3>
+<p>
+  CentOSでは「/bin/sh」は「/bin/bash」にシンボリックリンクが張られている。
+</p>
+<p>
+  シェバンを以下のように書いているとCetnOSでは、bashで実行されるのに対して、Ubuntuでは、shで実行される。
+</p>
+<pre>
+#!/bin/sh
+</pre>
+<p>
+  そして、bashの文法を使っていると以下のように文法エラーになる。
+</p>
+<pre>
+./morbo: 10: ./morbo: Syntax error: "(" unexpected
+</pre>
+<p>
+  ポータビリティを持たせるためには、明示的にbashとシェバンを書くのがよい。
+</p>
+<pre>
+#!/bin/bash
+</pre>
+<h3>パッケージ管理</h3>
+<p>
+  パッケージ管理ツールUbuntuではapt、CentOSではyumの違いがある。パッケージのインストールプロセスは、共通化されていない(2020年5月21日現在)。
+</p>
+<h3>ファイアーウォール</h3>
+<p>
+  ファイアーウォールは、Ubuntuはufw、CentOSはfirewalldと異なる。
+</p>
+<p>
+  ファイアーウォールは、コマンドラインでの設定は、非常にややこしく、やりたくないという気持ちは強い。
+</p>
+<p>
+  クラウドサービスには、たいてい、ネットワークのパケット制御が存在するので、それで設定すると、Linux自体のファイアーウォールを意識しないですむ。
+</p>
+<h3>ここ最近共通になったもの(2020年5月21日現在)</h3>
+<p>
+  CentOSとUbuntuで、ここ最近共通になったもの。
+</p>
+<h4>systemctl, journalctl</h4>
+<p>
+  CentOSもUbuntuもサービス(サーバーとして起動する者)は、systemdで管理するようになって、管理コマンドもsystemctl, journalctlが共通で使える。
+</p>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発を学ぶ
+  </div>
+  <ul>
+    <li><a href="https://tutorial.perlzemi.com/">Perlプログラミングを学ぶ</a></li>
+    <li><a href="https://linux.perlzemi.com/">Linuxの仕組み・コマンドを学ぶ</a></li>
+    <li><a href="https://web.perlzemi.com/">Webシステム開発を学ぶ</a></li>
+  </ul>
+
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発の見積もり
+  </div>
+  <ul>
+    <li><a href="https://kimoto-system.co.jp/">Perl Webシステム開発の<br>木本システム株式会社</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="kimoto_system_link">
+  <a href="https://kimoto-system.co.jp">
+    <img src="https://kimoto-system.co.jp/images/kimoto-system-logo.png" alt="Perl Webシステム開発">
+    Perl Webシステム開発の木本システム
+  </a>
+</div>
+
+<div class="copyright">
+  Copyright © Yuki Kimoto
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>
