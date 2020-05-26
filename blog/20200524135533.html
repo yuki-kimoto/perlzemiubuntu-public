@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>libssl-devのインストール - OpenSSLのヘッダファイルとライブラリ - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
-<meta name="description" content="OpenSSLのヘッダとライブラリが利用できるように「libssl-dev」をインストールします。sudoを使って、root権限でインストールします。">
+<title>aptのアップデート - apt update - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="aptをアップデートするには「apt update」を使用します。sudoを使ってroot権限で実行します。">
   </head>
   <body>
     <div class="container">
@@ -29,22 +29,29 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200412174004.html">libssl-devのインストール - OpenSSLのヘッダファイルとライブラリ</a></h2>
+    <h2><a href="/blog/20200524135533.html">aptのアップデート - apt update</a></h2>
 <p>
-  OpenSSLのヘッダとライブラリが利用できるように「libssl-dev」をインストールします。sudoを使って、root権限でインストールします。
+  aptをアップデートするには「apt update」を使用します。sudoを使ってroot権限で実行します。
 </p>
 <pre>
-sudo apt install -y libssl-dev
+sudo apt update
 </pre>
 <p>
-  Webシステム開発では、ユーザーPerlを使いますが、HTTP通信をサポートするためには、IO::Socket::SSLをインストールする必要があります。
+  aptが参照するURLなどが変更していたりした場合は「apt install」が失敗する場合があります。
 </p>
 <p>
-  IO::Socket::SSLは、Net::SSLeayに依存していますが、Net::SSLeayは、OpenSSLのヘッダとライブラリに依存しています。
+  ですので、aptを最初に使い始める場合は「apt update」をしておくと安心です。
 </p>
 <p>
-  インストールされた、OpenSSLのヘッダファイルとライブラリの場所については、<a href="/blog/20200429174004.html">ヘッダーファイルの読み込みパス</a>と<a href="/blog/20200428174004.html">ライブラリの読み込みパス</a>を参考にしてください。
+  「apt install gcc」を実行すると、以下のようなエラーがでましたが「apt update」を実行すると、このエラーがでなくなりました。
 </p>
+<pre>
+Err:1 http://security.ubuntu.com/ubuntu bionic-updates/main amd64 linux-libc-dev amd64 4.15.0-99.100
+  404  Not Found [IP: 13.66.189.214 80]
+Fetched 378 kB in 0s (950 kB/s)
+E: Failed to fetch http://security.ubuntu.com/ubuntu/pool/main/l/linux/linux-libc-dev_4.15.0-99.100_amd64.deb  404  Not Found [IP: 13.66.189.214 80]
+E: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?
+</pre>
 
   </div>
   <div class="bottom">
