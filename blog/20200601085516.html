@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
 <title>物理的に接続されているディスクを確認する - fdisk -l - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
-<meta name="description" content="Ubuntuに物理的に接続されているディスクを確認するには「fdisk -l」を使います。外付けハードディスクを接続した、あるいは、クラウドサービスで、GUI画面上から、ハードディスクを増設(アタッチ)したという場合を想定します。この状態では、まだLinuxのファイルシステムには認識されておらず、ハードディスクというデバイスが物理的に接続されたという状態です。">
+<meta name="description" content="Ubuntuに物理的に接続されているディスクを確認するには「fdisk -l」を使います。外付けハードディスクを接続した、あるいは、クラウドサービスで、GUI画面上から、ハードディスクを増設(アタッチ)したという場合を想定します。この状態は、まだLinuxのファイルシステムには認識されておらず、ハードディスクというデバイスが物理的に接続されたという状態です。">
   </head>
   <body>
     <div class="container">
@@ -31,14 +31,82 @@
   <div class="middle">
     <h2><a href="/blog/20200601085516.html">物理的に接続されているディスクを確認する - fdisk -l</a></h2>
 <p>
-  Ubuntuに物理的に接続されているディスクを確認するには「fdisk -l」を使います。外付けハードディスクを接続した、あるいは、クラウドサービスで、GUI画面上から、ハードディスクを増設(アタッチ)したという場合を想定します。この状態では、まだLinuxのファイルシステムには認識されておらず、ハードディスクというデバイスが物理的に接続されたという状態です。
+  Ubuntuに物理的に接続されているディスクを確認するには「fdisk -l」を使います。外付けハードディスクを接続した、あるいは、クラウドサービスで、GUI画面上から、ハードディスクを増設(アタッチ)したという場合を想定します。この状態は、まだLinuxのファイルシステムには認識されておらず、ハードディスクというデバイスが物理的に接続されたという状態です。
 </p>
 <p>
-  まず「fdisk -l」で、接続されているディスクの状態を確認します。sudoを使って管理者権限で実行します。
+  まず「fdisk -l」で、接続されているディスクの状態を確認します。<a href="/blog/20200531085516.html">sudo</a>を使って管理者権限で実行します。
 </p>
 <pre>
 sudo fdisk -l
 </pre>
+<p>
+  出力結果のサンプルです。このサンプルは、1TiBのディスクを接続したものです。
+</p>
+<p>
+  「/dev/sda: 30 GiB」というのが、最初に存在していたディスクです。「/dev/sdb」はブート開始に利用される領域のようです(たぶん)。ブートというのは、OSの起動のことです。
+</p>
+<p>
+  「/dev/sdc」に1TiBのディスクが接続されています。
+</p>
+<pre>
+Disk /dev/sda: 30 GiB, 32213303296 bytes, 62916608 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+Disklabel type: gpt
+Disk identifier: 1063137B-3864-48EE-946E-22FB0FA6320A
+
+Device      Start      End  Sectors  Size Type
+/dev/sda1  227328 62916574 62689247 29.9G Linux filesystem
+/dev/sda14   2048    10239     8192    4M BIOS boot
+/dev/sda15  10240   227327   217088  106M EFI System
+
+Partition table entries are not in disk order.
+
+
+Disk /dev/sdb: 16 GiB, 17179869184 bytes, 33554432 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+Disklabel type: dos
+Disk identifier: 0xa252cd85
+
+Device     Boot Start      End  Sectors Size Id Type
+/dev/sdb1         128 33552383 33552256  16G  7 HPFS/NTFS/exFAT
+
+
+
+
+Disk /dev/sdc: 1 TiB, 1099511627776 bytes, 2147483648 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes&lt;/pre&gt;
+</pre>
+<p>
+  <a href="https://linux.perlzemi.com/">Linux</a>では「/dev/sda」「/dev/sdb」「/dev/sdc」のような名前で、物理ディスクが表現されます。
+</p>
+<p>
+  DiskとDeviceというのがセットになっています。Deviceという項目がない場合は、まだファイルシステムなどから利用されていないということです。
+</p>
+<p>
+  「/dev/sda」というのは、さらに
+</p>
+<pre>
+Device      Start      End  Sectors  Size Type
+/dev/sda1  227328 62916574 62689247 29.9G Linux filesystem
+/dev/sda14   2048    10239     8192    4M BIOS boot
+/dev/sda15  10240   227327   217088  106M EFI System
+</pre>
+<p>
+  末尾に数字が付いた領域に分割されていますね。これは、パーティションという機能を使った、論理的なディスクの分割です。
+</p>
+<p>
+  「/dev/sda」が物理ディスクを表現、分割された「/dev/sda1」「/dev/sda14」「/dev/sda15」が論理的なディスクを表現しています。
+</p>
+<h3>物理ディスクをLinuxファイルシステムとして認識させるには?</h3>
+<p>
+  物理ディスクをLinuxファイルシステムとして認識させる方法は、他の記事で解説します。
+</p>
 
   </div>
   <div class="bottom">
