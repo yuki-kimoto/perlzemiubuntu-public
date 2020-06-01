@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>新しい物理ディスクの初期フォーマットとファイルシステムへのマウント - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="新しいディスクの初期フォーマット方法を解説します。物理ディスクを新しく追加した場合は、利用する前に初期フォーマットを行う必要があります。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200528085516.html">新しい物理ディスクの初期フォーマットとファイルシステムへのマウント</a></h2>
+<p>
+  新しいディスクの初期フォーマット方法を解説します。物理ディスクを新しく追加した場合は、利用する前に初期フォーマットを行う必要があります。
+</p>
+<p>
+  新しく追加した物理ディスクの確認方法については、以下を参考にしてください。
+</p>
+<p>
+  <a href="/blog/20200601085516.html">物理的に接続されているディスクを確認する - fdisk -l</a>
+</p>
+<h3>パーティションの作成とフォーマット</h3>
+<p>
+  まず最初に、パーティションを作成します。パーティションとは、論理的なディスクのことです。
+</p>
+<p>
+  一つの物理ディスクを、複数の論理ディスクに分けて扱うこともできますし、複数の物理ディスクを、大きなサイズのひとつの論理ディスクとして扱うこともできます。
+</p>
+<p>
+  パーティションが、ディスクに対してひとつの場合でも、パーティションは作成する必要があります。
+</p>
+<p>
+  ここでは、新しい物理ディスクに対して、ひとつのパーティションを割り当てる方法を解説します。
+</p>
+<p>
+  まずpartedコマンドを使用して、物理ディスクのパーティション分割とフォーマットを行います。
+</p>
+<p>
+  fdiskを使用する方法もありますが、ここでは、対話実行ではなくコマンド実行できるpartedと呼ばれるコマンドを使って、
+</p>
+<p>
+  以下の解説では、新しく追加された物理ディスクを「/dev/sdc」とします。
+</p>
+<p>
+  ファイルシステムの種類はUbuntuのデフォルトのext4です。(これはパーティションにおける単なるヒントで、次の手順で、実際のファイルシステムを指定します。)
+</p>
+<pre>
+sudo parted /dev/sdc --script mklabel gpt mkpart ext4part ext4 0% 100%
+</pre>
+<p>
+  パーティションが作成されたことを確認しましょう。
+</p>
+<pre>
+sudo fdisk -l
+</pre>
+<p>
+  「/dev/sdc1」というパーティションが作成されます。
+</p>
+<pre>
+Disk /dev/sdc: 1 TiB, 1099511627776 bytes, 2147483648 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+Disklabel type: gpt
+Disk identifier: D5DDBFFA-278E-417C-9DA7-7FF50891E1FD
+
+Device     Start        End    Sectors  Size Type
+/dev/sdc1   2048 2147481599 2147479552 1024G Linux filesystem
+&lt;pre&gt;
+
+&lt;h3&gt;Linuxファイルシステムの作成&lt;/h3&gt;
+
+次は、パーティションに対して、Linuxファイルシステムを作成します。
+
+Linuxファイルシステムを作成するには、mkfsコマンドを使用します。XFSファイル用に「mkfs.ext4」というコマンドがあるので、これを使います。
+
+引数には、パーティションを指定します。
+
+&lt;pre&gt;
+sudo mkfs.ext4 /dev/sdc1
+</pre>
+<p>
+  出力結果のサンプルです。
+</p>
+<pre>
+meta-data=/dev/sdc1              isize=512    agcount=4, agsize=67108736 blks
+         =                       sectsz=4096  attr=2, projid32bit=1
+         =                       crc=1        finobt=1, sparse=0, rmapbt=0, reflink=0
+data     =                       bsize=4096   blocks=268434944, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=131071, version=2
+         =                       sectsz=4096  sunit=1 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+</pre>
+<p>
+  partprobeを使って、すぐに、ファイルシステムとして認識させましょう。
+</p>
+<pre>
+sudo partprobe /dev/sdc1
+</pre>
+<p>
+  パーティションが、Linuxファイルシステムとして認識されているか<a href="https://linux.perlzemi.com/blog/20191126082723.html">lsコマンド</a>で「/dev」を見てみましょう。
+</p>
+<pre>
+ls /dev | grep sd
+</pre>
+<p>
+  「/dev/sdc1」がファイルシステムとして認識されています。
+</p>
+<pre>
+sda
+sda1
+sda14
+sda15
+sdb
+sdb1
+sdc
+sdc1
+</pre>
+<h3>ファイルシステムへのマウント</h3>
+<p>
+  最後はファイルシステムへのマウントです。「/dev/sdc1」は、パーティションを指し示すデバイスファイルです。これは特別なファイルで、通常のファイルシステムのディレクトリとして、扱うことができません。
+</p>
+<p>
+  デバイスファイルを、通常のディレクトリに結び付けるという操作を行う必要があります。これを、マウントと呼びます。
+</p>
+<p>
+  ディレクトリ名は、自由に決めることができますがここでは「/datadrive」にします。
+</p>
+<p>
+  まず、空のディレクトリを作成します。
+</p>
+<pre>
+sudo mkdir /datadrive
+</pre>
+<p>
+  次に「/dev/sdc2」を「/datadrive」でマウントします。
+</p>
+<pre>
+sudo mount /dev/sdc1 /datadrive
+</pre>
+<p>
+  dfコマンドを使って、マウントが成功しているか確認しましょう。
+</p>
+<pre>
+df -h
+</pre>
+<p>
+  「/dev/sdc1」が「/datadrive」に結び付けられています。
+</p>
+<pre>
+/dev/sdc1       1.0T  1.1G 1023G   1% /datadrive
+</pre>
+<p>
+  これで、完了です。ただし、マウントは、一時的なものなので、Ubuntuの再起動時に自動的にマウントするためには、追加の手順が必要です。
+</p>
+<h3>自動マウントの設定</h3>
+<p>
+  Ubuntuを再起動した場合に、自動的にマウントするにはまず、UUIDと呼ばれる、パーティションを一意に識別できるIDを知る必要があります。
+</p>
+<p>
+  blkidコマンドを使って、UUIDを取得しましょう。
+</p>
+<pre>
+sudo blkid
+</pre>
+<pre>
+/dev/sda1: LABEL="cloudimg-rootfs" UUID="bdf328db-9606-49ba-8e44-5e1299ae56f0" TYPE="ext4" PARTUUID="179b1e79-bd71-4241-9557-8be63cbb8857"
+/dev/sda15: LABEL="UEFI" UUID="54D1-0F3A" TYPE="vfat" PARTUUID="ec4144dd-3a40-4774-bfc2-73488a3f8e39"
+/dev/sdb1: UUID="61c57ec5-96f9-4c18-8d7e-d7b05dd48b76" TYPE="ext4" PARTUUID="a252cd85-01"
+/dev/sdc1: UUID="c85b796f-b9ff-4b4d-9091-47327999d8aa" TYPE="ext4" PARTLABEL="ext4part" PARTUUID="d2295ab7-22fb-49a2-a3d0-1a9819207562"
+/dev/sda14: PARTUUID="bddfd6d3-8ef9-40d2-8fda-0083f3e0df9b"
+</pre>
+<p>
+  新しく追加したパーティション「sdc1」のUUIDのダブルクォートの中をコピーして、どこかに保存しておきましょう。
+</p>
+<p>
+  次に、OSの再起動ができないなどの状況に陥ったときのために「/etc/fstab」のバックアップを取っておきましょう。
+</p>
+<pre>
+sudo cp /etc/fstab /etc/fstab.original
+</pre>
+<p>
+  「/etc/fstab」を編集します。この設定ファイルに書き込むことで、再起動時に自動的にマウントされるようになります。
+</p>
+<pre>
+sudo vi /etc/fstab
+</pre>
+<p>
+  自分の環境でコピーしたUUIDを使用して、以下の行を「/etc/fstab」に追加します。
+</p>
+<pre>
+UUID=c85b796f-b9ff-4b4d-9091-47327999d8aa   /datadrive   ext4   defaults,nofail   1   2
+</pre>
+<p>
+  nofailを指定しておくと、マウントに失敗しても、再起動ができるので、少し安心。5列目の1は、dumpするかどうか、データディスクなので、1に。六列目の2(2以上)は、ファイルシステムがルートなどではない場合で、通常のデータを格納する場合に指定しておく。
+</p>
+<p>
+  fstabの設定は、間違った設定を行うと、以下のようなエラーメッセージでOSの再起動に失敗し、起動できなくなるので、慎重に。
+</p>
+<pre>
+The disk drive for /datadrive is not ready yet or not present.
+Continue to wait, or Press S to skip mounting or M for manual recovery
+</pre>
+<p>
+  VPSや各クラウドサービスでの、fstab エラーが起こった場合の復帰方法を確認してから行うようにしましょう。
+</p>
+<p>
+  VPSや各クラウドサービスでの、コンソールから、マウントをスキップして、OSを再起動して「/etc/fstab」を修正するという手順になるかと思われます。
+</p>
+<h3>他のディレクトリのために、新しいデータ領域を使うには?</h3>
+<p>
+  たとえば「/var/backup」のために、新しい「/datadrive」を使いたい場合はどうするのでしょうか?
+</p>
+<p>
+  シンボリックリンクを使います。
+</p>
+<p>
+  「/datadrive」の中に「/var/backup」というディレクトリを作って「/var/backup」から「/datadrive/var/backup」にシンボリックリンクを作成します。
+</p>
+<pre>
+mkdir -p /datadrive/var/backup
+ls -s /datadrive/var/backup /var/backup
+</pre>
+<h3>手順を間違ったしまって元に戻したい場合</h3>
+<p>
+  手順を間違ったしまって元に戻したい場合の解説です。
+</p>
+<h4>マウントを解除する</h4>
+<p>
+  マウントを解除するにはumountコマンドを使用します。
+</p>
+<pre>
+sudo umount /datadrive
+</pre>
+<p>
+  cdなどで、ディレクトリに入っていたり、そのディレクトリを使用している場合は、busyになって、アンマウントできないです。
+</p>
+<p>
+  誰かが利用している場合は、以下のコマンドで確認できます。
+</p>
+<pre>
+fuser -muv /datadrive
+</pre>
+<p>
+  だれも入っていない状態にしてから、アンマウントしましょう。
+</p>
+<h4>パーティションの再作成</h4>
+<p>
+  マウントを解除したら、partedコマンドを、再実行することで、パーティションを再作成できます。
+</p>
+<h4>ファイルシステムの再作成</h4>
+<p>
+  mkfsコマンドも、再度ファイルシステムを作成するかを効かれますので、yを押して進めましょう。
+</p>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発を学ぶ
+  </div>
+  <ul>
+    <li><a href="https://tutorial.perlzemi.com/">Perlプログラミングを学ぶ</a></li>
+    <li><a href="https://linux.perlzemi.com/">Linuxの仕組み・コマンドを学ぶ</a></li>
+    <li><a href="https://web.perlzemi.com/">Webシステム開発を学ぶ</a></li>
+  </ul>
+
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発の見積もり
+  </div>
+  <ul>
+    <li><a href="https://kimoto-system.co.jp/">Perl Webシステム開発の<br>木本システム株式会社</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="kimoto_system_link">
+  <a href="https://kimoto-system.co.jp">
+    <img src="https://kimoto-system.co.jp/images/kimoto-system-logo.png" alt="Perl Webシステム開発">
+    Perl Webシステム開発の木本システム
+  </a>
+</div>
+
+<div class="copyright">
+  Copyright © Yuki Kimoto
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>
