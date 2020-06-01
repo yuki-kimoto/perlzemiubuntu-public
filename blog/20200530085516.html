@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>aptコマンド - パッケージ管理 - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="aptコマンドを使ってパッケージ管理を行うことができます。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200530085516.html">aptコマンド - パッケージ管理</a></h2>
+<p>
+  <b>aptコマンド</b>を使ってパッケージ管理を行うことができます。
+</p>
+<h3>パッケージのインストール - apt install</h3>
+<p>
+  パッケージをインストールするには「apt install」を使用します。<a href="/blog/20200531085516.html">sudo</a>コマンドで、管理者権限で実行します。
+</p>
+<pre>
+sudo apt install パッケージ名
+</pre>
+<h3>パッケージの削除 - apt remove</h3>
+<p>
+  パッケージを削除するには「apt remove」を使用します。<a href="/blog/20200531085516.html">sudo</a>コマンドで、管理者権限で実行します。
+</p>
+<pre>
+sudo apt remove パッケージ名
+</pre>
+<h3>aptシステムのアップグレード - apt upgrade</h3>
+<p>
+  aptシステムのアップグレードするには「apt upgrade」を使用します。<a href="/blog/20200531085516.html">sudo</a>コマンドで、管理者権限で実行します。
+</p>
+<p>
+  すでに何らかのパッケージがインストールされている場合は、新しいaptシステムが参照するパッケージに更新されます。
+</p>
+<p>
+  この場合は、確率が低いとしても、既存のアプリケーションが動かなくなリスクがあり、アプリケーション修正が必要な場合があるという点は注意しましょう。
+</p>
+<pre>
+sudo apt upgrade
+</pre>
+<p>
+  「apt install」でエラーが発生する場合は、「apt upgrade」を試してみましょう。エラーが修正される場合があります。
+</p>
+<h3>パッケージ管理に関する情報</h3>
+<p>
+  デフォルトでインストールされているパッケージについては、以下を参考にしてください。
+</p>
+<p>
+  <a href="/blog/20200506174004.html">Ubuntu 18.04 LTSにデフォルトでインストールされているソフトウェアパッケージ</a>
+</p>
+<p>
+  パッケージ名の検索については以下の記事を参考にしてください。
+</p>
+<p>
+  <a href="/blog/20200430174004.html">Ubuntuのパッケージの検索サイト</a>
+</p>
+<p>
+  パッケージの依存関係を調べるには以下の記事を参考にしてください。
+</p>
+<p>
+  <a href="/blog/20200427174004.html">パッケージの依存関係を調べる</a>
+</p>
+<h3>aptとapt-getとの違い</h3>
+<p>
+  Ubuntu 14から、一般的なパッケージ管理においてaptコマンドが推奨されるようになりました。
+</p>
+<p>
+  aptはapt-getとapt-chaceコマンドを、システム管理者がより簡潔につかえるラッパーアプリケーションです。
+</p>
+<p>
+  apt-getとapt-chacheは、aptの一段下にある低レベルレイヤーという位置づけになりました。
+</p>
+<p>
+  aptとapt-getの違いについては、以下が詳しいです。
+</p>
+<p>
+  <a href="https://www.translatetheweb.com/?ref=TVert&from=&to=ja&a=https%3A%2F%2Fitsfoss.com%2Fapt-vs-apt-get-difference%2F">aptとapt-getの違い説明</a>
+</p>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発を学ぶ
+  </div>
+  <ul>
+    <li><a href="https://tutorial.perlzemi.com/">Perlプログラミングを学ぶ</a></li>
+    <li><a href="https://linux.perlzemi.com/">Linuxの仕組み・コマンドを学ぶ</a></li>
+    <li><a href="https://web.perlzemi.com/">Webシステム開発を学ぶ</a></li>
+  </ul>
+
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発の見積もり
+  </div>
+  <ul>
+    <li><a href="https://kimoto-system.co.jp/">Perl Webシステム開発の<br>木本システム株式会社</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="kimoto_system_link">
+  <a href="https://kimoto-system.co.jp">
+    <img src="https://kimoto-system.co.jp/images/kimoto-system-logo.png" alt="Perl Webシステム開発">
+    Perl Webシステム開発の木本システム
+  </a>
+</div>
+
+<div class="copyright">
+  Copyright © Yuki Kimoto
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>
