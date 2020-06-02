@@ -7,7 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>journalctl - ログを見る - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<title>journalctlコマンド - systemd管理のログを見る - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="journalctlコマンドを使うと、systemdで管理されているアプリケーション(サーバーアプリケーション)のログを見ることができます。sudoでroot権限で実行します。">
   </head>
   <body>
     <div class="container">
@@ -54,7 +55,105 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200602135100.html">journalctl - ログを見る</a></h2>
+    <h2><a href="/blog/20200602135100.html">journalctlコマンド - systemd管理のログを見る</a></h2>
+<p>
+  <b>journalctlコマンド</b>を使うと、systemdで管理されているアプリケーション(サーバーアプリケーション)のログを見ることができます。<a href="/blog/20200531085516.html">sudo</a>でroot権限で実行します。
+</p>
+<pre>
+sudo journalctl
+</pre>
+<p>
+  ログには、日付・時刻・ホスト名・アプリケーション名・プロセスID・メッセージが記述されています。
+</p>
+<pre>
+Jun 02 12:17:26 myhost systemd[75667]: Received SIGRTMIN+24 from PID 81968 (kill).
+Jun 02 14:11:19 myhost systemd[88231]: Reached target Paths.
+Jun 02 14:11:19 myhost systemd[88231]: Reached target Timers.
+Jun 02 14:11:19 myhost systemd[88231]: Listening on GnuPG cryptographic agent (ssh-agent emulation).
+Jun 02 14:11:19 myhost systemd[88231]: Listening on GnuPG cryptographic agent and passphrase cache.
+Jun 02 14:11:19 myhost systemd[88231]: Listening on GnuPG cryptographic agent and passphrase cache (access for web browsers).
+Jun 02 14:11:19 myhost systemd[88231]: Listening on REST API socket for snapd user session agent.
+Jun 02 14:11:19 myhost systemd[88231]: Listening on GnuPG network certificate management daemon.
+Jun 02 14:11:19 myhost systemd[88231]: Listening on GnuPG cryptographic agent and passphrase cache (restricted).
+Jun 02 14:11:19 myhost systemd[88231]: Reached target Sockets.
+Jun 02 14:11:19 myhost systemd[88231]: Reached target Basic System.
+Jun 02 14:11:19 myhost systemd[88231]: Reached target Default.
+Jun 02 14:11:19 myhost systemd[88231]: Startup finished in 20ms.
+</pre>
+<p>
+  ログファイルを<a href="https://linux.perlzemi.com/blog/20190401171737.html">vi</a>を使って開いた状態になりますので「Shift + G」を押すと一番下まで移動できます。
+</p>
+<h3>特定のアプリケーションのログだけを取り出す</h3>
+<p>
+  <a href="https://linux.perlzemi.com/blog/20200602093211.html">grep</a>コマンドと組み合わせると簡単です。「-i」オプションで大文字小文字を区別しないともれなくとれだせます。
+</p>
+<pre>
+# Apache
+sudo journalctl | grep -i apache
+
+# MariaDB
+sudo journalctl | grep -i mariadb
+
+# sshd
+sudo journalctl | grep -i sshd
+
+# Postfix
+sudo journalctl | grep -i postfix
+
+# sudo 
+sudo journalctl | grep -i sudo
+
+# cron
+sudo journalctl | grep -i cron
+</pre>
+<h3>ログの末尾だけを取り出す</h3>
+<p>
+  ログの末尾だけを取り出すのは、<a href="https://linux.perlzemi.com/blog/20200203124238.html">tail</a>コマンドと組み合わせるのが簡単です。
+</p>
+<pre>
+# Apache
+sudo journalctl | grep -i apache | tail -50
+
+# MariaDB
+sudo journalctl | grep -i mariadb | tail -50
+
+# sshd
+sudo journalctl | grep -i sshd | tail -50
+
+# Postfix
+sudo journalctl | grep -i postfix | tail -50
+
+# sudo 
+sudo journalctl | grep -i sudo | tail -50
+
+# cron
+sudo journalctl | grep -i cron | tail -50
+</pre>
+<h3>journalctlのオプション</h3>
+<p>
+  journalctlのオプションです。
+</p>
+<pre>
+オプション：
+     --system システムジャーナルを表示する
+     --user 現在のユーザーのユーザージャーナルを表示します
+  -M --マシン=コンテナはローカルコンテナで動作します
+  -S --SINCE=DATE 指定した日付より古くないエントリを表示します
+  -U --until=DATE 指定した日付より新しいエントリを表示
+  -c --カーソル=CURSOR 指定されたカーソルから開始するエントリを表示します。
+     --after-cursor=CURSOR 指定されたカーソルの後にエントリを表示する
+     --show-cursor すべてのエントリの後にカーソルを表示します
+  -b --boot[=ID] 現在のブートまたは指定されたブートを表示する
+     --リスト-ブーツ記録されたブーツに関する簡潔な情報を表示
+  -k --dmesg 現在のブートからカーネルメッセージログを表示する
+  -u --unit=UNIT 指定されたユニットのログを表示します。
+     --user-unit=UNIT 指定されたユーザーユニットのログを表示します。
+  -t --識別子 =文字列 指定された syslog 識別子を持つエントリを表示します。
+  -p --優先順位=範囲 指定された優先度のエントリを表示します
+  -g --grep=パターンは、パターンに一致する MESSSAGE を持つエントリを表示します
+     --大文字と小文字を区別する[=BOOL] 大文字と小文字を区別する、または無感覚の一致を強制する
+  -e --pager-end 直ちにページャーの最後にジャンプする
+</pre>
 
   </div>
   <div class="bottom">
