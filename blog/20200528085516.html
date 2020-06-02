@@ -86,17 +86,18 @@ Disk identifier: D5DDBFFA-278E-417C-9DA7-7FF50891E1FD
 
 Device     Start        End    Sectors  Size Type
 /dev/sdc1   2048 2147481599 2147479552 1024G Linux filesystem
-&lt;pre&gt;
-
-&lt;h3&gt;Linuxファイルシステムの作成&lt;/h3&gt;
-
-次は、パーティションに対して、Linuxファイルシステムを作成します。
-
-Linuxファイルシステムを作成するには、mkfsコマンドを使用します。XFSファイル用に「mkfs.ext4」というコマンドがあるので、これを使います。
-
-引数には、パーティションを指定します。
-
-&lt;pre&gt;
+</pre>
+<h3>Linuxファイルシステムの作成</h3>
+<p>
+  次は、パーティションに対して、Linuxファイルシステムを作成します。
+</p>
+<p>
+  Linuxファイルシステムを作成するには、mkfsコマンドを使用します。XFSファイル用に「mkfs.ext4」というコマンドがあるので、これを使います。
+</p>
+<p>
+  引数には、パーティションを指定します。
+</p>
+<pre>
 sudo mkfs.ext4 /dev/sdc1
 </pre>
 <p>

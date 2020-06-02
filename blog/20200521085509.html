@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>SendGridを使う理由、SendGridの価格と申し込み方法 - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
-<meta name="description" content="SendGridは、メール配信のためのクラウドサービスです。">
+<title>クラウドメール配信SendGridとPostfixとの連携 - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="SendGridは、メール配信のためのクラウドメール配信サービスです。">
   </head>
   <body>
     <div class="container">
@@ -29,9 +29,9 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200521085509.html">SendGridを使う理由、SendGridの価格と申し込み方法</a></h2>
+    <h2><a href="/blog/20200521085509.html">クラウドメール配信SendGridとPostfixとの連携</a></h2>
 <p>
-  SendGridは、メール配信のためのクラウドサービスです。
+  SendGridは、メール配信のためのクラウドメール配信サービスです。
 </p>
 <h3>SendGridを使う理由</h3>
 <p>
@@ -93,7 +93,117 @@
 <p>
   <a href="https://sendgrid.kke.co.jp"><img src="/images/sendgrid/sendgrid-top.png" width="100%"></a>
 </p>
+<p>
+  審査の後、本承認のメールが届きます。
+</p>
 <h3>Web APIやリレーメールを送るために必要なSendGridの情報</h3>
+<p>
+  Web APIやリレーメールを送るために必要なSendGridの情報は、ユーザー名とパスワードです。
+</p>
+<p>
+  ユーザー名は、登録メールアドレスとは異なるので注意しましょう。
+</p>
+<h3>SendGridとPostfixを連携する</h3>
+<p>
+  SendGridはWeb APIを持っていますが、Postfixと連携して、sendmailコマンドからのメール送信をSendGridに接続することもできます。
+</p>
+<p>
+  この方法の利点は、SendGridを使う使わないの選択で、メールを送信するアプリケーションに変更を加える必要がないことです。アプリケーションを抽象化できます。
+</p>
+<p>
+  デメリットは、Postfixのインストールと設定が必要なことです。
+</p>
+<p>
+  (UbuntuのPostfixのインストールは、GUI画面が登場するので、インストール自動化が可能なのかは、今の僕にはまだわからない。)
+</p>
+<h4>SendGridの公式ドキュメント</h4>
+<p>
+  手順の詳細についてはSendGridのドキュメントが詳しいです。
+</p>
+<p>
+  基本的なドキュメント。新規に始める場合は「SendGridドキュメント - Postfix」の手順を実行しましょう。
+</p>
+<p>
+  <a href="https://sendgrid.kke.co.jp/docs/Integrate/Mail_Servers/postfix.html">SendGridドキュメント - Postfix</a>
+</p>
+<p>
+  以下では、メール配信に当たって、応用的な情報が記載されています。
+</p>
+<p>
+  <a href="https://sendgrid.kke.co.jp/blog/?p=8192">PostfixからSendGridへのリレーをカスタマイズする - SendGridブログ</a>
+</p>
+<h4>SendGridとPostfixを連携する手順</h4>
+<p>
+  Postfixの設定ファイルを編集します。
+</p>
+<pre>
+sudo vi /etc/postfix/main.cf
+</pre>
+<p>
+  以下の設定を追加します。SMTP-Authプロトコルを使って、Postfixは、SendGridにメールの配信を依頼します。
+</p>
+<p>
+  上記の公式ドキュメントから引用して、手順をここに書き出してみます。(以下引用、2020年6月2日現在)
+</p>
+<p>
+  Postfixの設定ファイルを開いてください。通常、 /etc/postfix/main.cf です。そして、以下を追加してください:
+</p>
+<pre>
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_sasl_security_options = noanonymous
+smtp_sasl_tls_security_options = noanonymous
+smtp_tls_security_level = encrypt
+header_size_limit = 4096000
+relayhost = [smtp.sendgrid.net]:587
+</pre>
+<p>
+  (relayhostをすでに設定している場合は、元のrelayhostをコメントアウト)
+</p>
+<p>
+  ここで上で設定した別のファイル /etc/postfix/sasl_passwd （新たに作成が必要）にて認証情報を指定します（ユーザ名としてapikeyを、パスワードとしてAPIキーを指定できます）:
+</p>
+<pre>
+[smtp.sendgrid.net]:587 yourSendGridUsername:yourSendGridPassword
+</pre>
+<p>
+  次に、このファイルがrootアカウントでのみ読み書きができるよう制限されていることを確認して、postmap コマンドを使用してPostfixがこの新しいファイルを使用するようハッシュテーブルを更新します:
+</p>
+<pre>
+$ sudo chmod 600 /etc/postfix/sasl_passwd
+$ sudo postmap /etc/postfix/sasl_passwd
+</pre>
+<p>
+  最後にPostfixを再起動してください:
+</p>
+<pre>
+$ sudo systemctl restart postfix
+</pre>
+<h3>sendmailコマンドでメール送信</h3>
+<p>
+  sendmailコマンドでメール送信してみましょう。送信元がなかった場合は、メールをはじかれる経験があるので、「-f」で送信元メールアドレスを指定しています。
+</p>
+<pre>
+echo Hello | sendmail -f kimoto.example@foo.com kimoto.example@foo.com
+</pre>
+<p>
+  メール送信できれば、正しく設定できています。
+</p>
+<p>
+  送信できていなければ、mailqコマンドで、まずメールのキューを見てみましょう。
+</p>
+<pre>
+mailq
+</pre>
+<p>
+  キューに送信失敗と書かれていれば失敗しています。
+</p>
+<p>
+  journalctlでpostfixのログを見るのもやりましょう。<a href="https://linux.perlzemi.com/blog/20200602093211.html">grep</a>で絞り込み、<a href="https://linux.perlzemi.com/blog/20200203124238.html">tail</a>で末尾50行を表示しています。
+</p>
+<pre>
+sudo journalctl | grep -i postfix | tail -50
+</pre>
 
   </div>
   <div class="bottom">
