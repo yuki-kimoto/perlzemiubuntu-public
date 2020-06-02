@@ -7,8 +7,7 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>mariadb-clientのインストール - MariaDBデータベースクライアント - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
-<meta name="description" content="MariaDBデータベースのクライアントアプリケーションである「mysql」を使えるように「mariadb-client」をインストールしましょう。">
+<title>journalctl - ログを見る - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
   </head>
   <body>
     <div class="container">
@@ -55,33 +54,7 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200422174004.html">mariadb-clientのインストール - MariaDBデータベースクライアント</a></h2>
-<p>
-  <a href="https://mariadb.perlzemi.com/">MariaDBデータベース</a>のクライアントアプリケーションである「mysql」を使えるように「mariadb-client」をインストールしましょう。
-</p>
-<pre>
-sudo apt install -y mariadb-client
-</pre>
-<h4>mysqlコマンドがインストールされたことの確認</h4>
-<p>
-  MariaDBのmysqlコマンドがインストールされたことを確認しましょう。
-</p>
-<pre>
-mysql --version
-</pre>
-<p>
-  以下のようにバージョン情報が表示されるとインストールされています。
-</p>
-<pre>
-mysql  Ver 15.1 Distrib 10.1.44-MariaDB, for debian-linux-gnu (x86_64) using readline 5.2
-</pre>
-<h3>DBD::MySQLを使える用にするには</h3>
-<p>
-  (2020年5月18日時点で、確認未)
-</p>
-<p>
-  PerlのDBD::MySQLを使るようにするには「libmariadb-dev」パッケージが必要になります。
-</p>
+    <h2><a href="/blog/20200602135100.html">journalctl - ログを見る</a></h2>
 
   </div>
   <div class="bottom">
