@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>useraddコマンド - ユーザーの追加 - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
-<meta name="description" content="useraddコマンドを使用すると、ユーザーを追加できます。">
+<title>userdelコマンド - ユーザーを削除する - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="userdelコマンドで、ユーザーを削除できます。sudoでroot権限で実行します。">
   </head>
   <body>
     <div class="container">
@@ -55,44 +55,13 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200511173052.html">useraddコマンド - ユーザーの追加</a></h2>
+    <h2><a href="/blog/20200402174004.html">userdelコマンド - ユーザーを削除する</a></h2>
 <p>
-  <b>useradd</b>コマンドを使用すると、ユーザーを追加できます。
-</p>
-<p>
-  ユーザーを追加するにはroot権限を持っている必要があります。sudoを使って、root権限で、作業しましょう。sudoを使う場合は、ルートパスワードを聞かれますので、ルートパスワードを入力してください。
-</p>
-<p>
-  ユーザーを追加するには<b>useradd</b>コマンドを使用します。ユーザーディレクトリを作りたい場合は「-m」オプションを使用します。
+  <b>userdelコマンド</b>で、ユーザーを削除できます。sudoでroot権限で実行します。
 </p>
 <pre>
-# ユーザーの追加(ホームディレクトリあり)
-sudo useradd -m kimoto
-
-# ユーザーの追加(ホームディレクトリなし)
-sudo useradd kimoto
+sudo userdel kimoto
 </pre>
-<h4>パスワードの設定</h4>
-<p>
-  ユーザーを追加したらパスワードも設定します。<a href="/blog/20200510173052.html">passwdコマンド</a>を使用します。
-</p>
-<pre>
-sudo passwd kimoto
-</pre>
-<p>
-  パスワードの入力と確認のための再入力を求められるので設定します。
-</p>
-<h4>sudoグループに登録</h4>
-<p>
-  このユーザーをroot権限を持つsudoユーザーとして登録したい場合はgpasswdコマンドを使って、sudoグループに追加します。
-</p>
-<pre>
-sudo gpasswd -a kimoto sudo
-</pre>
-<h4>ユーザーを間違って追加したので削除したい</h4>
-<p>
-  ユーザーを間違って追加したので削除したい場合は「userdel」を使います。
-</p>
 <pre>
 sudo userdel kimoto
 </pre>
@@ -111,10 +80,10 @@ ps -ef
 </pre>
 <h3>ユーザー管理のその他の操作</h3>
 <p>
-  ユーザー削除。
+  ユーザー追加。
 </p>
 <ul>
-  <li><a href="/blog/20200402174004.html">ユーザーを削除する - userdelコマンド</a></li>
+  <li><a href="/blog/20200511173052.html">ユーザーを追加する - useraddコマンド</a></li>
 </ul>
 <p>
   ユーザー一覧。
