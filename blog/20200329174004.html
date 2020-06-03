@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>すべてのグループとグループに所属するユーザーを表示する 「/etc/group」ファイル - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
-<meta name="description" content="グループの一覧は、「/etc/group」ファイルに記述されています。catコマンドで、「/etc/group」ファイルを表示しましょう。sudoコマンドを使ってroot権限で実行します。">
+<title>ユーザーをグループから削除する - gpasswd -d - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="ユーザーをグループから削除するには「gpasswd -d」を使用します。sudoでroot権限で実行します。">
   </head>
   <body>
     <div class="container">
@@ -55,47 +55,19 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200403174004.html">すべてのグループとグループに所属するユーザーを表示する 「/etc/group」ファイル</a></h2>
+    <h2><a href="/blog/20200329174004.html">ユーザーをグループから削除する - gpasswd -d</a></h2>
 <p>
-  <b>グループの一覧</b>は、「/etc/group」ファイルに記述されています。<a href="/blog/20200113083613.html">cat</a>コマンドで、「/etc/group」ファイルを表示しましょう。<a href="/blog/20200118092236.html">sudoコマンド</a>を使ってroot権限で実行します。
-</p>
-<p>
-  グループに所属しているユーザーを調べるのにも「/etc/group」は利用できます。
+  ユーザーをグループから削除するには「gpasswd -d」を使用します。<a href="/blog/20200406174004.html">sudo</a>でroot権限で実行します。
 </p>
 <pre>
-sudo cat /etc/group
+sudo gpasswd -d ユーザー名 グループ名
 </pre>
 <p>
-  出力結果のサンプルです。
+  kimotoをmyappグループから削除するサンプルです。
 </p>
 <pre>
-chrony:x:993:
-tcpdump:x:72:
-admins:x:1000:
-batch:x:1001:
-gitprep:x:1002:
-webdbviewer:x:1003:
-apache:x:48:
-mysql:x:27:
-okamoto:x:1004:
-izawa:x:1005:
-kimoto2:x:1006:
-cgred:x:992:
-myapp:x:1007:kimoto,yamada,tanaka
+sudo gpasswd -d kimoto myapp
 </pre>
-<h3>グループに対するその他の操作</h3>
-<p>
-  グループを追加する方法は、以下の記事で解説しています。
-</p>
-<ul>
-  <li><a href="/blog/20200405174004.html">groupaddコマンド - グループを追加する</a></li>
-</ul>
-<p>
-  グループを削除する方法は、以下の記事で解説しています。
-</p>
-<ul>
-  <li><a href="/blog/20200404174004.html">groupdelコマンド - グループを削除する</a></li>
-</ul>
 
   </div>
   <div class="bottom">
