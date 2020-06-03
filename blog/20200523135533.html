@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>libmariadb-devのインストール - MariaDBサーバーのヘッダとライブラリ - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
-<meta name="description" content="MariaDBサーバーのヘッダやライブラリを含む「libmariadb-dev」をインストールしましょう。">
+<title>postgresqlのインストール - PostgreSQLサーバー - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="PostgreSQLデータベースサーバーを使えるように「postgresql」をインストールしましょう。PostgreSQLは、利便性の高いリレーショナルデータベースシステムです。">
   </head>
   <body>
     <div class="container">
@@ -55,20 +55,31 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200419174004.html">libmariadb-devのインストール - MariaDBサーバーのヘッダとライブラリ</a></h2>
+    <h2><a href="/blog/20200523135533.html">postgresqlのインストール - PostgreSQLサーバー</a></h2>
 <p>
-  MariaDBサーバーのヘッダやライブラリを含む「libmariadb-dev」をインストールしましょう。
+  PostgreSQLデータベースサーバーを使えるように「postgresql」をインストールしましょう。PostgreSQLは、利便性の高いリレーショナルデータベースシステムです。
 </p>
 <pre>
-sudo apt install -y libmariadb-dev
+sudo apt install -y postgresql
+</pre>
+<h4>PostgreSQLデータベースサーバーがインストールされたことの確認</h4>
+<p>
+  PostgreSQLデータベースサーバーがインストールされたことをsystemctlコマンドのstatusを使って、確認しましょう。
+</p>
+<pre>
+systemctl status postgresql
 </pre>
 <p>
-  インストールされた、MariaDBデータベースのヘッダファイルとライブラリの場所については、<a href="/blog/20200429174004.html">ヘッダーファイルの読み込みパス</a>と<a href="/blog/20200428174004.html">ライブラリの読み込みパス</a>を参考にしてください。
+  次のように状態が表示されます。
 </p>
-<h4>注</h4>
-<p>
-  この手順はPerlのDBD::MySQLをインストールするために、実施した手順でしたが、PerlのDBD::MySQLをインストールするためには、「libmariadb-dev」ではなく、MariaDBクライアントのヘッダとライブラリ「<a href="/blog/20200411174004.html">libmariadbclient-dev</a>」が必要であることが判明しました。
-</p>
+<pre>
+● postgresql.service - PostgreSQL RDBMS
+   Loaded: loaded (/lib/systemd/system/postgresql.service; enabled; vendor preset: enabled)
+   Active: active (exited) since Wed 2020-06-03 08:56:27 JST; 11s ago
+ Main PID: 26352 (code=exited, status=0/SUCCESS)
+    Tasks: 0 (limit: 9479)
+   CGroup: /system.slice/postgresql.service
+</pre>
 
   </div>
   <div class="bottom">

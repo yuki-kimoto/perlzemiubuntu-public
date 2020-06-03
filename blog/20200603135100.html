@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>libmariadb-devのインストール - MariaDBサーバーのヘッダとライブラリ - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
-<meta name="description" content="MariaDBサーバーのヘッダやライブラリを含む「libmariadb-dev」をインストールしましょう。">
+<title>postgresql-clientのインストール - PostgreSQLデータベースクライアント - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="PostgreSQLデータベースのクライアントアプリケーションである「psql」を使えるように「postgresql-client」をインストールしましょう。">
   </head>
   <body>
     <div class="container">
@@ -55,20 +55,26 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200419174004.html">libmariadb-devのインストール - MariaDBサーバーのヘッダとライブラリ</a></h2>
+    <h2><a href="/blog/20200603135100.html">postgresql-clientのインストール - PostgreSQLデータベースクライアント</a></h2>
 <p>
-  MariaDBサーバーのヘッダやライブラリを含む「libmariadb-dev」をインストールしましょう。
+  PostgreSQLデータベースのクライアントアプリケーションである「psql」を使えるように「postgresql-client」をインストールしましょう。
 </p>
 <pre>
-sudo apt install -y libmariadb-dev
+sudo apt install -y postgresql-client
+</pre>
+<h4>pgコマンドがインストールされたことの確認</h4>
+<p>
+  PostgreSQLのpgコマンドがインストールされたことを確認しましょう。
+</p>
+<pre>
+psql --version
 </pre>
 <p>
-  インストールされた、MariaDBデータベースのヘッダファイルとライブラリの場所については、<a href="/blog/20200429174004.html">ヘッダーファイルの読み込みパス</a>と<a href="/blog/20200428174004.html">ライブラリの読み込みパス</a>を参考にしてください。
+  以下のようにバージョン情報が表示されるとインストールされています。
 </p>
-<h4>注</h4>
-<p>
-  この手順はPerlのDBD::MySQLをインストールするために、実施した手順でしたが、PerlのDBD::MySQLをインストールするためには、「libmariadb-dev」ではなく、MariaDBクライアントのヘッダとライブラリ「<a href="/blog/20200411174004.html">libmariadbclient-dev</a>」が必要であることが判明しました。
-</p>
+<pre>
+psql (PostgreSQL) 10.12 (Ubuntu 10.12-0ubuntu0.18.04.1)
+</pre>
 
   </div>
   <div class="bottom">
