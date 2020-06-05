@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>crontab - cronで定期実行するプログラムを記述する - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="cronはプログラムを定期実行するためのアプリケーションですが、その設定ファイルはcrontabというコマンドを使って編集します。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+<style>
+  .ubuntu-version {
+
+  }
+  .ubuntu-version ul {
+    
+  }
+  .ubuntu-version li {
+    display:inline-block;
+    background:pink;
+    color:white;
+    border-radisu:10px;
+    padding:3px 5px;
+    margin:0;
+    margin-right:5px;
+  }
+</style>
+
+<div class="ubuntu-version">
+  <ul>
+    <li>Ubuntu 20</li>
+    <li>Ubuntu 18</li>
+    <li>Ubuntu 16</li>
+  </ul>
+</div>
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200604085516.html">crontab - cronで定期実行するプログラムを記述する</a></h2>
+<p>
+  cronはプログラムを定期実行するためのアプリケーションですが、その設定ファイルはcrontabというコマンドを使って編集します。
+</p>
+<p>
+  crontabは、ユーザーごとに持つことができます。kimotoというユーザーでcrontabを編集すると、それはkimotoのcrontabになります。
+</p>
+<h3>crontabを編集する</h3>
+<p>
+  crontabを編集するには「-e」オプションを使用します。
+</p>
+<pre>
+crontab -e
+</pre>
+<p>
+  エディタが起動します。
+</p>
+<p>
+  もし使用するエディタを切り替えたい場合は<a href="/blog/20200325174004.html">select-editor</a>コマンドを実行してください。
+</p>
+<h3>crontabの記述方法</h3>
+<p>
+  crontabeでは、分 時 日 月 週を指定して、プログラムを定期実行できます。
+</p>
+<pre>
+分 時 日 月 週 コマンド
+</pre>
+<p>
+  たとえば、毎時の15分に実行する場合は以下のように書きます。
+</p>
+<pre>
+15 * * * * foo.pl
+</pre>
+<p>
+  実行の最低単位は1分です。
+</p>
+<p>
+  「*」は単位毎を意味します。分の位置に「*」が指定された場合は、毎分という意味になります。
+</p>
+<p>
+  毎分実行する場合は以下のようになります。
+</p>
+<pre>
+* * * * * foo.pl
+</pre>
+<p>
+  カンマで区切って、複数指定することも可能です。
+</p>
+<pre>
+15,30,45 * * * * foo.pl
+</pre>
+<p>
+  「/」記号を使うと、15分毎のような記述ができます。
+</p>
+<pre>
+*/15 * * * * foo.pl
+</pre>
+<p>
+  crontabのサンプルは以下に詳しいです。
+</p>
+<ul>
+  <li><a href="https://crontab.guru/examples.html">Cron Examples(crontab guru)</a></li>
+</ul>
+<h3>crontabでユーザーPerlを使用する</h3>
+<p>
+  crontabののはまりどころのひとつは、perlbrewやplenvでインストールしたユーザーPerlがcronからは利用されないということでしょう。
+</p>
+<p>
+  これはcronから実行するときは、シェルが起動されないのでperlbrewやplenvの設定が記述されている「.bashrc」「.bash_profile」が読み込まれないことが原因です。
+</p>
+<p>
+  一番簡単な解決策は、crontabの中でPATHを、そのユーザーが持っている環境変数PATHの値に書き換えてあげることです。
+</p>
+<p>
+  まずperlbrewをインストールしたユーザーで、PATH環境変数の値を表示します。
+</p>
+<pre>
+env | grep PATH
+</pre>
+<p>
+  PATHを含んだ環境変数がいくつか表示されるので、PATHというものを探します。(ユーザー名がadminsの場合の例です。)
+</p>
+<pre>
+PATH=/home/admins/perl5/perlbrew/bin:/home/admins/perl5/perlbrew/perls/perl-5.16.2/bin:/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:/home/admins/bin
+</pre>
+<p>
+  以下のコマンドでcrontabを編集します。
+</p>
+<pre>
+crontab -e
+</pre>
+<p>
+  そして上記のPATHの値をcrontabの一番上に書き込みます。
+</p>
+<pre>
+PATH=/home/admins/perl5/perlbrew/bin:/home/admins/perl5/perlbrew/perls/perl-5.16.2/bin:/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:/home/admins/bin
+
+# crontabの設定が続く...
+</pre>
+<p>
+  これでcronがインストールしたユーザーPerlを利用してくれるようになります。
+</p>
+<h3>Perlのライブラリのパスを追加する</h3>
+<p>
+  Webアプリケーションで読み込んでいるライブラリのパスがあれば以下のように「PERL5LIB」を設定しましょう。
+</p>
+<pre>
+PERL5LIB=/home/admins/webapp/fudousancms/lib
+</pre>
+<h3>cronのエラーが発生した場合のメールの送信先を変更する MAILTO</h3>
+<p>
+  cronは、標準エラー出力に出力があった場合は、メールを送信するという動作をします。
+</p>
+<p>
+  <strong>MAILTO</strong>を使えば<strong>cron</strong>でメールの送信先を変更することができます。<strong>crontab</strong>の中に次の一行を追加します。
+</p>
+<p>
+  設定しない場合は、cronを実行したユーザーのローカルのメールボックスに入ります。
+</p>
+<pre>
+MAILTO=kimoto@somehost.com
+</pre>
+<p>
+  複数のメールアドレスを設定する場合はカンマで区切ります。
+</p>
+<pre>
+MAILTO=kimoto@somehost.com,taro@somehost.com
+</pre>
+<p>
+  メールアドレスを設定しておくと、cronで実行しているバッチ処理のエラーを知ることができるので便利です。
+</p>
+<h3>crontabの内容をバックアップして保存</h3>
+<p>
+  <b>-l</b>オプションで内容を表示することができます。リダイレクトして、内容をバックアップすることができます。
+</p>
+<pre>
+crontab -l &gt; crontab_prod
+</pre>
+<p>
+  これを、ソースコードと一緒に、Gitで管理しておけば、最悪crontabの設定全てを失うリスクを避けることができます。
+</p>
+<h3>crontabに設定をファイルから読み込む</h3>
+<p>
+  crontabの引数にファイルを指定すると設定をファイルからcrontabに読み込むことができます。
+</p>
+<pre>
+crontab ファイル名
+</pre>
+<h3>cronの起動・停止・再起動・状態確認, cronの実行ログ</h3>
+<p>
+  cronの起動・停止・再起動・状態確認, cronの実行ログについては以下の記事を参考にしてくだい。
+</p>
+<ul>
+  <li><a href="/blog/20200520084454.html">cronの起動・停止・再起動・状態確認, cronの実行ログ</a></li>
+</ul>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発を学ぶ
+  </div>
+  <ul>
+    <li><a href="https://tutorial.perlzemi.com/">Perlプログラミングを学ぶ</a></li>
+    <li><a href="https://linux.perlzemi.com/">Linuxの仕組み・コマンドを学ぶ</a></li>
+    <li><a href="https://web.perlzemi.com/">Webシステム開発を学ぶ</a></li>
+  </ul>
+
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発の見積もり
+  </div>
+  <ul>
+    <li><a href="https://kimoto-system.co.jp/">Perl Webシステム開発の<br>木本システム株式会社</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="kimoto_system_link">
+  <a href="https://kimoto-system.co.jp">
+    <img src="https://kimoto-system.co.jp/images/kimoto-system-logo.png" alt="Perl Webシステム開発">
+    Perl Webシステム開発の木本システム
+  </a>
+</div>
+
+<div class="copyright">
+  Copyright © Yuki Kimoto
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>
