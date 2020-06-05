@@ -67,21 +67,21 @@
   アプリケーションを開始するには、startコマンドを使用します。
 </p>
 <pre>
-systemctl start apache2
+sudo systemctl start apache2
 </pre>
 <h4>アプリケーションの停止</h3>
 <p>
   アプリケーションを停止するには、stopコマンドを使用します。
 </p>
 <pre>
-systemctl stop apache2
+sudo systemctl stop apache2
 </pre>
 <h4>アプリケーションの再起動</h3>
 <p>
   アプリケーションを再起動するには、restartコマンドを使用します。
 </p>
 <pre>
-systemctl restart apache2
+sudo systemctl restart apache2
 </pre>
 <p>
   stopの後に、startが実行されます。
@@ -91,15 +91,77 @@ systemctl restart apache2
   アプリケーションの状態を見るには、statusコマンドを使用します。
 </p>
 <pre>
-systemctl status apache2
+sudo systemctl status apache2
+</pre>
+<p>
+  アプリケーションが起動している場合は、以下のように表示されます。
+</p>
+<pre>
+● apache2.service - The Apache HTTP Server
+   Loaded: loaded (/lib/systemd/system/apache2.service; enabled; vendor preset: enabled)
+  Drop-In: /lib/systemd/system/apache2.service.d
+           mqapache2-systemd.conf
+   Active: active (running) since Fri 2020-06-05 10:27:15 JST; 3h 32min ago
+ Main PID: 1624 (apache2)
+    Tasks: 55 (limit: 9479)
+   CGroup: /system.slice/apache2.service
+           tq1624 /usr/sbin/apache2 -k start
+           tq1628 /usr/sbin/apache2 -k start
+           mq1629 /usr/sbin/apache2 -k start
 </pre>
 <h4>アプリケーションのリロード</h3>
 <p>
-  アプリケーションには、reloadが定義されている場合は、reloadを使うことができます。
+  アプリケーションで、reloadが定義されている場合は、reloadを使うことができます。
 </p>
+<pre>
+sudo systemctl reload apache2
+</pre>
 <p>
-  <a href="/blog/20200526151435.html">apache2</a>の場合は、グレースフルスタート、postfixの場合は、設定ファイルの再読み込みを意味します。
+  <a href="/blog/20200526151435.html">apache2</a>の場合はグレースフルスタート、postfixの場合は、設定ファイルの再読み込みが定義されています。
 </p>
+<h3>各アプリケーションのsystemdの設定ファイルを見る</h3>
+<p>
+  各アプリケーションのsystemdの設定ファイルは「systemctl status」の内容に含まれています。
+</p>
+<pre>
+sudo systemctl status apache2
+</pre>
+<p>
+  以下の「/lib/systemd/system/apache2.service」というのが、systemdのapacheの設定ファイルです。
+</p>
+<pre>
+● apache2.service - The Apache HTTP Server
+   Loaded: loaded (/lib/systemd/system/apache2.service; enabled; vendor preset: enabled)
+  Drop-In: /lib/systemd/system/apache2.service.d
+           mqapache2-systemd.conf
+   Active: active (running) since Fri 2020-06-05 10:27:15 JST; 3h 32min ago
+ Main PID: 1624 (apache2)
+    Tasks: 55 (limit: 9479)
+   CGroup: /system.slice/apache2.service
+           tq1624 /usr/sbin/apache2 -k start
+           tq1628 /usr/sbin/apache2 -k start
+           mq1629 /usr/sbin/apache2 -k start
+</pre>
+<p>
+  catコマンドを使って「/lib/systemd/system/apache2.service」の中身を見てみましょう。
+</p>
+<pre>
+[Unit]
+Description=The Apache HTTP Server
+After=network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=forking
+Environment=APACHE_STARTED_BY_SYSTEMD=true
+ExecStart=/usr/sbin/apachectl start
+ExecStop=/usr/sbin/apachectl stop
+ExecReload=/usr/sbin/apachectl graceful
+PrivateTmp=true
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+</pre>
 
   </div>
   <div class="bottom">

@@ -64,7 +64,7 @@
   CentOSでは「/bin/sh」は「/bin/bash」にシンボリックリンクが張られている。
 </p>
 <p>
-  シェバンを以下のように書いているとCetnOSでは、bashで実行されるのに対して、Ubuntuでは、shで実行される。
+  シェバンを以下のように書いているとCentOSでは、bashで実行されるのに対して、Ubuntuでは、shで実行される。
 </p>
 <pre>
 #!/bin/sh
@@ -95,13 +95,31 @@
 <p>
   クラウドサービスには、たいてい、ネットワークのパケット制御が存在するので、それで設定すると、Linux自体のファイアーウォールを意識しないですむ。
 </p>
+<h3>cron</h3>
+<p>
+  Ubuntuの場合は、デフォルトでcronがインストールされていて、普通のcronです。自然にcronを使えます。
+</p>
+<p>
+  CentOSの場合は、デフォルトのcronがanacronです。普通のcronが欲しい場合は、anacronをアンインストールして、普通のcronをインストールする必要があります。
+</p>
+<h3>SeLinux</h3>
+<p>
+  CentOSの場合は、SeLinuxがデフォルトでonになっている。この機能、リバースプロキシでの接続で、プロキシエラーになっちゃうので、SeLinuxを無効にするか、リバースプロキシができる設定にする必要があります。
+</p>
+<p>
+  Ubuntuの場合は、CentOSのSeLinuxに該当する機能は、デフォルトでoffになっているようです。
+</p>
 <h3>ここ最近共通になったもの(2020年5月21日現在)</h3>
 <p>
   CentOSとUbuntuで、ここ最近共通になったもの。
 </p>
-<h4>systemctl, journalctl</h4>
+<h4>systemctl</h4>
 <p>
-  CentOSもUbuntuもサービス(サーバーとして起動する者)は、systemdで管理するようになって、管理コマンドもsystemctl, journalctlが共通で使える。
+  CentOSもUbuntuもサービス(サーバーとして起動する者)は、systemdで管理するようになって、管理コマンドもsystemctlになりました。
+</p>
+<h4>journalctl</h4>
+<p>
+  systemdのログ管理もjournalctlがUbuntuとCentOSで共通で使える。
 </p>
 
   </div>
