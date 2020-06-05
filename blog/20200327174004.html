@@ -92,14 +92,21 @@ sudo gpasswd -d yamada myapp
   データディレクトリ以下にあるファイルの所有者グループを<a href="https://linux.perlzemi.com/blog/20200604095018.html">chgrp</a>コマンドで再帰的にmyappに変更
 </p>
 <pre>
-chgrp -R myapp /datadrive
+sudo chgrp -R myapp /datadrive
+</pre>
+<h4>グループの書き込み権限を与える</h4>
+<p>
+  「/datadrive」にグループでの書き込み権限を与えます。
+</p>
+<pre>
+sudo chmod 775 /datadrive
 </pre>
 <h4>データディレクトリに特別なパーミッションSGIDを設定</h4>
 <p>
   データディレクトリに特別なパーミッションSGIDを<a href="https://linux.perlzemi.com/blog/20200519082545.html">chmod</a>コマンドで設定します。
 </p>
 <pre>
-chmod g+s /datadrive
+sudo chmod g+s /datadrive
 </pre>
 <p>
   lsコマンドで確認するとsが設定されています。
@@ -115,6 +122,9 @@ drwxr-sr-x   7 kimoto myapp  115 Jun  3 10:36 /datadrive
 </pre>
 <p>
   これで、複数の開発者が起動するWebアプリケーションによって、アップロードされるファイルのためのデータディレクトリの準備ができました。
+</p>
+<p>
+  グループへの追加の反映は、ユーザーがログインしたときに認識されますので、自分のユーザーが、グループに追加したユーザーである場合は、いったんログアウトして、ログインしてください。
 </p>
 
   </div>

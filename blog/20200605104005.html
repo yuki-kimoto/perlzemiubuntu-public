@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>systemctl - systemdで管理されているサーバーアプリケーションの管理 - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="systemctlコマンドを使うと、systemdで管理されているサーバーアプリケーションの管理を行うことができます。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+<style>
+  .ubuntu-version {
+
+  }
+  .ubuntu-version ul {
+    
+  }
+  .ubuntu-version li {
+    display:inline-block;
+    background:pink;
+    color:white;
+    border-radisu:10px;
+    padding:3px 5px;
+    margin:0;
+    margin-right:5px;
+  }
+</style>
+
+<div class="ubuntu-version">
+  <ul>
+    <li>Ubuntu 20</li>
+    <li>Ubuntu 18</li>
+    <li>Ubuntu 16</li>
+  </ul>
+</div>
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200605104005.html">systemctl - systemdで管理されているサーバーアプリケーションの管理</a></h2>
+<p>
+  <b>systemctl</b>コマンドを使うと、systemdで管理されているサーバーアプリケーションの管理を行うことができます。
+</p>
+<p>
+  ここでは、apache2を使って、各種コマンドについて解説します。
+</p>
+<h4>アプリケーションの開始</h3>
+<p>
+  アプリケーションを開始するには、startコマンドを使用します。
+</p>
+<pre>
+systemctl start apache2
+</pre>
+<h4>アプリケーションの停止</h3>
+<p>
+  アプリケーションを停止するには、stopコマンドを使用します。
+</p>
+<pre>
+systemctl stop apache2
+</pre>
+<h4>アプリケーションの再起動</h3>
+<p>
+  アプリケーションを再起動するには、restartコマンドを使用します。
+</p>
+<pre>
+systemctl restart apache2
+</pre>
+<p>
+  stopの後に、startが実行されます。
+</p>
+<h4>アプリケーションの状態</h3>
+<p>
+  アプリケーションの状態を見るには、statusコマンドを使用します。
+</p>
+<pre>
+systemctl status apache2
+</pre>
+<h4>アプリケーションのリロード</h3>
+<p>
+  アプリケーションには、reloadが定義されている場合は、reloadを使うことができます。
+</p>
+<p>
+  <a href="/blog/20200526151435.html">apache2</a>の場合は、グレースフルスタート、postfixの場合は、設定ファイルの再読み込みを意味します。
+</p>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発を学ぶ
+  </div>
+  <ul>
+    <li><a href="https://tutorial.perlzemi.com/">Perlプログラミングを学ぶ</a></li>
+    <li><a href="https://linux.perlzemi.com/">Linuxの仕組み・コマンドを学ぶ</a></li>
+    <li><a href="https://web.perlzemi.com/">Webシステム開発を学ぶ</a></li>
+  </ul>
+
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発の見積もり
+  </div>
+  <ul>
+    <li><a href="https://kimoto-system.co.jp/">Perl Webシステム開発の<br>木本システム株式会社</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="kimoto_system_link">
+  <a href="https://kimoto-system.co.jp">
+    <img src="https://kimoto-system.co.jp/images/kimoto-system-logo.png" alt="Perl Webシステム開発">
+    Perl Webシステム開発の木本システム
+  </a>
+</div>
+
+<div class="copyright">
+  Copyright © Yuki Kimoto
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>
