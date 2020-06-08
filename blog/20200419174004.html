@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>libmariadb-devのインストール - MariaDBサーバーのヘッダとライブラリ - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
-<meta name="description" content="MariaDBサーバーのヘッダやライブラリを含む「libmariadb-dev」をインストールしましょう。">
+<title>net-toolsのインストール - 非推奨だがとりあえずifconfig、arp、route、netstatを使いたい場合 - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="ifconfigはLinuxでは、現在では非推奨のネットワーク情報の管理ツールになっていますが、とりあえずifconfigを使いたい場合は、net-toolsをインストールしましょう。">
   </head>
   <body>
     <div class="container">
@@ -74,20 +74,40 @@
     </li>
   </ul>
 </div>
-<h2><a href="/blog/20200419174004.html">libmariadb-devのインストール - MariaDBサーバーのヘッダとライブラリ</a></h2>
+<h2><a href="/blog/20200419174004.html">net-toolsのインストール - 非推奨だがとりあえずifconfig、arp、route、netstatを使いたい場合</a></h2>
 <p>
-  MariaDBサーバーのヘッダやライブラリを含む「libmariadb-dev」をインストールしましょう。
+  ifconfigはLinuxでは、現在では非推奨のネットワーク情報の管理ツールになっていますが、とりあえずifconfigを使いたい場合は、net-toolsをインストールしましょう。
+</p>
+<p>
+  ifconfigは商用Unix環境と共通で使えるので、迷いたくないという場合も、とりあえずは、良いかもしれません。
 </p>
 <pre>
-sudo apt install -y libmariadb-dev
+# net-toolsのインストール
+sudo apt install -y net-tools
+</pre>
+<h4>ifconfigコマンドがインストールされたことの確認</h4>
+<p>
+  ifconfigコマンドがインストールされたことを確認しましょう。
+</p>
+<pre>
+ifconfig
 </pre>
 <p>
-  インストールされた、MariaDBデータベースのヘッダファイルとライブラリの場所については、<a href="/blog/20200429174004.html">ヘッダーファイルの読み込みパス</a>と<a href="/blog/20200428174004.html">ライブラリの読み込みパス</a>を参考にしてください。
+  net-toolsに含まれているarp、route、netstatコマンドも使える用になります。
 </p>
-<h4>注</h4>
+<h3>Linuxにおける正式なネットーワーク管理ツールはiproute2</h3>
 <p>
-  この手順はPerlのDBD::MySQLをインストールするために、実施した手順でしたが、PerlのDBD::MySQLをインストールするためには、「libmariadb-dev」ではなく、MariaDBクライアントのヘッダとライブラリ「<a href="/blog/20200411174004.html">libmariadbclient-dev</a>」が必要であることが判明しました。
+  現在Linuxにおける正式なネットーワーク管理ツールはiproute2となっています。(2020年6月8日記載)
 </p>
+<p>
+  iproute2には、ip・ss・bridge・rtacct・rtmon・tc・ctstat・lnstat・nstat・routef・routel・rtstat・tipc・arpd・devlinkというコマンドラインユーティリティが含まれています。
+</p>
+<p>
+  ifconfigで、IPアドレスをチェックしていた機能は「ip addr」コマンドを使います。
+</p>
+<pre>
+ip addr
+</pre>
 
   </div>
   <div class="bottom">
