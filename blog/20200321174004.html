@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>Apacheの子プロセスの実行ユーザーがデータディレクトリに書き込む方法 - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
-<meta name="description" content="UbuntuのApacheではroot権限で起動した後、実際にリクエストを受ける子プロセスが「www-data」というユーザーで実行されます。">
+<title>Perl以外のプログラミング言語のインストール - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="Perl以外のプログラミング言語のインストールです。">
   </head>
   <body>
     <div class="container">
@@ -55,34 +55,62 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200322174004.html">Apacheの子プロセスの実行ユーザーがデータディレクトリに書き込む方法</a></h2>
+    <h2><a href="/blog/20200321174004.html">Perl以外のプログラミング言語のインストール</a></h2>
 <p>
-  UbuntuのApacheではroot権限で起動した後、実際にリクエストを受ける子プロセスが「www-data」というユーザーで実行されます。
+  Perl以外のプログラミング言語のインストールです。
 </p>
+<h3>C言語のインストール</h3>
 <p>
-  psコマンドで、実際のプロセスを見てみましょう。<a href="https://linux.perlzemi.com/blog/20200602093211.html">grep</a>コマンドでapacheを絞り込みます。
+  C言語は、<a href="/blog/20200504174004.html">gcc</a>というコンパイラをインストールすると使えるようになります。
 </p>
-<pre>
-ps -ef | grep apache
-</pre>
-<pre>
-root       1624      1  0 Jun05 ?        00:00:10 /usr/sbin/apache2 -k start
-admins    10576  10188  0 13:11 pts/1    00:00:00 grep --color=auto apache
-www-data 115206   1624  0 06:25 ?        00:00:00 /usr/sbin/apache2 -k start
-www-data 115207   1624  0 06:25 ?        00:00:00 /usr/sbin/apache2 -k start
-</pre>
+<h3>PHPのインストール</h3>
 <p>
-  Ubuntuサーバー構築入門では、アプリケーション用のグループ「myapp」を作成して、グループに所属するユーザーがデータディレクトリに書き込める運用を紹介しています。
-</p>
-<ul>
-  <li><a href="/blog/20200327174004.html">データディレクトリに複数のユーザーが読み書きする方法 - Webアプリのファイルアップロードディレクトリ</a></li>
-</ul>
-<p>
-  もし、CGIアプリケーションが存在して、Aapcheで起動される場合に、このデータディレクトリに、ファイルを書き込むためには「www-data」ユーザーを、<a href="/blog/20200330174004.html">gpasswd</a>コマンドで、myappグループに追加してください。
+  PHPをインストールする。
 </p>
 <pre>
-sudo gpasswd -a www-data myapp
+sudo apt install -y php
 </pre>
+<h3>Rubyのインストール</h3>
+<p>
+  Rubyをインストールする。
+</p>
+<pre>
+sudo apt install -y ruby
+</pre>
+<h3>Javaのインストール</h3>
+<p>
+  Javaをインストールする。Open JDKと呼ばれる種類のJavaです。実行環境であるJREと開発ツールキットであるJDKをインストールします。
+</p>
+<pre>
+sudo apt install -y default-jre
+</pre>
+<p>
+  JREをインストールするとJDKもインストールされます。
+</p>
+<h3>nodejsのインストール</h3>
+<p>
+  JavaScriptの実行環境であるnodejsをインストールする。
+</p>
+<pre>
+sudo apt install -y nodejs
+</pre>
+<h3>Python 2のインストール</h3>
+<p>
+  Python 2をインストールする。
+</p>
+<pre>
+sudo apt install -y python
+</pre>
+<h3>Python 3のインストール</h3>
+<p>
+  Python 3をインストールする。
+</p>
+<pre>
+sudo apt install -y python3
+</pre>
+<p>
+  僕の好きなこのプログラミング言語ないよというものありましたら、<a href="https://github.com/yuki-kimoto/perlzemiubuntu">プルリクエスト</a>歓迎。
+</p>
 
   </div>
   <div class="bottom">
