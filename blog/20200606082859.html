@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>sshパッケージのインストール - SSHサーバーとクライアント - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
-<meta name="description" content="SSHサーバーとSSLクライアントを使えるようにするにはsshパッケージをインストールします。">
+<title>libreadline-devのインストール - コマンド実行履歴を保存・検索するためのReadLineのライブラリ - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="コマンド実行履歴を保存・検索するためのReadLineライブラリとヘッダーを含むlibreadline-devをインストールしましょう。">
   </head>
   <body>
     <div class="container">
@@ -74,51 +74,28 @@
     </li>
   </ul>
 </div>
-<h2><a href="/blog/20200608082859.html">sshパッケージのインストール - SSHサーバーとクライアント</a></h2>
+<h2><a href="/blog/20200606082859.html">libreadline-devのインストール - コマンド実行履歴を保存・検索するためのReadLineのライブラリ</a></h2>
 <p>
-  SSHサーバーとSSLクライアントを使えるようにするにはsshパッケージをインストールします。
+  コマンド実行履歴を保存・検索するためのReadLineライブラリとヘッダーを含むlibreadline-devをインストールしましょう。
 </p>
 <pre>
-# SSHサーバーとSSHクライアントのインストール
-sudo apt install -y ssh
+sudo apt install -y libreadline-dev
 </pre>
 <p>
-  これはOpenSSHと呼ばれるSSHクライアントとSSHサーバーを含むオープンソースのプロジェクトです。
+  インストールされた、ReadLineのヘッダファイルとライブラリの場所については、<a href="/blog/20200429174004.html">ヘッダーファイルの読み込みパス</a>と<a href="/blog/20200428174004.html">ライブラリの読み込みパス</a>を参考にしてください。
+</p>
+<h3>Perlのデバッガのコマンドライン履歴を使える用にする方法</h3>
+<p>
+  <a href="https://tutorial.perlzemi.com/blog/20100302126967.html">Perlのデバッガ</a>のコマンド履歴の機能はTerm::ReadLine::Gnuというモジュールに依存していますが、これはC言語で書かれたReadLineライブラリに依存しています。
 </p>
 <p>
-  SSHサーバーとクライアントが、デフォルトでインストールされていない場合に、インストールしてください。
+  UbuntuでPerlのデバッガを行う場合に、上下キーでコマンドのヒストリーが効かないという場合は、Term::ReadLine::Gnuライブラリがインストールされていないという可能性を疑ってみましょう。
 </p>
 <p>
-  SSHサーバー、SSHクライアントを個別にインストールすることもできます。
+  libreadline-devパッケージをインストールした後に、Term::ReadLine::Gnuを<a href="https://tutorial.perlzemi.com/blog/20101027127859.html">cpanm</a>を使ってインストールします。
 </p>
 <pre>
-# SSHクライアント
-sudo apt install -y ssh openssh-client
-
-# SSHサーバー
-sudo apt install -y ssh openssh-server
-</pre>
-<h4>sshコマンドがインストールされたことの確認</h4>
-<p>
-  sshコマンドがインストールされたことを確認しましょう。
-</p>
-<pre>
-ssh --help
-</pre>
-<h4>sshサーバーがインストールされたことの確認</h4>
-<p>
-  sshサーバーがインストールされたことを<a href="/blog/20200605104005.html">systemctl</a>コマンドで確認しましょう。<a href="/blog/20200531085516.html">sudo</a>で管理者権限で実行します。
-</p>
-<pre>
-sudo systemctl status ssh
-</pre>
-<p>
-  activeと表示されれば、インストールが成功し、SSHサーバーが起動しています。
-</p>
-<pre>
-● ssh.service - OpenBSD Secure Shell server
-   Loaded: loaded (/lib/systemd/system/ssh.service; enabled; vendor preset: enab
-   Active: active (running) since Fri 2020-06-05 10:27:15 JST; 2 days ago
+cpanm Term::ReadLine::Gnu
 </pre>
 
   </div>
