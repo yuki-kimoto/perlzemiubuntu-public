@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>Apacheのデフォルトのバーチャルホストの設定 - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="他のバーチャルホストで設定されていないドメイン名あるいは、直IPアドレス対して、デフォルトのバーチャルホストを記述する方法の解説です。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+<style>
+  .ubuntu-version {
+
+  }
+  .ubuntu-version ul {
+    
+  }
+  .ubuntu-version li {
+    display:inline-block;
+    background:pink;
+    color:white;
+    border-radisu:10px;
+    padding:3px 5px;
+    margin:0;
+    margin-right:5px;
+  }
+</style>
+
+<div class="ubuntu-version">
+  <ul>
+    <li>Ubuntu 20</li>
+    <li>Ubuntu 18</li>
+    <li>Ubuntu 16</li>
+  </ul>
+</div>
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200314174004.html">Apacheのデフォルトのバーチャルホストの設定</a></h2>
+<p>
+  他のバーチャルホストで設定されていないドメイン名あるいは、直IPアドレス対して、デフォルトのバーチャルホストを記述する方法の解説です。
+</p>
+<p>
+  この設定は、Apache上のCGIやPHPで運用されているWebアプリケーションがあり、さらにバーチャルホストの設定で、リバースプロキシを使って、別サイトを運用するために必要です。
+</p>
+<p>
+  デフォルトのバーチャルホストの設定とは、一番最初に定義されたバーチャルホストが利用されるというApacheの動作を利用するものです。
+</p>
+<p>
+  Ubuntuでは、最初から以下のファイルが配置され、有効になっています。
+</p>
+<pre>
+sites-available/000-default.conf
+</pre>
+<p>
+  なぜ000という名前で始まっているのかというと、これが最初に読み込まれるようにする工夫のようです。Apacheは、ワイルドカードが指定された場合、辞書順で、設定ファイルを読み込むようです。
+</p>
+<p>
+  中を見てみましょう。
+</p>
+<pre>
+&lt;VirtualHost *:80&gt;
+        # The ServerName directive sets the request scheme, hostname and port that
+        # the server uses to identify itself. This is used when creating
+        # redirection URLs. In the context of virtual hosts, the ServerName
+        # specifies what hostname must appear in the request's Host: header to
+        # match this virtual host. For the default virtual host (this file) this
+        # value is not decisive as it is used as a last resort host regardless.
+        # However, you must set it for any further virtual host explicitly.
+        #ServerName www.example.com
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html
+
+        # Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
+        # error, crit, alert, emerg.
+        # It is also possible to configure the loglevel for particular
+        # modules, e.g.
+        #LogLevel info ssl:warn
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+        # For most configuration files from conf-available/, which are
+        # enabled or disabled at a global level, it is possible to
+        # include a line for only one particular virtual host. For example the
+        # following line enables the CGI configuration for this host only
+        # after it has been globally disabled with "a2disconf".
+        #Include conf-available/serve-cgi-bin.conf
+&lt;/VirtualHost&gt;
+</pre>
+<p>
+  デフォルトのバーチャルホストの設定は、このファイルの中に記述しましょう。
+</p>
+<p>
+  この設定は80番ポートの設定ですが、443のデフォルトのバーチャルホストの設定も行うことができます。
+</p>
+<pre>
+&lt;VirtualHost *:443&gt;
+
+&lt;/VirtualHost&gt;
+</pre>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発を学ぶ
+  </div>
+  <ul>
+    <li><a href="https://tutorial.perlzemi.com/">Perlプログラミングを学ぶ</a></li>
+    <li><a href="https://linux.perlzemi.com/">Linuxの仕組み・コマンドを学ぶ</a></li>
+    <li><a href="https://web.perlzemi.com/">Webシステム開発を学ぶ</a></li>
+  </ul>
+
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発の見積もり
+  </div>
+  <ul>
+    <li><a href="https://kimoto-system.co.jp/">Perl Webシステム開発の<br>木本システム株式会社</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="kimoto_system_link">
+  <a href="https://kimoto-system.co.jp">
+    <img src="https://kimoto-system.co.jp/images/kimoto-system-logo.png" alt="Perl Webシステム開発">
+    Perl Webシステム開発の木本システム
+  </a>
+</div>
+
+<div class="copyright">
+  Copyright © Yuki Kimoto
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>

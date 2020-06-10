@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>CGIプログラムを利用するためにmod_cgidを有効化する - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
-<meta name="description" content="CGIプログラムを利用する場合はmod_cgidを有効化しましょう。">
+<title>Apacheのアクセスログとエラーログの場所 - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="UbuntuにおけるApacheのアクセスログとエラーログの場所は、環境変数「APACHE_LOG_DIR」で定義されています。">
   </head>
   <body>
     <div class="container">
@@ -55,54 +55,31 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200316174004.html">CGIプログラムを利用するためにmod_cgidを有効化する</a></h2>
+    <h2><a href="/blog/20200313174004.html">Apacheのアクセスログとエラーログの場所</a></h2>
 <p>
-  CGIプログラムを利用する場合はmod_cgidを有効化しましょう。
+  UbuntuにおけるApacheのアクセスログとエラーログの場所は、環境変数「APACHE_LOG_DIR」で定義されています。
 </p>
 <p>
-  CGIのプログラムが存在して、CGIプログラムを実行する必要がある場合に、この手順を実行してください。
-</p>
-<p>
-  新規に<a href="https://web.perlzemi.com/">Webシステム開発</a>を行う場合は、リアルタイムWeb・クラウドサーバー対応できる開発手法をお勧めしています。
-</p>
-<h4>mod_cgidを有効化</h4>
-<p>
-  mod_cgidはApacheモジュールですが、<a href="/blog/20200610082714.html">Apacheモジュールを有効化</a>するにはa2enmodコマンドを使用します。
+  <a href="/blog/20200317174004.html">Apacheの設定ファイルがあるディレクトリ</a>の中の「envvars」ファイルの中で定義されています。
 </p>
 <pre>
-sudo a2enmod cgid
+export APACHE_LOG_DIR=/var/log/apache2$SUFFIX
 </pre>
 <p>
-  有効化した後は、<a href="/blog/20200519084454.html">Apacheの再起動</a>が必要です。
-</p>
-<h3>CGIが実行できるディレクトリ</h3>
-<p>
-  CGIが実行できるディレクトリは以下のディレクトリです。
+  $SUFFIXは、Apacheが一台しか動いていない場合は空文字ですので、Apacheのログのディレクトリは「/var/log/apache2」になります。
 </p>
 <pre>
-/usr/lib/cgi-bin/
+sudo ls /var/log/apache2
+</pre>
+<pre>
+access.log        access.log.13.gz  access.log.5.gz  error.log        error.log.13.gz  error.log.5.gz  other_vhosts_access.log        other_vhosts_access.log.13.gz  other_vhosts_access.log.5.gz
+access.log.1      access.log.14.gz  access.log.6.gz  error.log.1      error.log.14.gz  error.log.6.gz  other_vhosts_access.log.1      other_vhosts_access.log.14.gz  other_vhosts_access.log.6.gz
+access.log.10.gz  access.log.2.gz   access.log.7.gz  error.log.10.gz  error.log.2.gz   error.log.7.gz  other_vhosts_access.log.10.gz  other_vhosts_access.log.2.gz   other_vhosts_access.log.7.gz
+access.log.11.gz  access.log.3.gz   access.log.8.gz  error.log.11.gz  error.log.3.gz   error.log.8.gz  other_vhosts_access.log.11.gz  other_vhosts_access.log.3.gz   other_vhosts_access.log.8.gz
+access.log.12.gz  access.log.4.gz   access.log.9.gz  error.log.12.gz  error.log.4.gz   error.log.9.gz  other_vhosts_access.log.12.gz  other_vhosts_access.log.4.gz   other_vhosts_access.log.9.gz
 </pre>
 <p>
-  この中にCGIプログラムを配置して実行権限を与えれば、WebブラウザからCGIプログラムを呼び出すことができます。
-</p>
-<p>
-  ただし、一般的には、/var/www/htmlの中に、画像などの静的ファイルやCGIプログラムなどのまとめて配置することのほうが多いでしょう。
-</p>
-<p>
-  この場合は、追加の設定を行う必要があります。
-</p>
-<p>
-  これを設定する場所は、デフォルトのバーチャルホストの設定ファイルです。
-</p>
-<ul>
-  <li><a href="/blog/20200314174004.html">Apacheのデフォルトのバーチャルホストの設定</a></li>
-</ul>
-<h3>mod_cgiとmod_cgidの違い</h3>
-<p>
-  ユーザーから見た場合、ひとつの例外を除いて、mod_cgidはmod_cgidと同じ動作をするようです。コストが小さいmod_cgidを選んでおくとよいようです。
-</p>
-<p>
-  <a href="https://httpd.apache.org/docs/2.4/ja/mod/mod_cgid.html">Apache モジュール mod_cgid</a>
+  最新と1つ前のアクセスログ以外は, <a href="https://linux.perlzemi.com/blog/20200608103245.html">GZIP形式</a>に圧縮されているようです。
 </p>
 
   </div>
