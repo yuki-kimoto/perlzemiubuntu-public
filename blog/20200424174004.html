@@ -106,62 +106,11 @@ Server built:   2020-03-13T12:26:16
 </pre>
 <h3>HTTPSで通信できるようにmod_sslを有効化</h3>
 <p>
-  HTTPSで通信できるようにmod_sslを有効化しておきましょう。a2enmodというのは、「Apache2 Enable Module」の略のようです。
+  ApacheでHTTPSで通信できるようにmod_sslを有効化しておきましょう。
 </p>
-<pre>
-sudo a2enmod ssl
-</pre>
-<p>
-  a2enmodコマンドは、利用可能なモジュールから、指定したモジュールの読み込みを有効にするものです。
-</p>
-<p>
-  設定ファイルの有効化が、ファイル編集なしで、コマンドだけで、完結します。
-</p>
-<p>
-  動作を理解するために、<a href="https://linux.perlzemi.com/blog/20191126082723.html">lsコマンド</a>で、Apacheの設定ファイルのディレクトリを見てみましょう。
-</p>
-<pre>
-ls /etc/apache2
-</pre>
-<p>
-  以下です。
-</p>
-<pre>
-apache2.conf    conf-enabled  magic           mods-enabled  sites-available
-conf-available  envvars       mods-available  ports.conf    sites-enabled
-</pre>
-<p>
-  「mods-available」の中に、ssl.confというファイルがあります。lsとgrepで確認します。
-</p>
-<pre>
-ls /etc/apache2/mods-available | grep ssl
-</pre>
-<p>
-  確かに「ssl.conf」があります。
-</p>
-<pre>
-ssl.conf
-ssl.load
-</pre>
-<p>
-  「mods-enabled」の中も見てみましょう。こちらは実際に読み込まれる設定ファイルです。
-</p>
-<pre>
-ls /etc/apache2/mods-enabled | grep ssl
-</pre>
-<p>
-  「ssl.conf」があります。
-</p>
-<pre>
-ssl.conf
-ssl.load
-</pre>
-<p>
-  「mods-enabled」の中に、設定ファイルが存在するかどうかで、有効/無効の切り替えを行っているんですね。
-</p>
-<p>
-  Apacheの再起動後に有効になります。
-</p>
+<ul>
+  <li><a href="/blog/20200318174004.html">ApacheでHTTPSで通信できるようにmod_sslを有効化</a></li>
+</ul>
 
   </div>
   <div class="bottom">

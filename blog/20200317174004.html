@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>Apache Webサーバー - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
-<meta name="description" content="Aapche Webサーバーに関する情報です。">
+<title>Apacheの設定ファイルの場所 - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="UbuntuにおけるApacheの設定ファイルの場所は「/etc/apache2」です。">
   </head>
   <body>
     <div class="container">
@@ -55,34 +55,29 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200526151435.html">Apache Webサーバー</a></h2>
+    <h2><a href="/blog/20200317174004.html">Apacheの設定ファイルの場所</a></h2>
 <p>
-  Aapche Webサーバーに関する情報です。
+  UbuntuにおけるApacheの設定ファイルの場所は「/etc/apache2」です。
 </p>
-<h3>Apacheのインストール</h3>
-<ul>
-  <li><a href="/blog/20200424174004.html">apache2のインストール - WebサーバーであるApacheのバージョン2系</a></li>
-</ul>
-<h3>Apacheの起動・停止・再起動・状態確認</h3>
-<ul>
-  <li><a href="/blog/20200519084454.html">Aapacheの起動・停止・再起動・状態確認</a></li>
-</ul>
-<h3>Apacheの設定ファイル</h3>
-<ul>
-  <li><a href="/blog/20200315174004.html">Apacheのデフォルトのドキュメントルート</a></li>
-  <li><a href="/blog/20200317174004.html">Apacheの設定ファイルの場所</a></li>
-  <li><a href="/blog/20200527151435.html">Apacheにおける環境変数の設定</a></li>
-  <li><a href="/blog/20200609132409.html">Apacheの設定ファイルが正しいかテストする</a></li>
-  <li><a href="/blog/20200610082714.html">Apacheの設定ファイルを有効・無効にする</a></li>
-</ul>
-<h3>Apacheモジュール</h3>
-<ul>
-  <li><a href="/blog/20200318174004.html">ApacheでHTTPSで通信できるようにmod_sslを有効化</a></li>
-</ul>
-<h3>データディレクトリ</h3>
-<ul>
-  <li><a href="/blog/20200322174004.html">Apacheの子プロセスの実行ユーザーがデータディレクトリに書き込む方法</a></li>
-</ul>
+<pre>
+ls /etc/apache2
+</pre>
+<p>
+  この中にApacheの設定ファイルが格納されています。
+</p>
+<pre>
+-rw-r--r-- 1 root root  7224 Mar 13 21:26 apache2.conf
+drwxr-xr-x 2 root root  4096 Jun 10 08:41 conf-available
+drwxr-xr-x 2 root root  4096 Jun 10 08:46 conf-enabled
+-rw-r--r-- 1 root root  1855 May 27 15:53 envvars
+-rw-r--r-- 1 root root  1782 May 27 15:42 envvars.bak
+-rw-r--r-- 1 root root 31063 Jul 17  2019 magic
+drwxr-xr-x 2 root root 12288 Jun  8 15:21 mods-available
+drwxr-xr-x 2 root root  4096 Jun  8 16:07 mods-enabled
+-rw-r--r-- 1 root root   320 Jul 17  2019 ports.conf
+drwxr-xr-x 2 root root  4096 May 26 14:59 sites-available
+drwxr-xr-x 2 root root  4096 May 26 14:59 sites-enabled
+</pre>
 
   </div>
   <div class="bottom">

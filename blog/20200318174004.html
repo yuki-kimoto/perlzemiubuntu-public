@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>Apache Webサーバー - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
-<meta name="description" content="Aapche Webサーバーに関する情報です。">
+<title>ApacheでHTTPSで通信できるようにmod_sslを有効化 - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="HTTPSで通信できるようにmod_sslを有効化しておきましょう。a2enmodというのは、「Apache2 Enable Module」の略のようです。">
   </head>
   <body>
     <div class="container">
@@ -55,34 +55,64 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200526151435.html">Apache Webサーバー</a></h2>
+    <h2><a href="/blog/20200318174004.html">ApacheでHTTPSで通信できるようにmod_sslを有効化</a></h2>
 <p>
-  Aapche Webサーバーに関する情報です。
+  HTTPSで通信できるようにmod_sslを有効化しておきましょう。a2enmodというのは、「Apache2 Enable Module」の略のようです。
 </p>
-<h3>Apacheのインストール</h3>
-<ul>
-  <li><a href="/blog/20200424174004.html">apache2のインストール - WebサーバーであるApacheのバージョン2系</a></li>
-</ul>
-<h3>Apacheの起動・停止・再起動・状態確認</h3>
-<ul>
-  <li><a href="/blog/20200519084454.html">Aapacheの起動・停止・再起動・状態確認</a></li>
-</ul>
-<h3>Apacheの設定ファイル</h3>
-<ul>
-  <li><a href="/blog/20200315174004.html">Apacheのデフォルトのドキュメントルート</a></li>
-  <li><a href="/blog/20200317174004.html">Apacheの設定ファイルの場所</a></li>
-  <li><a href="/blog/20200527151435.html">Apacheにおける環境変数の設定</a></li>
-  <li><a href="/blog/20200609132409.html">Apacheの設定ファイルが正しいかテストする</a></li>
-  <li><a href="/blog/20200610082714.html">Apacheの設定ファイルを有効・無効にする</a></li>
-</ul>
-<h3>Apacheモジュール</h3>
-<ul>
-  <li><a href="/blog/20200318174004.html">ApacheでHTTPSで通信できるようにmod_sslを有効化</a></li>
-</ul>
-<h3>データディレクトリ</h3>
-<ul>
-  <li><a href="/blog/20200322174004.html">Apacheの子プロセスの実行ユーザーがデータディレクトリに書き込む方法</a></li>
-</ul>
+<pre>
+sudo a2enmod ssl
+</pre>
+<p>
+  a2enmodコマンドは、利用可能なモジュールから、指定したモジュールの読み込みを有効にするものです。
+</p>
+<p>
+  設定ファイルの有効化が、ファイル編集なしで、コマンドだけで、完結します。
+</p>
+<p>
+  動作を理解するために、<a href="https://linux.perlzemi.com/blog/20191126082723.html">lsコマンド</a>で、Apacheの設定ファイルのディレクトリを見てみましょう。
+</p>
+<pre>
+ls /etc/apache2
+</pre>
+<p>
+  以下です。
+</p>
+<pre>
+apache2.conf    conf-enabled  magic           mods-enabled  sites-available
+conf-available  envvars       mods-available  ports.conf    sites-enabled
+</pre>
+<p>
+  「mods-available」の中に、ssl.confというファイルがあります。lsとgrepで確認します。
+</p>
+<pre>
+ls /etc/apache2/mods-available | grep ssl
+</pre>
+<p>
+  確かに「ssl.conf」があります。
+</p>
+<pre>
+ssl.conf
+ssl.load
+</pre>
+<p>
+  「mods-enabled」の中も見てみましょう。こちらは実際に読み込まれる設定ファイルです。
+</p>
+<pre>
+ls /etc/apache2/mods-enabled | grep ssl
+</pre>
+<p>
+  「ssl.conf」があります。
+</p>
+<pre>
+ssl.conf
+ssl.load
+</pre>
+<p>
+  「mods-enabled」の中に、設定ファイルが存在するかどうかで、有効/無効の切り替えを行っているんですね。
+</p>
+<p>
+  Apacheの再起動後に有効になります。
+</p>
 
   </div>
   <div class="bottom">

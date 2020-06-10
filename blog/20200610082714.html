@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>Apacheの設定ファイルを有効・無効にする - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="UbunutのApacheでは、コマンドによって、設定ファイルの有効・無効を切り替えるコマンドが存在します。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+<style>
+  .ubuntu-version {
+
+  }
+  .ubuntu-version ul {
+    
+  }
+  .ubuntu-version li {
+    display:inline-block;
+    background:pink;
+    color:white;
+    border-radisu:10px;
+    padding:3px 5px;
+    margin:0;
+    margin-right:5px;
+  }
+</style>
+
+<div class="ubuntu-version">
+  <ul>
+    <li>Ubuntu 20</li>
+    <li>Ubuntu 18</li>
+    <li>Ubuntu 16</li>
+  </ul>
+</div>
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200610082714.html">Apacheの設定ファイルを有効・無効にする</a></h2>
+<p>
+  UbunutのApacheでは、コマンドによって、設定ファイルの有効・無効を切り替えるコマンドが存在します。
+</p>
+<p>
+  Apacheの設定ファイルの場所は「/etc/apache2」です。
+</p>
+<p>
+  Apacheの設定ファイルのディレクトリ構成を見てください。設定ファイルに関するものだけを表示します。
+</p>
+<pre>
+-rw-r--r-- 1 root root  7224 Mar 13 21:26 apache2.conf
+drwxr-xr-x 2 root root  4096 Jun  8 15:37 conf-available
+drwxr-xr-x 2 root root  4096 Jun  8 15:37 conf-enabled
+drwxr-xr-x 2 root root 12288 Jun  8 15:21 mods-available
+drwxr-xr-x 2 root root  4096 Jun  8 16:07 mods-enabled
+-rw-r--r-- 1 root root   320 Jul 17  2019 ports.conf
+drwxr-xr-x 2 root root  4096 May 26 14:59 sites-available
+drwxr-xr-x 2 root root  4096 May 26 14:59 sites-enabled
+</pre>
+<p>
+  confで始まるものは、一般的な設定、modsで始まるものはApacheモジュールの設定、sitesで始まるものは、複数のサイトを運営するためのバーチャルホストの設定です。
+</p>
+<h4>有効になるApacheの設定ファイル</h4>
+<p>
+  Apacheの設定ファイルとしてが有効になるのは、以下です。設定が有効になるためには、以下のどれかに該当する必要があります。availableに格納されている設定ファイルは、そのままでは有効になりまｗせん。
+</p>
+<pre>
+#       /etc/apache2/
+#       |-- apache2.conf
+#       |       `--  ports.conf
+#       |-- mods-enabled
+#       |       |-- *.load
+#       |       `-- *.conf
+#       |-- conf-enabled
+#       |       `-- *.conf
+#       `-- sites-enabled
+#               `-- *.conf
+</pre>
+<h3>一般的な設定ファイル</h2>
+<p>
+  まず、あなたが新しく作る設定ファイルは、apache2.confの中に書きたくなりますが、これは、デフォルトのまま置いておくことをお勧めします。
+</p>
+<p>
+  あなたが新しく作る設定ファイルは「conf-available」の中に作成します。「myapache2.conf」という名前で配置してみましょう。<a href="https://linux.perlzemi.com/blog/20190401171737.html">viコマンド</a>で新規に作成します。
+</p>
+<pre>
+sudo vi conf-available/myapache2.conf
+</pre>
+<p>
+  保存して終了してください。
+</p>
+<h4>一般的なApacheの設定ファイルをa2enconfで有効にする</h4>
+<p>
+  次にこの設定ファイルa2enconfコマンドで有効にします。
+</p>
+<pre>
+sudo a2enconf myapache2
+</pre>
+<p>
+  <a href="https://linux.perlzemi.com/blog/20191126082723.html">ls</a>コマンドで「conf-enabled」の中を見てみます。
+</p>
+<pre>
+ls -l conf-enabled
+</pre>
+<p>
+  すると<a href="https://linux.perlzemi.com/blog/20200610092705.html">シンボリックリンク</a>が「conf-available/myapache2.conf」に対して作成されていることがわかります。
+</p>
+<pre>
+myapache2.conf -&gt; ../conf-available/myapache2.conf
+</pre>
+<p>
+  これで、あなたの作成したApacheの設定ファイルが有効になりました。
+</p>
+<p>
+  有効にした後は、Apacheに設定を反映させるには<a href="/blog/20200519084454.html">Apacheを再起動</a>する必要があります。
+</p>
+<h4>一般的なApacheの設定ファイルをa2disconfで無効にする</h4>
+<p>
+  無効にするには、a2disconfコマンドを使用します。
+</p>
+<pre>
+sudo a2disconf myapache2
+</pre>
+<p>
+  無効にした後は、Apacheに設定を反映させるにはApacheを再起動する必要があります。
+</p>
+<h3>モジュール設定ファイル</h2>
+<p>
+  Apacheのモジュールは、利用可能だが、有効化されていないものがあります。そのようなモジュールの設定は「mods-available」の中にあります。
+</p>
+<h4>Apacheのモジュールの設定ファイルをa2enmodで有効にする</h4>
+<p>
+  Apacheのモジュールの設定ファイルを有効にするにはa2enmodコマンドを使用します。sslモジュール(mod_ssl)を有効にしてみます。
+</p>
+<pre>
+sudo a2enmod ssl
+</pre>
+<p>
+  「mods-enabled」の中にシンボリックリンクが張られます。設定を反映させるにはApacheの再起動が必要です。
+</p>
+<h4>Apacheのモジュールの設定ファイルをa2dismodで無効にする</h4>
+<p>
+  Apacheのモジュールの設定ファイルを無効にするには、a2dismodコマンドを使用します。
+</p>
+<pre>
+sudo a2dismod ssl
+</pre>
+<p>
+  無効にした後は、設定を反映させるにはApacheの再起動が必要です。
+</p>
+<h3>複数のサイトを運営するためのバーチャルホストの設定ファイル</h2>
+<p>
+  Ubuntuでは、バーチャルホストで複数のサイトを運営するための「sites-available」ディレクトリが用意されています。
+</p>
+<p>
+  まず、新しくバーチャルホストの設定を書く場合は「sites-available」に設定ファイルを格納しましょう。
+</p>
+<p>
+  サイトのドメイン名を設定ファイルの名前にします。拡張子は「.conf」です。
+</p>
+<pre>
+vi www.mysite.example.conf
+</pre>
+<p>
+  この中にバーチャルホストの設定を書きましょう。
+</p>
+<h4>バーチャルホストの設定ファイルをa2ensiteで有効にする</h4>
+<p>
+  バーチャルホストの設定ファイルを有効にするにはa2ensiteコマンドを使用します。sslモジュール(mod_ssl)を有効にしてみます。
+</p>
+<pre>
+sudo a2ensite www.mysite.example
+</pre>
+<p>
+  「sites-enabled」の中にシンボリックリンクが張られます。設定を反映させるにはApacheの再起動が必要です。
+</p>
+<h4>バーチャルホストの設定ファイルをa2dissiteで無効にする</h4>
+<p>
+  バーチャルホストの設定ファイルを無効にするには、a2dissiteコマンドを使用します。
+</p>
+<pre>
+sudo a2dissite www.mysite.example
+</pre>
+<p>
+  無効にした後は、設定を反映させるにはApacheの再起動が必要です。
+</p>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発を学ぶ
+  </div>
+  <ul>
+    <li><a href="https://tutorial.perlzemi.com/">Perlプログラミングを学ぶ</a></li>
+    <li><a href="https://linux.perlzemi.com/">Linuxの仕組み・コマンドを学ぶ</a></li>
+    <li><a href="https://web.perlzemi.com/">Webシステム開発を学ぶ</a></li>
+  </ul>
+
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発の見積もり
+  </div>
+  <ul>
+    <li><a href="https://kimoto-system.co.jp/">Perl Webシステム開発の<br>木本システム株式会社</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="kimoto_system_link">
+  <a href="https://kimoto-system.co.jp">
+    <img src="https://kimoto-system.co.jp/images/kimoto-system-logo.png" alt="Perl Webシステム開発">
+    Perl Webシステム開発の木本システム
+  </a>
+</div>
+
+<div class="copyright">
+  Copyright © Yuki Kimoto
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>

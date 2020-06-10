@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>Apache Webサーバー - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
-<meta name="description" content="Aapche Webサーバーに関する情報です。">
+<title>CGIプログラムを利用するためにmod_cgidを有効化する - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="CGIプログラムを利用する場合はmod_cgidを有効化しましょう。">
   </head>
   <body>
     <div class="container">
@@ -55,34 +55,33 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200526151435.html">Apache Webサーバー</a></h2>
+    <h2><a href="/blog/20200316174004.html">CGIプログラムを利用するためにmod_cgidを有効化する</a></h2>
 <p>
-  Aapche Webサーバーに関する情報です。
+  CGIプログラムを利用する場合はmod_cgidを有効化しましょう。
 </p>
-<h3>Apacheのインストール</h3>
-<ul>
-  <li><a href="/blog/20200424174004.html">apache2のインストール - WebサーバーであるApacheのバージョン2系</a></li>
-</ul>
-<h3>Apacheの起動・停止・再起動・状態確認</h3>
-<ul>
-  <li><a href="/blog/20200519084454.html">Aapacheの起動・停止・再起動・状態確認</a></li>
-</ul>
-<h3>Apacheの設定ファイル</h3>
-<ul>
-  <li><a href="/blog/20200315174004.html">Apacheのデフォルトのドキュメントルート</a></li>
-  <li><a href="/blog/20200317174004.html">Apacheの設定ファイルの場所</a></li>
-  <li><a href="/blog/20200527151435.html">Apacheにおける環境変数の設定</a></li>
-  <li><a href="/blog/20200609132409.html">Apacheの設定ファイルが正しいかテストする</a></li>
-  <li><a href="/blog/20200610082714.html">Apacheの設定ファイルを有効・無効にする</a></li>
-</ul>
-<h3>Apacheモジュール</h3>
-<ul>
-  <li><a href="/blog/20200318174004.html">ApacheでHTTPSで通信できるようにmod_sslを有効化</a></li>
-</ul>
-<h3>データディレクトリ</h3>
-<ul>
-  <li><a href="/blog/20200322174004.html">Apacheの子プロセスの実行ユーザーがデータディレクトリに書き込む方法</a></li>
-</ul>
+<p>
+  CGIのプログラムが存在して、CGIプログラムを実行する必要がある場合に、この手順を実行してください。
+</p>
+<p>
+  新規に<a href="https://web.perlzemi.com/">Webシステム開発</a>を行う場合は、リアルタイムWeb・クラウドサーバー対応できる開発手法をお勧めしています。
+</p>
+<h4>mod_cgidを有効化</h4>
+<p>
+  mod_cgidはApacheモジュールですが、<a href="/blog/20200610082714.html">Apacheモジュールを有効化</a>するにはa2enmodコマンドを使用します。
+</p>
+<pre>
+sudo a2enmod cgid
+</pre>
+<p>
+  有効化した後は、<a href="/blog/20200519084454.html">Apacheの再起動</a>が必要です。
+</p>
+<h3>mod_cgiとmod_cgidの違い</h3>
+<p>
+  ユーザーから見た場合、ひとつの例外を除いて、mod_cgidはmod_cgidと同じ動作をするようです。コストが小さいmod_cgidを選んでおくとよいようです。
+</p>
+<p>
+  <a href="https://httpd.apache.org/docs/2.4/ja/mod/mod_cgid.html">Apache モジュール mod_cgid</a>
+</p>
 
   </div>
   <div class="bottom">
