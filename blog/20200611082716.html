@@ -124,6 +124,9 @@ Include conf-available/ssl-basic.conf
 <p>
   ですので、80番ポートで、受けたHTTPリクエストは最初から、HTTPS(443)にリダイレクトするようにしておきましょう。リバースプロキシで、Webアプリケーションが起動していることを前提とします。
 </p>
+<p>
+  SSLの設定を有効にして、最初から準備されている自己SSL証明書を読み込みます。「SSLEngine on」だけでは、HTTPSでの接続に失敗するので注意しましょう。
+</p>
 <pre>
 &lt;VirtualHost *:80&gt;
   ServerName www.mydomain.example
@@ -143,6 +146,10 @@ Include conf-available/ssl-basic.conf
   ProxyPass / http://localhost:20013/ keepalive=On
   ProxyPassReverse / http://localhost:20013/
   RequestHeader set X-Forwarded-Proto "https"
+
+  SSLEngine on
+  SSLCertificateFile      /etc/ssl/certs/ssl-cert-snakeoil.pem
+  SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
 &lt;/VirtualHost&gt;
 </pre>
 <p>

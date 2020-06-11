@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>Apacheにmod_phpをインストールする - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
-<meta name="description" content="Apacheにmod_phpをインストールします。Apacheで、PHPアプリケーション動かす必要がある場合に、必要です。ApacheでPHPを実行するには、PHPのインストールも必要です。">
+<title>libapache2-mod-phpのインストール - Apacheのmod_phpモジュール - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
+<meta name="description" content="Apache上でPHPを実行するにはlibapache2-mod-phpをインストールします。PHPがインストールされていることが前提です。">
   </head>
   <body>
     <div class="container">
@@ -74,28 +74,13 @@
     </li>
   </ul>
 </div>
-<h2><a href="/blog/20200320174004.html">Apacheにmod_phpをインストールする</a></h2>
+<h2><a href="/blog/20200307174004.html">libapache2-mod-phpのインストール - Apacheのmod_phpモジュール</a></h2>
 <p>
-  Apacheにmod_phpをインストールします。Apacheで、PHPアプリケーション動かす必要がある場合に、必要です。ApacheでPHPを実行するには、<a href="/blog/20200321174004.html">PHPのインストール</a>も必要です。
+  Apache上でPHPを実行するにはlibapache2-mod-phpをインストールします。PHPがインストールされていることが前提です。
 </p>
 <pre>
-sudo apt install -y libapache2-mod-php
+sudo apt install libapache2-mod-php
 </pre>
-<p>
-  mod_phpをインストールしたら、次は、mod_phpを有効にしましょう。(2020年6月8日記載。Ubuntu 18。PHPバージョンは7.2)
-</p>
-<pre>
-sudo a2enmod php7.2
-</pre>
-<p>
-  最後にApacheを再起動して完了です。
-</p>
-<pre>
-sudo systemctl reload apache2
-</pre>
-<p>
-  これで、PHPアプリケーションがApache上で動くようになりました。
-</p>
 
   </div>
   <div class="bottom">
