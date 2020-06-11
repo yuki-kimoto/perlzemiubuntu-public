@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>Apacheの設定ファイルをGitで管理する - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="UbuntuのApacheの設定ファイルは、Gitで管理しやすいようになっているので、Gitで管理してみましょう。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+<style>
+  .ubuntu-version {
+
+  }
+  .ubuntu-version ul {
+    
+  }
+  .ubuntu-version li {
+    display:inline-block;
+    background:pink;
+    color:white;
+    border-radisu:10px;
+    padding:3px 5px;
+    margin:0;
+    margin-right:5px;
+  }
+</style>
+
+<div class="ubuntu-version">
+  <ul>
+    <li>Ubuntu 20</li>
+    <li>Ubuntu 18</li>
+    <li>Ubuntu 16</li>
+  </ul>
+</div>
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200312174004.html">Apacheの設定ファイルをGitで管理する</a></h2>
+<p>
+  UbuntuのApacheの設定ファイルは、<a href="https://git.perlzemi.com/">Git</a>で管理しやすいようになっているので、Gitで管理してみましょう。
+</p>
+<pre>
+cd /etc/apache2
+</pre>
+<h4>Gitリポジトリの初期化</h4>
+<p>
+  Gitリポジトリとして初期化するには「<a href="https://git.perlzemi.com/blog/20200605092020.html">git init</a>」を使用します。
+</p>
+<pre>
+sudo git init
+</pre>
+<h4>.gitignoreの作成</h4>
+<p>
+  conf-enabled, mods-enabled, sites-enabledは、環境ごとに有効になっている設定ファイルですので、<a href="https://git.perlzemi.com/blog/20200610092020.html">.gitignore</a>を使ってGitの管理からはずしましょう。<a href="https://linux.perlzemi.com/blog/20190401171737.html">vi</a>コマンドで、編集します。
+</p>
+<pre>
+sudo vi .gitignore
+</pre>
+<p>
+  以下の設定を記述します。これでconf-enabled, mods-enabled, sites-enabledは、Gitの管理からはずれます。
+</p>
+<pre>
+*-enable
+</pre>
+<h4>管理方法のコツ</h4>
+<p>
+  apache2.conf, envvars, magic, ports.confは、デフォルトのまま手を加えないのがお勧めです。
+</p>
+<p>
+  xxx-availableに、開発環境と本番環境におけるすべての設定ファイルを、含めてしまいましょう。
+</p>
+<h4>ステージング環境に乗せる</h4>
+<p>
+  次に、「git addコマンド」を使って、管理したいファイルをステージング環境に載せます。カレントディレクトリ以下のすべてのファイルをステージング環境に乗せるには「.」を指定します。
+</p>
+<pre>
+sudo git add .
+</pre>
+<p>
+  ステージング環境に乗ったファイルを「git statusコマンド」で確認しましょう。
+</p>
+<pre>
+sudo git status
+</pre>
+<p>
+  間違ってしまった場合は「git reset」でいったん元に戻しましょう。
+</p>
+<pre>
+sudo git reset
+</pre>
+<p>
+  正しくステージングされていたら、最後にコミットです。
+</p>
+<pre>
+sudo git commit -m "first commit"
+</pre>
+<p>
+  Githubなどのリモートリポジトリにpushしましょう。リモートリポジトリからの取り込み、リモートリポジトリへの反映については、別の場所で扱います。
+</p>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発を学ぶ
+  </div>
+  <ul>
+    <li><a href="https://tutorial.perlzemi.com/">Perlプログラミングを学ぶ</a></li>
+    <li><a href="https://linux.perlzemi.com/">Linuxの仕組み・コマンドを学ぶ</a></li>
+    <li><a href="https://web.perlzemi.com/">Webシステム開発を学ぶ</a></li>
+  </ul>
+
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発の見積もり
+  </div>
+  <ul>
+    <li><a href="https://kimoto-system.co.jp/">Perl Webシステム開発の<br>木本システム株式会社</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="kimoto_system_link">
+  <a href="https://kimoto-system.co.jp">
+    <img src="https://kimoto-system.co.jp/images/kimoto-system-logo.png" alt="Perl Webシステム開発">
+    Perl Webシステム開発の木本システム
+  </a>
+</div>
+
+<div class="copyright">
+  Copyright © Yuki Kimoto
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>

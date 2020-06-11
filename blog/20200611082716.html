@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>SSL証明書の設定をApacheの設定ファイルに記述する - Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</title>
+<meta name="description" content="SSLの設定をApacheの設定ファイルの例を紹介します。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー構築入門 - UbuntuでPerl Webシステム開発</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+<style>
+  .ubuntu-version {
+
+  }
+  .ubuntu-version ul {
+    
+  }
+  .ubuntu-version li {
+    display:inline-block;
+    background:pink;
+    color:white;
+    border-radisu:10px;
+    padding:3px 5px;
+    margin:0;
+    margin-right:5px;
+  }
+</style>
+
+<div class="ubuntu-version">
+  <ul>
+    <li>Ubuntu 20</li>
+    <li>Ubuntu 18</li>
+    <li>Ubuntu 16</li>
+  </ul>
+</div>
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200611082716.html">SSL証明書の設定をApacheの設定ファイルに記述する</a></h2>
+<p>
+  SSLの設定をApacheの設定ファイルの例を紹介します。
+</p>
+<p>
+  ApacheでHTTPSを有効にする場合は、Let's Encryptなどを使ってSSL証明書を取得して、Apacheの設定ファイルにSSLの設定を行う必要があります。
+</p>
+<p>
+  SSLの設定で行うことは、二種類あって、すべてのサイトで共通させるSSLの基本設定と、各サイトごとに異なるSSL証明書のパスの設定です。
+</p>
+<h3>SSLの基本設定</h3>
+<p>
+  SSLの基本設定の例です。必須であるのは「SSLEngine on」です。残りの設定は、SSLのセキュリティの脆弱性を減らし、セキュリティを高めるための設定です。
+</p>
+<p>
+  これは、Let's Encryptが設定したSSLの設定をそのまま記載したものです。
+</p>
+<pre>
+SSLEngine on
+SSLProtocol             all -SSLv2 -SSLv3
+SSLCipherSuite          ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA:ECDHE-ECDSA-DES-CBC3-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:DES-CBC3-SHA:!DSS
+SSLHonorCipherOrder     on
+</pre>
+<p>
+  すべてのサイトで共通させることができるので「conf-available/ssl-basic.conf」というファイル名を<a href="https://linux.perlzemi.com/blog/20190401171737.html">viエディタ</a>で作成して、各サイトのバーチャルホストの設定からインクルードしましょう。
+</p>
+<pre>
+cd /etc/apache2
+sudo vi conf-available/ssl-basic.conf
+</pre>
+<p>
+  Apache設定ファイルでインクルード。
+</p>
+<pre>
+Include conf-available/ssl-basic.conf
+</pre>
+<h3>各サイトごとのSSL証明書のパスの設定</h3>
+<p>
+  各サイトごとのSSL証明書のパスの設定ですが、三つのファイルのパスを記載する必要があります。SSLは公開鍵認証なので、サーバー側に秘密鍵が必要であること、中間証明書が合わせて必要なことを覚えておきましょう。実装の詳細などの詳しい内容については、セキュリティの専門家の方にお尋ねください。
+</p>
+<ul>
+  <li>SSL証明書</li>
+  <li>SSL証明書の秘密鍵</li>
+  <li>SSL証明書の中間証明書</li>
+</ul>
+<p>
+  これを各サイトのバーチャルホストの設定に記述しましょう。以下は、Let's Encryptで生成された、SSL証明書のファイルです。
+</p>
+<pre>
+  SSLCertificateFile /etc/letsencrypt/live/www.mydomain.example/cert.pem
+  SSLCertificateKeyFile /etc/letsencrypt/live/www.mydomain.example/privkey.pem
+  SSLCertificateChainFile /etc/letsencrypt/live/www.mydomain.example/chain.pem
+</pre>
+<h3>設定ファイルを作成する手順</h3>
+<p>
+  ここで、SSLの設定ファイルを作成する手順について書いておきます。実は、Let's Encryptで生成された、SSL証明書を利用する場合は、一度でApacheの設定ファイルの設定を行うことができないからです。
+</p>
+<p>
+  なぜなら、Let's Encryptは、実際にそのHTTPサーバーにアクセスできるということで、SSL証明書の所有者の確認を行うからです。
+</p>
+<p>
+  つまり、まず最初に、80番ポートで、Let's Encryptからくる確認のHTTPリクエストがアクセス可能な状態にして、おく必要があります。
+</p>
+<p>
+  ただし、HTTPで80番ポートで設定して、また443のHTTPSの設定を行うということは、面倒です。
+</p>
+<p>
+  ですので、80番ポートで、受けたHTTPリクエストは最初から、HTTPS(443)にリダイレクトするようにしておきましょう。リバースプロキシで、Webアプリケーションが起動していることを前提とします。
+</p>
+<pre>
+&lt;VirtualHost *:80&gt;
+  ServerName www.mydomain.example
+
+  RewriteEngine on
+  RewriteRule (.*)?$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+&lt;/VirtualHost&gt;
+
+&lt;VirtualHost *:443&gt;
+  ServerName www.mydomain.example
+  &lt;Proxy *&gt;
+    Require all granted
+  &lt;/Proxy&gt;
+
+  ProxyRequests Off
+  ProxyPreserveHost On
+  ProxyPass / http://localhost:20013/ keepalive=On
+  ProxyPassReverse / http://localhost:20013/
+  RequestHeader set X-Forwarded-Proto "https"
+&lt;/VirtualHost&gt;
+</pre>
+<p>
+  そして、SSL証明書が取得できると、以下の設定に修正します。
+</p>
+<p>
+  Let's Encryptのcertbotが自動的にApacheのSSL証明書の設定してくれる場合もあるのですが、Apacheの設定ファイルのディレクトリ外から設定ファイルを読み込むため、<a href="/blog/20200312174004.html">Gitでの設定ファイルの管理</a>のしやすさという面を考慮して、手動で設定することをお勧めしておきます。
+</p>
+<pre>
+&lt;VirtualHost *:80&gt;
+  ServerName www.mydomain.example
+
+  RewriteEngine on
+  RewriteRule (.*)?$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+&lt;/VirtualHost&gt;
+
+&lt;VirtualHost *:443&gt;
+  ServerName www.mydomain.example
+  &lt;Proxy *&gt;
+    Require all granted
+  &lt;/Proxy&gt;
+
+  ProxyRequests Off
+  ProxyPreserveHost On
+  ProxyPass / http://localhost:20013/ keepalive=On
+  ProxyPassReverse / http://localhost:20013/
+  RequestHeader set X-Forwarded-Proto "https"
+
+  Include conf-available/ssl-basic.conf
+  SSLCertificateFile /etc/letsencrypt/live/www.sekayu.jp/cert.pem
+  SSLCertificateKeyFile /etc/letsencrypt/live/www.sekayu.jp/privkey.pem
+  SSLCertificateChainFile /etc/letsencrypt/live/www.sekayu.jp/chain.pem
+&lt;/VirtualHost&gt;
+</pre>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発を学ぶ
+  </div>
+  <ul>
+    <li><a href="https://tutorial.perlzemi.com/">Perlプログラミングを学ぶ</a></li>
+    <li><a href="https://linux.perlzemi.com/">Linuxの仕組み・コマンドを学ぶ</a></li>
+    <li><a href="https://web.perlzemi.com/">Webシステム開発を学ぶ</a></li>
+  </ul>
+
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発の見積もり
+  </div>
+  <ul>
+    <li><a href="https://kimoto-system.co.jp/">Perl Webシステム開発の<br>木本システム株式会社</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="kimoto_system_link">
+  <a href="https://kimoto-system.co.jp">
+    <img src="https://kimoto-system.co.jp/images/kimoto-system-logo.png" alt="Perl Webシステム開発">
+    Perl Webシステム開発の木本システム
+  </a>
+</div>
+
+<div class="copyright">
+  Copyright © Yuki Kimoto
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>
