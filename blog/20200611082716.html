@@ -125,7 +125,7 @@ Include conf-available/ssl-basic.conf
   ですので、80番ポートで、受けたHTTPリクエストは最初から、HTTPS(443)にリダイレクトするようにしておきましょう。リバースプロキシで、Webアプリケーションが起動していることを前提とします。
 </p>
 <p>
-  SSLの設定を有効にして、最初から準備されている自己SSL証明書を読み込みます。「SSLEngine on」だけでは、HTTPSでの接続に失敗するので注意しましょう。
+  SSLの設定を有効にして、最初から準備されている<a href="/blog/20200307174004.html">自己SSL証明書</a>を読み込みます。「SSLEngine on」だけでは、HTTPSでの接続に失敗するので注意しましょう。
 </p>
 <pre>
 &lt;VirtualHost *:80&gt;

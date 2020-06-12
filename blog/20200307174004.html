@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>libapache2-mod-phpのインストール - Apacheのmod_phpモジュール - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
-<meta name="description" content="Apache上でPHPを実行するにはlibapache2-mod-phpをインストールします。PHPがインストールされていることが前提です。">
+<title>自己SSL証明書の場所 - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
+<meta name="description" content="本番環境では、本物のSSL証明書を使いますが、試験環境では、HTTPSの試験を行うためだけに、SSL証明書を取得するのは手間がかかかるので、自己SSL証明書を使いたい場合があります。">
   </head>
   <body>
     <div class="container">
@@ -55,31 +55,24 @@
 
   </div>
   <div class="middle">
-    <div class="bread">
-  <ul itemscope itemtype="http://schema.org/BreadcrumbList">
-    <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-      <a itemprop="item" href="/">
-        <span itemprop="name">Ubuntu</span>
-      </a>
-      <meta itemprop="position" content="1" />
-    </li>
-    <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-      <a itemprop="item" href="/blog/20200529085516.html">
-        <span itemprop="name">パッケージ管理</span>
-      </a>
-      <meta itemprop="position" content="2" />
-    </li>
-    <li>
-      here
-    </li>
-  </ul>
-</div>
-<h2><a href="/blog/20200307174004.html">libapache2-mod-phpのインストール - Apacheのmod_phpモジュール</a></h2>
+    <h2><a href="/blog/20200307174004.html">自己SSL証明書の場所</a></h2>
 <p>
-  Apache上でPHPを実行するにはlibapache2-mod-phpをインストールします。PHPがインストールされていることが前提です。
+  本番環境では、本物のSSL証明書を使いますが、試験環境では、HTTPSの試験を行うためだけに、SSL証明書を取得するのは手間がかかかるので、自己SSL証明書を使いたい場合があります。
+</p>
+<p>
+  Ubuntuにおける自己SSL証明書の場所は以下になります。自己SSL証明書と自己SSL証明書の秘密鍵です。
 </p>
 <pre>
-sudo apt install libapache2-mod-php
+自己SSL証明書      /etc/ssl/certs/ssl-cert-snakeoil.pem
+自己SSL証明書の秘密鍵 /etc/ssl/private/ssl-cert-snakeoil.key
+</pre>
+<h4>Apacheにおける自己SSL証明書と自己SSL証明書の秘密鍵の設定</h4>
+<p>
+  Apacheにおける自己SSL証明書と自己SSL証明書の秘密鍵の設定です。中間証明書ファイルは、指定する必要がありません。
+</p>
+<pre>
+  SSLCertificateFile      /etc/ssl/certs/ssl-cert-snakeoil.pem
+  SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
 </pre>
 
   </div>

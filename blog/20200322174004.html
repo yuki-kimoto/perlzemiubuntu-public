@@ -72,16 +72,16 @@ www-data 115206   1624  0 06:25 ?        00:00:00 /usr/sbin/apache2 -k start
 www-data 115207   1624  0 06:25 ?        00:00:00 /usr/sbin/apache2 -k start
 </pre>
 <p>
-  Ubuntuサーバー構築入門では、アプリケーション用のグループ「myapp」を作成して、グループに所属するユーザーがデータディレクトリに書き込める運用を紹介しています。
+  Ubuntuサーバー構築入門では、アプリケーション用のグループ「myapp-group」を作成して、グループに所属するユーザーがデータディレクトリに書き込める運用を紹介しています。
 </p>
 <ul>
   <li><a href="/blog/20200327174004.html">データディレクトリに複数のユーザーが読み書きする方法 - Webアプリのファイルアップロードディレクトリ</a></li>
 </ul>
 <p>
-  もし、CGIアプリケーションが存在して、Aapcheで起動される場合に、このデータディレクトリに、ファイルを書き込むためには「www-data」ユーザーを、<a href="/blog/20200330174004.html">gpasswd</a>コマンドで、myappグループに追加してください。
+  もし、CGIアプリケーションが存在して、Aapcheで起動される場合に、このデータディレクトリに、ファイルを書き込むためには「www-data」ユーザーを、<a href="/blog/20200330174004.html">gpasswd</a>コマンドで、myapp-groupグループに追加してください。
 </p>
 <pre>
-sudo gpasswd -a www-data myapp
+sudo gpasswd -a www-data myapp-group
 </pre>
 
   </div>

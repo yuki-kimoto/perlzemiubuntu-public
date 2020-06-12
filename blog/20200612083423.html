@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>Apacheでドキュメントルート化でCGIを実行できるようにする設定 - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
+<meta name="description" content="UbuntuのApacheでドキュメントルート化でCGIを実行できるようにする設定の解説です。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー構築入門</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+<style>
+  .ubuntu-version {
+
+  }
+  .ubuntu-version ul {
+    
+  }
+  .ubuntu-version li {
+    display:inline-block;
+    background:pink;
+    color:white;
+    border-radisu:10px;
+    padding:3px 5px;
+    margin:0;
+    margin-right:5px;
+  }
+</style>
+
+<div class="ubuntu-version">
+  <ul>
+    <li>Ubuntu 20</li>
+    <li>Ubuntu 18</li>
+    <li>Ubuntu 16</li>
+  </ul>
+</div>
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200612083423.html">Apacheでドキュメントルート化でCGIを実行できるようにする設定</a></h2>
+<p>
+  UbuntuのApacheでドキュメントルート化でCGIを実行できるようにする設定の解説です。
+</p>
+<p>
+  UbuntuのApacheの設定ではCGIを利用するための<a href="/blog/20200316174004.html">mod_cgidを有効にする</a>ことを行っても「/usr/lib/cgi-bin/」以下でしかCGIを実行することができません。
+</p>
+<p>
+  これは、セキュアですが、すでに作成されているCGIアプリケーションの多くは、ドキュメントルート化で動くことが求められるでしょう。
+</p>
+<p>
+  新規にPerlで<a href="https://web.perlzemi.com/">Webシステム開発</a>を行う場合は、セキュリティ、開発効率、リアルタイムWeb、クラウドサーバーなどを総合的に考慮して、リバースプロキシ運用をお勧めします。
+</p>
+<h4>ドキュメントルート下でCGIを実行するためのApacheの設定ファイル</h3>
+<p>
+  ドキュメントルート下でCGIを実行のためのApacheの設定ファイルです。<a href="blog/20200314174004.html">デフォルトのバーチャルホスト</a>の中で運用することを想定しています。
+</p>
+<p>
+  デフォルトのバーチャルホストは、最初に読み込まれる必要があるために「000-default.conf」のように、前に「000」を付けるなどして、最初に読み込まれるファイル名にする必要があることに注意してください。
+</p>
+<VirtualHost *:80>
+  ServerName www.mydomain.example
+  AddHandler cgi-script .cgi
+  DocumentRoot "/var/www/html"
+  <Directory /var/www/html>
+    Options +ExecCGI
+  </Directory>
+</VirtualHost>
+<h3>HTTPSで運用する</h3>
+<p>
+  CGIプログラムをHTTPSで運用したい場合は以下の記事でSSL証明書の設定方法を解説しています。
+</p>
+<ul>
+  <li><a href="/blog/20200611082716.html">SSL証明書の設定をApacheの設定ファイルに記述する</a></li>
+</ul>
+<h3>ユーザーPerlでCGIプログラムを実行する</h3>
+<p>
+  システムPerlではなく、ユーザーPerlでプログラムを実行したい場合は、以下の記事を参考にしてください。
+</p>
+<ul>
+  <li><a href="/blog/20200308174004.html">ApacheのCGIプログラムでユーザーPerlを利用する方法</a></li>
+</ul>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/">Ubuntuサーバー構築入門</a></li>
+    <li><a href="/blog/20200529085516.html">パッケージ管理</a></li>
+    <li><a href="/blog/20200526151435.html">Apache</a></li>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発を学ぶ
+  </div>
+  <ul>
+    <li><a href="https://tutorial.perlzemi.com/">Perlプログラミングを学ぶ</a></li>
+    <li><a href="https://linux.perlzemi.com/">Linuxの仕組み・コマンドを学ぶ</a></li>
+    <li><a href="https://web.perlzemi.com/">Webシステム開発を学ぶ</a></li>
+  </ul>
+
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発の見積もり
+  </div>
+  <ul>
+    <li><a href="https://kimoto-system.co.jp/">Perl Webシステム開発の<br>木本システム株式会社</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="kimoto_system_link">
+  <a href="https://kimoto-system.co.jp">
+    <img src="https://kimoto-system.co.jp/images/kimoto-system-logo.png" alt="Perl Webシステム開発">
+    Perl Webシステム開発の木本システム
+  </a>
+</div>
+
+<div class="copyright">
+  Copyright © Yuki Kimoto
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>

@@ -63,7 +63,7 @@
   これは、PerlでWebシステム開発を行っている場合に、別々の開発ユーザー起動したWebアプリケーションが、データ保存ディレクトリに、ファイルアップロードを行う場合に、直面する問題です。特定のユーザーだけではなく、複数のユーザーが読み書きできるようにします。
 </p>
 <p>
-  データ保存ディレクトリ以下のファイルすべてに「myapp」という所有者グループを設定して、特別なパーミッションSGIDをデータ保存ディレクトリ(トップディレクトリ)に設定することで、新規に作成されるファイルも、同じグループを持たせることができます。
+  データ保存ディレクトリ以下のファイルすべてに「myapp-group」という所有者グループを設定して、特別なパーミッションSGIDをデータ保存ディレクトリ(トップディレクトリ)に設定することで、新規に作成されるファイルも、同じグループを持たせることができます。
 </p>
 <p>
   SGIDというのはSet Group IDの略です。ディレクトリに設定することで、ディレクトリ以下のファイルが新規作成された場合に、所有者グループが、トップディレクトリと同じものになります。
@@ -74,25 +74,25 @@
 </p>
 <h4>アプリケーション用のグループの作成</h4>
 <p>
-  アプリケーション用のグループを<a href="/blog/20200405174004.html">groupadd</a>コマンドで作成します。名前は「myapp」とします。
+  アプリケーション用のグループを<a href="/blog/20200405174004.html">groupadd</a>コマンドで作成します。名前は「myapp-group」とします。
 </p>
 <pre>
-sudo groupadd myapp
+sudo groupadd myapp-group
 </pre>
-<h4>myappグループに開発ユーザーを追加</h4>
+<h4>myapp-groupグループに開発ユーザーを追加</h4>
 <p>
-  myappグループに<a href="/blog/20200330174004.html">gpasswd</a>コマンドで、開発ユーザーを追加します。
+  myapp-groupグループに<a href="/blog/20200330174004.html">gpasswd</a>コマンドで、開発ユーザーを追加します。
 </p>
 <pre>
-sudo gpasswd -d kimoto myapp
-sudo gpasswd -d yamada myapp
+sudo gpasswd -d kimoto myapp-group
+sudo gpasswd -d yamada myapp-group
 </pre>
-<h4>データディレクトリ以下にあるファイルの所有者グループを再帰的にmyappに変更</h4>
+<h4>データディレクトリ以下にあるファイルの所有者グループを再帰的にmyapp-groupに変更</h4>
 <p>
-  データディレクトリ以下にあるファイルの所有者グループを<a href="https://linux.perlzemi.com/blog/20200604095018.html">chgrp</a>コマンドで再帰的にmyappに変更
+  データディレクトリ以下にあるファイルの所有者グループを<a href="https://linux.perlzemi.com/blog/20200604095018.html">chgrp</a>コマンドで再帰的にmyapp-groupに変更
 </p>
 <pre>
-sudo chgrp -R myapp /datadrive
+sudo chgrp -R myapp-group /datadrive
 </pre>
 <h4>グループの書き込み権限を与える</h4>
 <p>
@@ -118,7 +118,7 @@ ls -l /datadrive
   出力結果の一部です。
 </p>
 <pre>
-drwxr-sr-x   7 kimoto myapp  115 Jun  3 10:36 /datadrive
+drwxr-sr-x   7 kimoto myapp-group  115 Jun  3 10:36 /datadrive
 </pre>
 <p>
   これで、複数の開発者が起動するWebアプリケーションによって、アップロードされるファイルのためのデータディレクトリの準備ができました。
