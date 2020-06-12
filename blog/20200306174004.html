@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>WebサイトをバーチャルホストとリバースプロキシでApacheから接続する - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
+<meta name="description" content="WebサイトをバーチャルホストとリバースプロキシでApacheから接続する方法を解説します。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー構築入門</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+<style>
+  .ubuntu-version {
+
+  }
+  .ubuntu-version ul {
+    
+  }
+  .ubuntu-version li {
+    display:inline-block;
+    background:pink;
+    color:white;
+    border-radisu:10px;
+    padding:3px 5px;
+    margin:0;
+    margin-right:5px;
+  }
+</style>
+
+<div class="ubuntu-version">
+  <ul>
+    <li>Ubuntu 20</li>
+    <li>Ubuntu 18</li>
+    <li>Ubuntu 16</li>
+  </ul>
+</div>
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200306174004.html">WebサイトをバーチャルホストとリバースプロキシでApacheから接続する</a></h2>
+<p>
+  WebサイトをバーチャルホストとリバースプロキシでApacheから接続する方法を解説します。
+</p>
+<p>
+  Perlで新規に<a href="https://web.perlzemi.com/">Webシステム開発</a>を行う場合に、セキュリティ、開発効率、リアルタイムWeb、クラウドサーバー対応など複合的な理由で、リバースプロキシ構成で、Webサイトを作成することを推奨しています。
+</p>
+<h3>なぜリバースプロキシ構成で運用するか</h3>
+<p>
+  なぜCGIプログラムのように配置するだけで動かせる方法ではなく、リバースプロキシ構成で運用することを推奨するかという理由を書きます。
+</p>
+<h4>セキュリティリスクの軽減</h4>
+<p>
+  CGIプログラムと比較すると、Webフレームワークを使用することで、セキュリティリスクを最小限に抑えることができます。一般的にいうと、Webフレームワークは、文字列をHTMLに出力する場合は、エスケープしてくれるなど、Webの脆弱性に対してあらかじめ対策をとってくれています。もちろん、それだけで安全というわけではないのですが、フレームワークの流儀に従うことで、セキュリティリスクを減らすことができます。
+</p>
+<h4>開発効率</h4>
+<p>
+  Webフレームワークを使うと、ユーザー環境で、Webサイトの試験を行うことができます。Apacheの上でCGIを動かすのではなく、各ユーザーのホームディレクトリの中で、Webサイトを起動して、開発を行うことができます。Webフレームワークが表示するエラーメッセージは親切です。開発効率を高めることができます。
+</p>
+<h4>実行速度</h4>
+<p>
+  Webフレームワークを使って、WebサイトをPerlのWebサーバーで起動すれば、CGIのように毎回プロセスを起動することはなく、高速な実行速度を得ることができます。
+</p>
+<h4>リアルタイムWeb</h4>
+<p>
+  push通知、ストリーミング、リアルタイム更新、リアルタイムチャットと呼ばれる、現代的なWeb手法がありますが、これはCGIで実現することができません。リアルタイムWebに対応したWebフレームワークを使って、Webサイトを起動し、Apacheからリバースプロキシで接続すれば、これを実現することができます。
+</p>
+<h4>クラウドサーバー対応</h4>
+<p>
+  CGIプログラムは、実行速度が遅く、サーバーを増やして負荷分散機につなぐなどの、スケーラビリティを持っていません。一方、Webサイトを起動して、これをApacheのリバースプロキシからつなぐようにしておくと、これはサーバー間疎結合ですので、Apacheのリバースプロキシからの接続を負荷分散機からの接続変えるということが、自然にできます。
+</p>
+<h3>Apacheのバーチャルホストの主な機能</h3>
+<p>
+  まずApacheのバーチャルホストの機能について解説します。Apacheのバーチャルホストとは、簡単にいうと、ドメインが異なる複数のWebサイトを運用するための機能です。
+</p>
+<p>
+  つまり、ドメインが異なる複数のWebサイトを運営したい場合は、Apacheのバーチャルホストという機能を使うことになります。複数のサイトを運営したいという場合は、非常に頻繁に起こりますので、ひとつのWebサイトであっても、最初からバーチャルホストでApachenの設定ファイルを作っておくことを、お勧めします。
+</p>
+<h3>リバースプロキシとはなにか?</h3>
+<p>
+  リバースプロキシとは、簡単にいうと、Apacheへのアクセスを、他のサーバーへ転送する機能です。ユーザは、WebブラウザなどのHTTPクライアントからApacheに接続します。その接続を、別のサーバーに接続することができます。
+</p>
+<p>
+  PerlのWebサイトをHTTPサーバーとして起動して、特定のポートで待ち受けます。これは、Webフレームワークが提供している機能です。たとえば、20020番ポートで、待ち受けます。
+</p>
+<p>
+  Apacheでリバースプロキシの設定を行って、これを、PerlのWebサイトに接続します。バーチャルホストを使うと、異なるドメインであれば、別のポートに接続することができますから、異なるポートでWebサイトを起動して、ドメインに応じて、接続すれば、複数のWebサイトを運用できます。
+</p>
+<h3>Apacheのバーチャルホストとリバースプロキシの設定</h3>
+<p>
+  まず設定ファイルは以下のディレクトリに配置します。
+</p>
+<pre>
+/etc/apache2/sites-available
+</pre>
+<p>
+  この設定ファイルのディレクトリについては、以下のページで詳しく解説しています。
+</p>
+<ul>
+  <li><a href="/blog/20200610082714.html">Apache設定ファイルを有効・無効にする - 基本設定・モジュール設定・サイト設定</a></li>
+</ul>
+<p>
+  サイトのドメイン名(ここではwww.mydomain.example)に「.conf」を付けた名前で、<a href="https://linux.perlzemi.com/blog/20190401171737.html">vi</a>コマンドで、設定ファイルを作成しましょう。
+</p>
+<pre>
+cd /etc/apache2/sites-available
+sudo vi www.mydomain.example.conf
+</pre>
+<p>
+  設定ファイルの内容は以下です。バーチャルホスト機能を使って、「www.mydomain.example」をリバースプロキシで「20020番ポート」に接続しているというところに注目してください。HTTPS対応した記述ですが、まだ本物のSSL証明書は使っておらず、<a href="/blog/20200307174004.html">自己SSL証明書</a>を使った状態になっています。
+</p>
+<pre>
+&lt;VirtualHost *:80&gt;
+  ServerName www.mydomain.example
+
+  RewriteEngine on
+  RewriteRule (.*)?$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+&lt;/VirtualHost&gt;
+
+&lt;VirtualHost *:443&gt;
+  ServerName www.mydomain.example
+
+  &lt;Proxy *&gt;
+    Require all granted
+  &lt;/Proxy&gt;
+
+  ProxyRequests Off
+  ProxyPreserveHost On
+  ProxyPass / http://localhost:20020/ keepalive=On
+  ProxyPassReverse / http://localhost:20020/
+  RequestHeader set X-Forwarded-Proto "https"
+
+  SSLEngine on
+  SSLCertificateFile      /etc/ssl/certs/ssl-cert-snakeoil.pem
+  SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+&lt;/VirtualHost&gt;
+</pre>
+<h4>設定ファイルの簡単な解説</h4>
+<pre>
+&lt;VirtualHost *:80&gt;
+  ServerName www.mydomain.example
+
+  RewriteEngine on
+  RewriteRule (.*)?$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+&lt;/VirtualHost&gt;
+</pre>
+<p>
+  ServerNameは、Webサイトのドメイン名を記述します。http(80番ポート)への接続をmod_rewriteを使って、https(443番ポート)へリダイレクトしています。
+</p>
+<pre>
+&lt;VirtualHost *:443&gt;
+  ServerName www.mydomain.example
+
+  &lt;Proxy *&gt;
+    Require all granted
+  &lt;/Proxy&gt;
+
+  ProxyRequests Off
+  ProxyPreserveHost On
+  ProxyPass / http://localhost:20020/ keepalive=On
+  ProxyPassReverse / http://localhost:20020/
+  RequestHeader set X-Forwarded-Proto "https"
+
+  SSLEngine on
+  SSLCertificateFile      /etc/ssl/certs/ssl-cert-snakeoil.pem
+  SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+&lt;/VirtualHost&gt;
+</pre>
+<p>
+  ServerNameは、Webサイトのドメイン名を記述します。
+</p>
+<p>
+  Proxyディレクティブは、必須です。プロキシリクエストを許可します。
+</p>
+<p>
+  「ProxyRequests Off」は、フォーワードプロキシ(リバースプロキシではない通常のプロキシ接続)をOffにしています。
+</p>
+<p>
+  「ProxyPreserveHost On」は、Apacheにアクセスしたクライアントのホスト名を、そのままWebアプリケーションに渡します。
+</p>
+<pre>
+ProxyPass / http://localhost:20020/ keepalive=On
+ProxyPassReverse / http://localhost:20020/
+</pre>
+<p>
+  上記は、ローカルホストの20020番ポートに接続するという設定です。ふたつ書く必要があります。
+</p>
+<p>
+  「RequestHeader set X-Forwarded-Proto "https"」によって、PerlのWebアプリケーションが、HTTPSによる接続であることを知ることができます
+</p>
+<pre>
+  SSLEngine on
+  SSLCertificateFile      /etc/ssl/certs/ssl-cert-snakeoil.pem
+  SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+</pre>
+<p>
+  上記は、<a href="/blog/20200307174004.html">自己SSL証明書</a>の設定です。
+</p>
+<h4>設定ファイルの有効化</h4>
+<p>
+  設定が終わったら、設定ファイルを有効にします。
+</p>
+<pre>
+sudo a2ensite www.mydomain.example
+</pre>
+<p>
+  有効化が終わったら<a href="/blog/20200519084454.html">Aapacheを再起動</a>してください。
+</p>
+<p>
+  20020番ポートでPerlでWebサイトが起動していることを確認してください。
+</p>
+<p>
+  「https://www.mydomain.example」でWebサイトが表示できれば成功です。
+</p>
+<h3>HTTPSで運用する</h3>
+<p>
+  本番環境で、SSL証明書を取得して、HTTPSで運用したい場合は以下の記事でSSL証明書の設定方法を解説しています。
+</p>
+<ul>
+  <li><a href="/blog/20200611082716.html">SSL証明書の設定をApacheの設定ファイルに記述する</a></li>
+</ul>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/">Ubuntuサーバー構築入門</a></li>
+    <li><a href="/blog/20200529085516.html">パッケージ管理</a></li>
+    <li><a href="/blog/20200526151435.html">Apache</a></li>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発を学ぶ
+  </div>
+  <ul>
+    <li><a href="https://tutorial.perlzemi.com/">Perlプログラミングを学ぶ</a></li>
+    <li><a href="https://linux.perlzemi.com/">Linuxの仕組み・コマンドを学ぶ</a></li>
+    <li><a href="https://web.perlzemi.com/">Webシステム開発を学ぶ</a></li>
+  </ul>
+
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発の見積もり
+  </div>
+  <ul>
+    <li><a href="https://kimoto-system.co.jp/">Perl Webシステム開発の<br>木本システム株式会社</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="kimoto_system_link">
+  <a href="https://kimoto-system.co.jp">
+    <img src="https://kimoto-system.co.jp/images/kimoto-system-logo.png" alt="Perl Webシステム開発">
+    Perl Webシステム開発の木本システム
+  </a>
+</div>
+
+<div class="copyright">
+  Copyright © Yuki Kimoto
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>
