@@ -63,26 +63,31 @@
   UbuntuのApacheの設定ではCGIを利用するための<a href="/blog/20200316174004.html">mod_cgidを有効にする</a>ことを行っても「/usr/lib/cgi-bin/」以下でしかCGIを実行することができません。
 </p>
 <p>
-  これは、セキュアですが、すでに作成されているCGIアプリケーションの多くは、ドキュメントルート化で動くことが求められるでしょう。
+  これは、セキュアですが、すでに作成されているCGIアプリケーションの多くは、ドキュメントルート下で動くことが求められるでしょう。
 </p>
 <p>
   新規にPerlで<a href="https://web.perlzemi.com/">Webシステム開発</a>を行う場合は、セキュリティ、開発効率、リアルタイムWeb、クラウドサーバーなどを総合的に考慮して、リバースプロキシ運用をお勧めします。
 </p>
 <h4>ドキュメントルート下でCGIを実行するためのApacheの設定ファイル</h3>
 <p>
-  ドキュメントルート下でCGIを実行のためのApacheの設定ファイルです。<a href="blog/20200314174004.html">デフォルトのバーチャルホスト</a>の中で運用することを想定しています。
+  ドキュメントルート下でCGIを実行のためのApacheの設定ファイルです。<a href="/blog/20200314174004.html">デフォルトのバーチャルホスト</a>の中で運用することを想定しています。
 </p>
 <p>
   デフォルトのバーチャルホストは、最初に読み込まれる必要があるために「000-default.conf」のように、前に「000」を付けるなどして、最初に読み込まれるファイル名にする必要があることに注意してください。
 </p>
-<VirtualHost *:80>
+<pre>
+&lt;VirtualHost *:80&gt;
   ServerName www.mydomain.example
-  AddHandler cgi-script .cgi
+
   DocumentRoot "/var/www/html"
-  <Directory /var/www/html>
+
+  AddHandler cgi-script .cgi
+
+  &lt;Directory /var/www/html&gt;
     Options +ExecCGI
-  </Directory>
-</VirtualHost>
+  &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+</pre>
 <h3>HTTPSで運用する</h3>
 <p>
   CGIプログラムをHTTPSで運用したい場合は以下の記事でSSL証明書の設定方法を解説しています。
