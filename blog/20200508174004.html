@@ -94,7 +94,6 @@
 </p>
 <ul>
   <li><a href="/blog/20200405174004.html">グループを追加する - groupaddコマンド</a></li>
-  <li><a href="/blog/20200330174004.html">ユーザーをグループに追加する - gpasswd -a</a></li>
 </ul>
 <p>
   次に、myappユーザーと開発者ユーザ(たとえばkimoto)を「myapp-group」に追加しましょう。
@@ -123,6 +122,9 @@
   まずは、ひとつのマシンの中に、Webサーバー、アプリケーションサーバー、メール送信サーバー、DBサーバーをすべて構築しましょう。
 </p>
 <h4>コンパイラ・リンカ</h4>
+<p>
+  Perlのモジュールのインストールに必要なコンパイラ・リンカのインストール。
+</p>
 <ul>
   <li><a href="/blog/20200514084132.html">makeのインストール</a></li>
   <li><a href="/blog/20200504174004.html">gccのインストール</a></li>
@@ -138,22 +140,31 @@
   <li><a href="/blog/20200502174004.html">libgif-devのインストール</a></li>
   <li><a href="/blog/20200426174004.html">libjpeg-devのインストール</a></li>
 </ul>
+<h4>圧縮・解凍</h4>
+<ul>
+  <li><a href="/blog/20200323174004.html">zipのインストール - ZIP形式のファイルの圧縮・解凍</a></li>
+</ul>
 <h4>Perl</h4>
 <ul>
   <li><a href="/blog/20200616085351.html">Perlのインストール</a></li>
   <li><a href="/blog/20200516081846.html">perl-docパッケージのインストール - perldocコマンド</a></li>
-  <li><a href="/blog/20200515081846">libio-socket-ssl-perlのインストール - PerlのIO::Socket::SSL</a></li>
+  <li><a href="/blog/20200515081846.html">libio-socket-ssl-perlのインストール - PerlのIO::Socket::SSL</a></li>
   <li><a href="/blog/20200606082859.html">libreadline-devのインストール - コマンド実行履歴を保存・検索するためのReadLineのライブラリ</a></li>
   <li><a href="/blog/20200227174004.html">libterm-readline-gnu-perlのインストール - PerlのTerm::ReadLine::Gnuモジュール</a></li>
+</ul>
+<h4>リポジトリ管理</h4>
+<ul>
+  <li><a href="/blog/20200607082859.html">gitのインストール - Git分散リポジトリ管理システム</a></li>
 </ul>
 <h4>Webサーバー</h4>
 <ul>
   <li><a href="/blog/20200424174004.html">apache2のインストール - WebサーバーであるApacheのバージョン2系</a></li>
 </ul>
+<h4>SSL証明書</h4>
+<ul>
+  <li><a href="/blog/20200319174004.html">certbotのインストール - Let's EncryptのSSL証明書の取得と更新</a></li>
+</ul>
 <h4>データベースサーバー</h4>
-<p>
-  データベースをローカルサーバーにインストールしない場合でも、リモートサーバーへのデータベース接続で、PerlのDBD::MySQLをインストールするために必要なので、インストールします。
-</p>
 <ul>
   <li><a href="/blog/20200422174004.html">mariadb-clientのインストール - MariaDBクライアント</a></li>
   <li><a href="/blog/20200421174004.html">mariadb-serverのインストール - MariaDBデータベースサーバー</a></li>
@@ -166,21 +177,18 @@
 </ul>
 <h4>Redisサーバー</h4>
 <p>
-  会員登録機能を実装する場合にセッション情報の保存に利用するRedisサーバーです。
+  会員登録機能を実装する場合にセッション情報の保存に利用するRedisサーバーです。また、push通知、リアルタイムチャット、リアルタイム更新機能などのリアルタイムWeb対応ができます。
 </p>
 <ul>
-  <li><a href="/blog/20200525135533.html.html">redis-serverのインストールする - Redisサーバー 揮発性データの高速保存</a></li>
+  <li><a href="/blog/20200525135533.html">redis-serverのインストールする - Redisサーバー 揮発性データの高速保存</a></li>
 </ul>
-<h4>必要に応じてインストールするもの</h4>
 <p>
-  ここは、必須手順ではありません。必要に応じてインストールしてください。
+  ここまで完成。
 </p>
+<h3>Perl Webシステム開発環境</h3>
+<h4>ユーザーPerlとcpanmのインストール</h4>
 <ul>
-  <li><a href="/blog/20200425174004.html">imagemagickのインストール - ImageMagickのconvertコマンド等</a></li>
-  <li><a href="/blog/20200518093929.html">nfs-kernel-serverのインストール - NFSサーバー ネットワークファイル共有</a></li>
-  <li><a href="/blog/20200518093929.html">nfs-kernel-serverのインストール - NFSサーバー ネットワークファイル共有</a></li>
-  <li><a href="/blog/20200517093929.html">nfs-commonのインストール - NFSクライアント ネットワークファイル共有</a></li>
-  <li><a href="/blog/20200416174004.html">vsftpdのインストール - FTPサーバー</a></li>
+  <li><a href="/blog/20200413174004.html">ユーザーPerlとcpanmのインストール</a></li>
 </ul>
 <h3>Webサーバー Apache</h3>
 <ul>
@@ -189,11 +197,6 @@
 <h3>データベースサーバー MariaDB</h3>
 <ul>
   <li><a href="/blog/20200417174004.html">MariaDBの起動・停止・再起動・状態確認</a></li>
-</ul>
-<h3>Perl Webシステム開発環境</h3>
-<h4>ユーザーPerlとcpanmのインストール</h4>
-<ul>
-  <li><a href="/blog/20200413174004.html">ユーザーPerlとcpanmのインストール</a></li>
 </ul>
 
   </div>
