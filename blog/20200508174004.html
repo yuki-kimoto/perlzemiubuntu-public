@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>Webシステム開発環境を構築する手順 - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
-<meta name="description" content="Webシステム開発環境構築の手順をここに書いていきます。">
+<title>Ubuntuを使ってPerlでWebシステム開発ができる環境を構築する手順 - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
+<meta name="description" content="Ubuntuを使ってPerlでWebシステム開発ができる環境を構築する手順をここに書いていきます。">
   </head>
   <body>
     <div class="container">
@@ -55,9 +55,9 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200508174004.html">Webシステム開発環境を構築する手順</a></h2>
+    <h2><a href="/blog/20200508174004.html">Ubuntuを使ってPerlでWebシステム開発ができる環境を構築する手順</a></h2>
 <p>
-  Webシステム開発環境構築の手順をここに書いていきます。
+  Ubuntuを使ってPerlでWebシステム開発ができる環境を構築する手順をここに書いていきます。
 </p>
 <h3>Ubuntuを利用できるようにする</h3>
 <p>
@@ -69,6 +69,9 @@
 <p>
   Windows 10であれば、WSLを使うことで、手元のPCでUbuntuを試すことができます。
 </p>
+<p>
+  自作したLinuxパソコンにチャレンジすることも可能です。
+</p>
 <ul>
   <li><a href="/blog/20200509155552.html">Ubuntuの利用方法</a></li>
 </ul>
@@ -77,13 +80,27 @@
 </p>
 <h3>ユーザーの作成</h3>
 <p>
-  次は、コンソール画面でユーザーを作成します。Webアプリケーションの実行ユーザー(たとえばwebapp)を作成するのと、自分自身のユーザー(たとえばkimoto)の二つを作成してみましょう。
+  次は、コンソール画面でユーザーを作成します。Webアプリケーションの実行ユーザー(myapp)を作成するのと、自分自身のユーザー(たとえばkimoto)の二つを作成してみましょう。
 </p>
 <p>
-  ユーザー追加「-m」オプションあり、パスワードの設定、sudoグループへ追加の手順を行いましょう。
+  ユーザー追加「-m」オプションあり、パスワードの設定、<a href="/blog/20200406174004.html">sudo</a>グループへ追加の手順を行いましょう。
 </p>
 <ul>
   <li><a href="/blog/20200511173052.html">ユーザーの追加 - useraddコマンド</a></li>
+</ul>
+<h3>グループの作成</h3>
+<p>
+  Webアプリケーションで必要になる「myapp-group」グループを作成します。これは、データディレクトリにWebアプリケーションのユーザー、開発ユーザー、Apacheユーザーが、アクセスするために必要になります。
+</p>
+<ul>
+  <li><a href="/blog/20200405174004.html">グループを追加する - groupaddコマンド</a></li>
+  <li><a href="/blog/20200330174004.html">ユーザーをグループに追加する - gpasswd -a</a></li>
+</ul>
+<p>
+  次に、myappユーザーと開発者ユーザ(たとえばkimoto)を「myapp-group」に追加しましょう。
+</p>
+<ul>
+  <li><a href="/blog/20200330174004.html">ユーザーをグループに追加する - gpasswd -a</a></li>
 </ul>
 <h3>タイムゾーンの設定</h3>
 <p>
@@ -96,6 +113,12 @@
 <p>
   PerlにおけるWebシステム開発に必要なパッケージをインストールしましょう。<a href="http://59.106.185.196:3000/blog/20200506174004.html">デフォルトパッケージ</a>では、足りないものをインストールしていきます。
 </p>
+<p>
+  インストールがうまくいかない場合があるので、最初にaptを最新のバージョンにしましょう。
+</p>
+<ul>
+  <li><a href="/blog/20200524135533.html">aptのアップデート - apt update</a></li>
+</ul>
 <p>
   まずは、ひとつのマシンの中に、Webサーバー、アプリケーションサーバー、メール送信サーバー、DBサーバーをすべて構築しましょう。
 </p>
@@ -117,8 +140,11 @@
 </ul>
 <h4>Perl</h4>
 <ul>
+  <li><a href="/blog/20200616085351.html">Perlのインストール</a></li>
   <li><a href="/blog/20200516081846.html">perl-docパッケージのインストール - perldocコマンド</a></li>
   <li><a href="/blog/20200515081846">libio-socket-ssl-perlのインストール - PerlのIO::Socket::SSL</a></li>
+  <li><a href="/blog/20200606082859.html">libreadline-devのインストール - コマンド実行履歴を保存・検索するためのReadLineのライブラリ</a></li>
+  <li><a href="/blog/20200227174004.html">libterm-readline-gnu-perlのインストール - PerlのTerm::ReadLine::Gnuモジュール</a></li>
 </ul>
 <h4>Webサーバー</h4>
 <ul>
