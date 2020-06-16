@@ -144,6 +144,10 @@
 <ul>
   <li><a href="/blog/20200323174004.html">zipのインストール - ZIP形式のファイルの圧縮・解凍</a></li>
 </ul>
+<h3>ネットワーク</h3>
+<ul>
+  <li><a href="/blog/20200324174004.html">net-toolsのインストール - 非推奨だがとりあえずifconfig、arp、route、netstatを使いたい場合</a></li>
+</ul>
 <h4>Perl</h4>
 <ul>
   <li><a href="/blog/20200616085351.html">Perlのインストール</a></li>
@@ -180,24 +184,68 @@
   会員登録機能を実装する場合にセッション情報の保存に利用するRedisサーバーです。また、push通知、リアルタイムチャット、リアルタイム更新機能などのリアルタイムWeb対応ができます。
 </p>
 <ul>
-  <li><a href="/blog/20200525135533.html">redis-serverのインストールする - Redisサーバー 揮発性データの高速保存</a></li>
+  <li><a href="/blog/20200225174004.html">Redisサーバーの起動・停止・再起動・状態確認</a></li>
+</ul>
+<h3>ユーザーPerlとcpanmのインストール</h3>
+<p>
+  安定性を求める場合は、CPANモジュールのインストールや警告表示などで不具合のない「perl-5.20.3」をインストール。
+</p>
+<p>
+  セキュアな最新版が良い場合は「perl-5.30.3」をインストール。
+</p>
+<ul>
+  <li><a href="/blog/20200413174004.html">ユーザーPerlとcpanmのインストール</a></li>
+</ul>
+<h3>サーバーの起動確認</h3>
+<p>
+  インストールしたサーバーの起動確認をしましょう。postfixは、設定ファイルがデフォルトではなく起動していないので、postfix以外のサーバーの起動確認を行います。
+</p>
+<h4>cronの起動確認</h4>
+<p>
+  定期プログラム実行の常駐アプリケーションであるcronの起動確認を行います。
+</p>
+<p>
+  以下の記事の「sudo systemctl status cron」を実行してApacheが起動していることを確認してください。
+</p>
+<ul>
+  <li><a href="/blog/20200520084454.html">cronの起動・停止・再起動・状態確認, cronの実行ログ</a></li>
+</ul>
+<h4>Apacheの起動確認</h4>
+<p>
+  WebサーバーであるApacheの起動確認を行います。
+</p>
+<p>
+  以下の記事の「sudo systemctl status apache2」を実行してApacheが起動していることを確認してください。
+</p>
+<ul>
+  <li><a href="/blog/20200519084454.html">Aapacheの起動・停止・再起動・状態確認</a></li>
+</ul>
+<h4>MariaDBの起動確認</h4>
+<p>
+  WebサーバーであるMariaDBの起動確認を行います。
+</p>
+<p>
+  以下の記事の「sudo systemctl status mariadb」を実行してMariaDBが起動していることを確認してください。
+</p>
+<ul>
+  <li><a href="/blog/20200417174004.html">MariaDBの起動・停止・再起動・状態確認</a></li>
 </ul>
 <p>
   ここまで完成。
 </p>
-<h3>Perl Webシステム開発環境</h3>
-<h4>ユーザーPerlとcpanmのインストール</h4>
+<h4>Redisサーバーの起動確認</h4>
+<p>
+  揮発性の情報の保存サーバーであるRedisサーバーの起動確認を行います。
+</p>
+<p>
+  以下の記事の「sudo systemctl status redis-server」を実行してRedisサーバーが起動していることを確認してください。
+</p>
 <ul>
-  <li><a href="/blog/20200413174004.html">ユーザーPerlとcpanmのインストール</a></li>
+  <li><a href="/blog/20200417174004.html">Redisサーバーの起動・停止・再起動・状態確認</a></li>
 </ul>
-<h3>Webサーバー Apache</h3>
-<ul>
-  <li><a href="/blog/20200519084454.html">Aapacheの起動・停止・再起動・状態確認</a></li>
-</ul>
-<h3>データベースサーバー MariaDB</h3>
-<ul>
-  <li><a href="/blog/20200417174004.html">MariaDBの起動・停止・再起動・状態確認</a></li>
-</ul>
+<p>
+  ここまで完成。
+</p>
 
   </div>
   <div class="bottom">

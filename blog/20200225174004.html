@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>Redisサーバーの起動・停止・再起動・状態確認 - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
+<meta name="description" content="Redisサーバーの起動・停止・再起動・状態確認について解説します。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー構築入門</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+<style>
+  .ubuntu-version {
+
+  }
+  .ubuntu-version ul {
+    
+  }
+  .ubuntu-version li {
+    display:inline-block;
+    background:pink;
+    color:white;
+    border-radisu:10px;
+    padding:3px 5px;
+    margin:0;
+    margin-right:5px;
+  }
+</style>
+
+<div class="ubuntu-version">
+  <ul>
+    <li>Ubuntu 20</li>
+    <li>Ubuntu 18</li>
+    <li>Ubuntu 16</li>
+  </ul>
+</div>
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200225174004.html">Redisサーバーの起動・停止・再起動・状態確認</a></h2>
+<p>
+  Redisサーバーの起動・停止・再起動・状態確認について解説します。
+</p>
+<h4>Redisの状態確認</h4>
+<p>
+  Redisの状態確認は、systemctlコマンドの「status」を使って行います。
+</p>
+<pre>
+sudo systemctl status redis-server
+</pre>
+<h5>起動している場合</h5>
+<p>
+  起動している場合は、以下のように表示されます。
+</p>
+<pre>
+● redis-server.service - Advanced key-value store
+   Loaded: loaded (/lib/systemd/system/redis-server.service; enabled; vendor preset: enabled)
+   Active: active (running) since Tue 2020-06-16 10:12:56 JST; 3h 57min ago
+     Docs: http://redis.io/documentation,
+           man:redis-server(1)
+ Main PID: 108380 (redis-server)
+    Tasks: 4 (limit: 9479)
+   CGroup: /system.slice/redis-server.service
+           mq108380 /usr/bin/redis-server 127.0.0.1:6379
+</pre>
+<h5>停止している場合</h5>
+<p>
+  停止している場合は、以下のように表示されます。
+</p>
+<pre>
+● redis-server.service - Advanced key-value store
+   Loaded: loaded (/lib/systemd/system/redis-server.service; enabled; vendor preset: enabled)
+   Active: inactive (dead) since Tue 2020-06-16 14:11:18 JST; 2s ago
+     Docs: http://redis.io/documentation,
+           man:redis-server(1)
+  Process: 27892 ExecStop=/bin/kill -s TERM $MAINPID (code=exited, status=0/SUCCESS)
+ Main PID: 108380 (code=exited, status=0/SUCCESS)
+</pre>
+<h4>Redisの起動</h4>
+<p>
+  Redisの起動は、systemctlコマンドの「start」を使って行います。sudoコマンドを使って、root権限で実行します。
+</p>
+<pre>
+sudo systemctl start redis-server
+</pre>
+<p>
+  起動が成功しても、成功したというメッセージは返ってきません。状態確認を行ってください。
+</p>
+<h4>Redisの停止</h4>
+<p>
+  Redisの停止は、systemctlコマンドの「stop」を使って行います。sudoコマンドを使って、root権限で実行します。
+</p>
+<pre>
+sudo systemctl stop redis-server
+</pre>
+<p>
+  停止が成功しても、成功したというメッセージは何も返ってきません。状態確認を行ってください。
+</p>
+<h4>Redisの再起動</h4>
+<p>
+  Redisの再起動は、systemctlコマンドの「restart」を使って行います。sudoコマンドを使って、root権限で実行します。
+</p>
+<pre>
+sudo systemctl restart redis-server
+</pre>
+<p>
+  restartは単に、stopコマンドを実行して、startコマンドを実行します。
+</p>
+<h3>Redisの起動・停止のログを見るには</h3>
+<p>
+  Redisなどのサーバーは、systemdというプログラムによって集中的に管理されています。
+</p>
+<p>
+  systemdのログにRedisの起動・停止ログが出力されています。
+</p>
+<p>
+  systemdのログを見るにはjournalctlコマンドを使ます。grepコマンドで「apache」を絞り込みます。大文字・小文字を区別しない「-i」オプションを使うと「Redis」「apache」の両方が拾えます。sudoで実行しないとredis-serverのログが見れないので注意してください。
+</p>
+<pre>
+sudo journalctl | grep -i redis-server
+</pre>
+<p>
+  ログの最後の部分だけ見たい場合は<a href="https://linux.perlzemi.com/blog/20200203124238.html">tailコマンド</a>を組み合わせましょう。
+</p>
+<pre>
+sudo journalctl | grep -i redis-server | tail -20;
+</pre>
+<p>
+  ログのサンプルです。
+</p>
+<pre>
+Jun 16 10:12:54 shinshina-production-app-00000001 sudo[108203]:    myapp : TTY=pts/1 ; PWD=/home/myapp ; USER=root ; COMMAND=/usr/bin/apt install -y redis-server
+Jun 16 10:12:56 shinshina-production-app-00000001 systemd[1]: redis-server.service: Can't open PID file /var/run/redis/redis-server.pid (yet?) after start: No such file or directory
+Jun 16 10:14:14 shinshina-production-app-00000001 sudo[109441]:    myapp : TTY=pts/1 ; PWD=/home/myapp ; USER=root ; COMMAND=/usr/bin/apt install -y redis-server
+Jun 16 14:09:55 shinshina-production-app-00000001 sudo[27719]:    myapp : TTY=pts/0 ; PWD=/home/myapp ; USER=root ; COMMAND=/bin/systemctl status redis-server
+Jun 16 14:10:26 shinshina-production-app-00000001 sudo[27768]:    myapp : TTY=pts/0 ; PWD=/home/myapp ; USER=root ; COMMAND=/bin/systemctl status redis-server
+Jun 16 14:11:18 shinshina-production-app-00000001 sudo[27889]:    myapp : TTY=pts/0 ; PWD=/home/myapp ; USER=root ; COMMAND=/bin/systemctl stop redis-server
+Jun 16 14:11:21 shinshina-production-app-00000001 sudo[27909]:    myapp : TTY=pts/0 ; PWD=/home/myapp ; USER=root ; COMMAND=/bin/systemctl status redis-server
+Jun 16 14:11:34 shinshina-production-app-00000001 sudo[27920]:    myapp : TTY=pts/0 ; PWD=/home/myapp ; USER=root ; COMMAND=/bin/systemctl start redis-server
+Jun 16 14:11:34 shinshina-production-app-00000001 systemd[1]: redis-server.service: Can't open PID file /var/run/redis/redis-server.pid (yet?) after start: No such file or directory
+</pre>
+<h3>Redisのsystemdの設定ファイルを見るには</h3>
+<p>
+  Redisのsystemdの設定ファイルは「systemctl status redis-server」で見れます。
+</p>
+<p>
+  設定ファイルを<a href="https://linux.perlzemi.com/blog/20200113083613.html">catコマンド</a>で見てみましょう。
+</p>
+<pre>
+cat /lib/systemd/system/redis-server.service
+</pre>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/">Ubuntuサーバー構築入門</a></li>
+    <li><a href="/blog/20200529085516.html">パッケージ管理</a></li>
+    <li><a href="/blog/20200526151435.html">Apache</a></li>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発を学ぶ
+  </div>
+  <ul>
+    <li><a href="https://tutorial.perlzemi.com/">Perlプログラミングを学ぶ</a></li>
+    <li><a href="https://linux.perlzemi.com/">Linuxの仕組み・コマンドを学ぶ</a></li>
+    <li><a href="https://web.perlzemi.com/">Webシステム開発を学ぶ</a></li>
+  </ul>
+
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発の見積もり
+  </div>
+  <ul>
+    <li><a href="https://kimoto-system.co.jp/">Perl Webシステム開発の<br>木本システム株式会社</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="kimoto_system_link">
+  <a href="https://kimoto-system.co.jp">
+    <img src="https://kimoto-system.co.jp/images/kimoto-system-logo.png" alt="Perl Webシステム開発">
+    Perl Webシステム開発の木本システム
+  </a>
+</div>
+
+<div class="copyright">
+  Copyright © Yuki Kimoto
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>
