@@ -131,23 +131,20 @@ Condition: start condition failed at Sat 2020-05-16 15:36:13 JST; 2 days ago
   「ホスト名.ドメイン名」です。ホスト名は、ローカルマシンを識別する名前。web_server1などです。ドメイン名は、あなたの運用しているサイトのひとつのドメイン名などを入れます。
 </p>
 <p>
-  変数「$mydomain」は、myhostnameから自動的に決定されます。
+  変数「$mydomain」は、myhostnameから自動的に決定されます。バッククォート演算子を使って「hostname」コマンドを実行して、シェル変数「MYHOSTNAME」に設定しています。
 </p>
 <pre>
-sudo sh -c 'perl &gt; /etc/postfix/main.cf'
-print &lt;&lt; 'EOS';
-myhostname = hostname.example.com
+MYHOSTNAME=`hostname`
+echo '
+myhostname = ' "$MYHOSTNAME" '
 myorigin = $mydomain
 relayhost = $mydomain
 inet_interfaces = loopback-only
 mydestination =
-EOS
+' | sudo sh -c 'cat &gt; /etc/postfix/main.cf'
 </pre>
 <p>
   shの-cオプションを使っているのは、リダイレクトにroot権限を持たせるためです。
-</p>
-<p>
-  <a href="https://tutorial.perlzemi.com/">perl</a>とリダイレクトを使って複数行の設定ファイルを書き込んでいます。
 </p>
 <p>
   入力の後はCtrl + Dを押してください。
@@ -261,11 +258,8 @@ sudo systemctl reload postfix
 sendmail
 </pre>
 <p>
-  以下出力結果です。sendmailコマンドは認識されています。
+  入力待ちになったら、sendmailがインストールされています。Ctrl + C でsendmailを終了しましょう。
 </p>
-<pre>
-sendmail: fatal: bad string length 0 &lt; 1: setgid_group =
-</pre>
 <p>
   ではメールを送信してみましょう。[メール]のところを自分のメールにしてください。
 </p>
@@ -299,7 +293,7 @@ mailq
 </pre>
 <h4>解決策</h4>
 <p>
-  ポート25がブロックされている場合は、Amazon SESやSendGridなどの、クラウドメール配信サービスを使うようです。Web API経由で、メール送信リクエストを投げて、信頼されている外部のメールサーバーから、メールを送ってもらう感じですね。
+  ポート25がブロックされている場合は、SendGridなどの、クラウドメール配信サービスを使いましょう。Web API経由で、メール送信リクエストを投げて、信頼されている外部のメールサーバーから、メールを送ってもらう感じですね。
 </p>
 <p>
   あるメールの送信件数を超えると月額の料金がかかります。
@@ -311,7 +305,7 @@ mailq
   ここから、パブリッククラウドサーバーに移転する場合に、アプリケーションの変更なしに、メールを送信するには、どうすればよいのでしょう。
 </p>
 <p>
-  良い解決策は、postfixをメールのリレーサーバーとして利用して、クラウドメール配信サービスに接続することのようです。(2020年5月20日の段階では、まだ試していません)
+  良い解決策は、postfixをメールのリレーサーバーとして利用して、クラウドメール配信サービスに配信します。
 </p>
 <p>
   <a href="https://sendgrid.kke.co.jp/docs/Integrate/Mail_Servers/postfix.html">PostFixでメール送信 - SendGrid</a>

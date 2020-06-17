@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>MariaDBの初期設定とユーザーの作成 - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
+<meta name="description" content="データベースサーバーとして利用するときに必要なMariaDBの初期設定についての解説です。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー構築入門</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+<style>
+  .ubuntu-version {
+
+  }
+  .ubuntu-version ul {
+    
+  }
+  .ubuntu-version li {
+    display:inline-block;
+    background:pink;
+    color:white;
+    border-radisu:10px;
+    padding:3px 5px;
+    margin:0;
+    margin-right:5px;
+  }
+</style>
+
+<div class="ubuntu-version">
+  <ul>
+    <li>Ubuntu 20</li>
+    <li>Ubuntu 18</li>
+    <li>Ubuntu 16</li>
+  </ul>
+</div>
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200224174004.html">MariaDBの初期設定とユーザーの作成</a></h2>
+<p>
+  データベースサーバーとして利用するときに必要なMariaDBの初期設定についての解説です。
+</p>
+<h3>タイムゾーンの設定</h3>
+<p>
+  MariaDBのデフォルトのタイムゾーンは、OSのタイムゾーンです。つまり。<a href="/blog/20200507174004.html">OSのタイムゾーンの設定</a>を行っている場合は、MariaDBのタイムゾーンの設定はいりません。
+</p>
+<p>
+  タイムゾーンの設定が必要となるのは、MariaDBがクラウドサービスとして、提供されている場合です。この場合は、MariaDBの設定ファイルのタイムゾーン設定を行ってください。そのままではUTC時刻になっています。
+</p>
+<p>
+  UTCと「Asia/Tokyo」の時間差分である「+09:00」を設定します。
+</p>
+<pre>
+# パラメータ名
+time_zone
+
+# 値
++09:00
+</pre>
+<h3>MariaDBの設定ファイルの場所</h3>
+<p>
+  初期設定では、特に設定の必要がありませんが、メモリの設定は、必ず行うことになるので、UbuntuにおけるMariaDBの設定ファイルの場所を記載しておきます。
+</p>
+<ul>
+  <li><a href="/blog/20200223174004.html">UbuntuのMariaDBの設定ファイルの場所</a></li>
+</ul>
+<h3>MariaDBユーザーの作成</h3>
+<p>
+  Webアプリケーションのためのユーザーを作成しますが、まず最初はrootパスワードを設定しましょう。
+</p>
+<h4>rootパスワードの設定</h4>
+<p>
+  rootパスワードの設定方法です。この手順は、MariaDBがクラウドサービスとして提供されている場合は、必要がありません。MariaDBがクラウドサービスでは、MariaDBを作成したときに、管理者ユーザーが作成されているはずですので、rootユーザーの代わりに、そのユーザーを使いましょう。
+</p>
+<p>
+  mysqlコマンドを使って、<a href="https://mariadb.perlzemi.com/blog/20200309102346.html">MariaDBへ接続</a>しましょう。パスワードなしで接続できます。
+</p>
+<p>
+  以下の手順でrootパスワードを設定してください。
+</p>
+<ul>
+  <li><a href="https://mariadb.perlzemi.com/blog/20200616142021.html">rootのパスワードを設定する</a></li>
+</ul>
+<p>
+  MariaDBへの接続を終了するには「quit」と入力してEnterを押します。
+</p>
+<h4>アプリケーションユーザーの作成</h4>
+<p>
+  Webアプリケーション用のMariaDBユーザを作成しましょう。select,insert,update,deleteの権限を持ったユーザーです。
+</p>
+<p>
+  MariaDBに管理者ユーザで接続します。上記でrootのパスワードを設定した場合は、rootユーザーで、管理者ユーザーが他にいる場合は、そのユーザーで接続してください。
+</p>
+<pre>
+# rootユーザーで接続
+mysql -uroot -p
+
+# MariaDBクラウドサービスに接続するサンプル
+mysql -h my-devel-db-001.mariadb.database.azure.com -ukanri@my-devel-db-001 -p
+</pre>
+<p>
+  パスワードを聞かれますので、入力してください。
+</p>
+<p>
+  データべースがリモートにあり、接続できない場合は、データベースサーバー側のファイアーウォールの確認も合わせておこなってください。
+</p>
+<p>
+  <a href="https://mariadb.perlzemi.com/blog/20200523082643.html">MariaDBでユーザーの作成</a>を行います。
+</p>
+<pre>
+create user myapp;
+</pre>
+<p>
+  次に、<a href="https://mariadb.perlzemi.com/blog/20200522082643.html">データベースへのアクセス権限の設定とパスワードを設定</a>します。
+</p>
+<pre>
+grant insert,update,delete,select on mydatabase.* to 'myapp'@'%' identified by 'eifjutab&amp;';
+</pre>
+<p>
+  接続を抜けて、新しく作成した「myapp」ユーザーで、MariaDBに接続できることを確認します。
+</p>
+<pre>
+# rootユーザーで接続
+mysql -umyapp -p
+
+# MariaDBクラウドサービスに接続するサンプル
+mysql -h my-devel-db-001.mariadb.database.azure.com -umyapp@my-devel-db-001 -p
+</pre>
+<p>
+  これで初期設定とユーザーの作成が完了しました。
+</p>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/">Ubuntuサーバー構築入門</a></li>
+    <li><a href="/blog/20200529085516.html">パッケージ管理</a></li>
+    <li><a href="/blog/20200526151435.html">Apache</a></li>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発を学ぶ
+  </div>
+  <ul>
+    <li><a href="https://tutorial.perlzemi.com/">Perlプログラミングを学ぶ</a></li>
+    <li><a href="https://linux.perlzemi.com/">Linuxの仕組み・コマンドを学ぶ</a></li>
+    <li><a href="https://web.perlzemi.com/">Webシステム開発を学ぶ</a></li>
+  </ul>
+
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発の見積もり
+  </div>
+  <ul>
+    <li><a href="https://kimoto-system.co.jp/">Perl Webシステム開発の<br>木本システム株式会社</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="kimoto_system_link">
+  <a href="https://kimoto-system.co.jp">
+    <img src="https://kimoto-system.co.jp/images/kimoto-system-logo.png" alt="Perl Webシステム開発">
+    Perl Webシステム開発の木本システム
+  </a>
+</div>
+
+<div class="copyright">
+  Copyright © Yuki Kimoto
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>
