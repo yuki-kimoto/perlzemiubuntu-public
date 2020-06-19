@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>Let's EncryptのSSL証明書の新しいサーバーへの引っ越し作業 - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
+<meta name="description" content="Let's EncryptのSSL証明書の引っ越し作業の記録です。Let's Encryptで作成したSSL証明書を新しいサーバーに引っ越すのですが、その時の手順を公開します。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー構築入門</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+<style>
+  .ubuntu-version {
+
+  }
+  .ubuntu-version ul {
+    
+  }
+  .ubuntu-version li {
+    display:inline-block;
+    background:pink;
+    color:white;
+    border-radisu:10px;
+    padding:3px 5px;
+    margin:0;
+    margin-right:5px;
+  }
+</style>
+
+<div class="ubuntu-version">
+  <ul>
+    <li>Ubuntu 20</li>
+    <li>Ubuntu 18</li>
+    <li>Ubuntu 16</li>
+  </ul>
+</div>
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200619081050.html">Let's EncryptのSSL証明書の新しいサーバーへの引っ越し作業</a></h2>
+<p>
+  Let's EncryptのSSL証明書の引っ越し作業の記録です。Let's Encryptで作成したSSL証明書を新しいサーバーに引っ越すのですが、その時の手順を公開します。
+</p>
+<h3>どのファイルを移動すればよいの?</h3>
+<p>
+  まず疑問なのは、どのファイルを移動すれば、移行先でcertbotは正しく動くのだろうかということですね。certbotがバージョンアップして、設定ファイルに互換性がない場合などが懸念点です。
+</p>
+<p>
+  Let's EncryptのSSL証明書は、発行制限があって、間違って証明書の要求をし続けると、一定期間取得できなくなるのも、慎重になる理由です。
+</p>
+<p>
+  移行元のディレクトリ構成はこんな感じでした。ドメイン名は「www.myhost.example」に変えてあります。
+</p>
+<pre>
+/etc/letsencrypt
+/etc/letsencrypt/renewal-hooks
+/etc/letsencrypt/renewal-hooks/post
+/etc/letsencrypt/renewal-hooks/deploy
+/etc/letsencrypt/renewal-hooks/pre
+/etc/letsencrypt/archive
+/etc/letsencrypt/archive/www.myhost.example
+/etc/letsencrypt/archive/www.myhost.example/chain2.pem
+/etc/letsencrypt/archive/www.myhost.example/cert1.pem
+/etc/letsencrypt/archive/www.myhost.example/chain1.pem
+/etc/letsencrypt/archive/www.myhost.example/fullchain3.pem
+/etc/letsencrypt/archive/www.myhost.example/fullchain1.pem
+/etc/letsencrypt/archive/www.myhost.example/chain4.pem
+/etc/letsencrypt/archive/www.myhost.example/privkey3.pem
+/etc/letsencrypt/archive/www.myhost.example/privkey2.pem
+/etc/letsencrypt/archive/www.myhost.example/cert3.pem
+/etc/letsencrypt/archive/www.myhost.example/fullchain4.pem
+/etc/letsencrypt/archive/www.myhost.example/chain3.pem
+/etc/letsencrypt/archive/www.myhost.example/cert4.pem
+/etc/letsencrypt/archive/www.myhost.example/privkey1.pem
+/etc/letsencrypt/archive/www.myhost.example/fullchain2.pem
+/etc/letsencrypt/archive/www.myhost.example/cert2.pem
+/etc/letsencrypt/archive/www.myhost.example/privkey4.pem
+/etc/letsencrypt/.updated-options-ssl-apache-conf-digest.txt
+/etc/letsencrypt/csr
+/etc/letsencrypt/csr/0147_csr-certbot.pem
+/etc/letsencrypt/csr/0173_csr-certbot.pem
+/etc/letsencrypt/csr/0241_csr-certbot.pem
+/etc/letsencrypt/csr/0026_csr-certbot.pem
+/etc/letsencrypt/csr/0049_csr-certbot.pem
+/etc/letsencrypt/csr/0252_csr-certbot.pem
+/etc/letsencrypt/csr/0243_csr-certbot.pem
+/etc/letsencrypt/accounts
+/etc/letsencrypt/accounts/acme-v02.api.letsencrypt.org
+/etc/letsencrypt/accounts/acme-v02.api.letsencrypt.org/directory
+/etc/letsencrypt/accounts/acme-v02.api.letsencrypt.org/directory/32d2139cf78454841dbfafc66f94f9c9
+/etc/letsencrypt/accounts/acme-v02.api.letsencrypt.org/directory/32d2139cf78454841dbfafc66f94f9c9/regr.json
+/etc/letsencrypt/accounts/acme-v02.api.letsencrypt.org/directory/32d2139cf78454841dbfafc66f94f9c9/meta.json
+/etc/letsencrypt/accounts/acme-v02.api.letsencrypt.org/directory/32d2139cf78454841dbfafc66f94f9c9/private_key.json
+/etc/letsencrypt/keys
+/etc/letsencrypt/keys/0045_key-certbot.pem
+/etc/letsencrypt/keys/0139_key-certbot.pem
+/etc/letsencrypt/keys/0002_key-certbot.pem
+/etc/letsencrypt/keys/0152_key-certbot.pem
+/etc/letsencrypt/live
+/etc/letsencrypt/live/www.myhost.example
+/etc/letsencrypt/live/www.myhost.example/privkey.pem
+/etc/letsencrypt/live/www.myhost.example/README
+/etc/letsencrypt/live/www.myhost.example/chain.pem
+/etc/letsencrypt/live/www.myhost.example/cert.pem
+/etc/letsencrypt/live/www.myhost.example/fullchain.pem
+/etc/letsencrypt/live/www.ganeshiaru.co.jp
+/etc/letsencrypt/options-ssl-apache.conf
+/etc/letsencrypt/renewal
+/etc/letsencrypt/renewal/www.myhost.example.conf
+</pre>
+<p>
+  certbotのバージョンは1.0.0です。
+</p>
+<pre>
+certbot --version
+certbot 1.0.0
+</pre>
+<p>
+  移行先のcertbotのバージョンは「0.27.0」です。なんで、バージョンが下がっているのだろうか???
+</p>
+<pre>
+certbot --version
+certbot 0.27.0
+</pre>
+<h3>必要なもの、必要がないもの</h3>
+<p>
+  「options-ssl-apache.conf」は、ApacheにおけるSSLの証明書の自動設定用のものだけれど、手動で設定することにしたので、これは、いらない。
+</p>
+<p>
+  「renewal-hooks」は空だからいらない。
+</p>
+<p>
+  Apacheから読み込むSSL証明書のことだけを考えると「live」ディレクトリ以下のSSL証明書を移動してくればよいはず。
+</p>
+<p>
+  問題は、Let's Encryptが、更新を正しくしてくれるためには、どの情報が必要かということだね。
+</p>
+<p>
+  どうやら、Let's EncryptのドメインごとのSSL証明書の更新のための設定ファイルは「/etc/letsencrypt/renewal」の中にあるようだ。引っ越しに必要そうだ。
+</p>
+<p>
+  Let's Encryptのアカウント情報は「/etc/letsencrypt/accounts/etc/letsencrypt/accounts」の中にあるようだ。引っ越しに必要そうだ。
+</p>
+<p>
+  「/etc/letsencrypt/archive」の中には、過去のLet's EncryptのSSL証明書の情報があるようです。これは、いらなさそう。
+</p>
+<p>
+  「/etc/letsencrypt/csr」と「/etc/letsencrypt/keys」は、バックアップ用だけに存在しているようです。これは、いらなさそう。
+</p>
+<h4>Let's EncryptのSSL証明書の引っ越しに必要なもの</h4>
+<p>
+  Let's EncryptのSSL証明書の引っ越しに必要なもの。
+</p>
+<ul>
+  <li>/etc/letsencrypt/live</li>
+  <li>/etc/letsencrypt/renewal</li>
+  <li>/etc/letsencrypt/accounts</li>
+</ul>
+<h3>root権限で移動しないといけない</h3>
+<p>
+  「/etc/letsencrypt」ディレクトリは、root権限で移動しないといけないので、必要なものを「sudo tar cfv」でtar.gzに固めて、移行先に移動して、「sudo tar xfv」展開という手順を踏む。
+</p>
+<p>
+  rootログイン禁止しているので、rsyncでは、移動ができない。
+</p>
+<h4>移動元での作業</h4>
+<p>
+  tarで固めて、アプリケーションユーザーのホームディレクトリに移動。すぐに消せるように、所有者もアプリケーションユーザーに変更しておく。
+</p>
+<pre>
+cd /etc
+sudo tar cfv letsencrypt.tar.gz letsencrypt
+sudo chown myapp letsencrypt.tar.gz
+sudo mv letsencrypt.tar.gz /home/myapp/
+</pre>
+<p>
+  参考: <a href="/blog/20200531085516.html">sudo</a>, <a href="https://linux.perlzemi.com/blog/20191012191854.html">cd</a>, <a href="https://linux.perlzemi.com/blog/20190129171737.html">tar</a>, <a href="https://linux.perlzemi.com/blog/20200603102015.html">chown</a>, <a href="https://linux.perlzemi.com/blog/20191204081652.html">mv</a>
+</p>
+<p>
+  引っ越し先のアプリケーションユーザーのホームディレクトリに移動する。
+</p>
+<h4>移動先での作業</h4>
+<p>
+  展開して、<a href="https://linux.perlzemi.com/blog/20190130171737.html">rsync</a>でコピーして、再帰的に所有者をrootに変更。
+</p>
+<pre>
+cd ~
+tar xfv letsencrypt.tar.gz
+sudo rsync -av letsencrypt/ /etc/letsencrypt/
+sudo chown -R root:root /etc/letsencrypt/
+</pre>
+<p>
+  上記で記述した、不必要なファイルは、消す。消さなくっても、そのままにしておいてもよいが。
+</p>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/">Ubuntuサーバー構築入門</a></li>
+    <li><a href="/blog/20200529085516.html">パッケージ管理</a></li>
+    <li><a href="/blog/20200526151435.html">Apache</a></li>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発を学ぶ
+  </div>
+  <ul>
+    <li><a href="https://tutorial.perlzemi.com/">Perlプログラミングを学ぶ</a></li>
+    <li><a href="https://linux.perlzemi.com/">Linuxの仕組み・コマンドを学ぶ</a></li>
+    <li><a href="https://web.perlzemi.com/">Webシステム開発を学ぶ</a></li>
+  </ul>
+
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発の見積もり
+  </div>
+  <ul>
+    <li><a href="https://kimoto-system.co.jp/">Perl Webシステム開発の<br>木本システム株式会社</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="kimoto_system_link">
+  <a href="https://kimoto-system.co.jp">
+    <img src="https://kimoto-system.co.jp/images/kimoto-system-logo.png" alt="Perl Webシステム開発">
+    Perl Webシステム開発の木本システム
+  </a>
+</div>
+
+<div class="copyright">
+  Copyright © Yuki Kimoto
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>
