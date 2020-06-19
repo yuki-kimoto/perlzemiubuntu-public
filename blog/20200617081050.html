@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>WebフレームワークMojoliciousのインストールとWebアプリケーションの実行方法 - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
+<meta name="description" content="WebフレームワークMojoliciousのインストールとWebアプリケーションの実行方法について解説します。Ubuntuサーバー構築入門では、Perl Webシステム開発を行うための、環境構築を行う上で、最低限必要な知識を公開します。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<div class="main">
+  <h1>
+    <a href="/">Ubuntuサーバー構築入門</a>
+  </h1>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+<style>
+  .ubuntu-version {
+
+  }
+  .ubuntu-version ul {
+    
+  }
+  .ubuntu-version li {
+    display:inline-block;
+    background:pink;
+    color:white;
+    border-radisu:10px;
+    padding:3px 5px;
+    margin:0;
+    margin-right:5px;
+  }
+</style>
+
+<div class="ubuntu-version">
+  <ul>
+    <li>Ubuntu 20</li>
+    <li>Ubuntu 18</li>
+    <li>Ubuntu 16</li>
+  </ul>
+</div>
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200617081050.html">WebフレームワークMojoliciousのインストールとWebアプリケーションの実行方法</a></h2>
+<p>
+  WebフレームワークMojoliciousのインストールとWebアプリケーションの実行方法について解説します。Ubuntuサーバー構築入門では、Perl Webシステム開発を行うための、環境構築を行う上で、最低限必要な知識を公開します。
+</p>
+<h3>Webフレームワーク Mojoliciousをインストールする前提</h3>
+<p>
+  Webフレームワーク<a href="https://mojolicious.perlzemi.com/">Mojolicious</a>をインストールする前提として、ユーザーPerlとcpanmがインストールされている必要があります。
+</p>
+<ul>
+  <li><a href="/blog/20200413174004.html">ユーザーPerlとcpanmのインストール</a></li>
+</ul>
+<h3>Webフレームワーク Mojoliciousのインストール</h3>
+<p>
+  Webフレームワーク Mojoliciousをインストールしましょう。
+</p>
+<pre>
+cpanm Mojolicious
+</pre>
+<p>
+  Mojoliciousがインストールされたことの確認しましょう。エラーが起こらなければ大丈夫です。
+</p>
+<pre>
+perl -e 'use Mojolicious'
+</pre>
+<h3>一番小さなMojoliciousアプリケーション</h3>
+<p>
+  次のMojoliciousのプログラムを「myapp.pl」という名前で保存しましょう。
+</p>
+<pre>
+use Mojolicious::Lite;
+get '/' =&gt; {text =&gt; 'Hello World!'};
+app-&gt;start;
+</pre>
+<h3>開発環境用でWebアプリケーションを起動</h3>
+<p>
+  <a href="https://mojolicious.perlzemi.com/blog/20120406133367.html">morbo</a>(モーボ)コマンドを使うと、Webアプリケーションが開発環境で起動します。
+</p>
+<pre>
+morbo myapp.pl
+</pre>
+<p>
+  3000番ポートでWebアプリケーションが起動します。
+</p>
+<pre>
+Web application available at http://127.0.0.1:3000
+</pre>
+<p>
+  127.0.0.1は、ローカルサーバーのアドレスです。この部分を、あなたのサーバーのIPアドレスに変えてブラウザからアクセスしてみましょう。
+</p>
+<p>
+  VPSやクラウドサーバで、3000番ポートが開いていない場合は、アクセスできないので、3000番ポートを許可してください。
+</p>
+<p>
+  以下の例は、サーバーのIPアドレスが「59.105.185.197」の例です。
+</p>
+<pre>
+http://59.105.185.197:3000
+</pre>
+<p>
+  画面に「Hello World!」と表示されれば、成功です。
+</p>
+<h3>本番環境用でWebアプリケーションを起動</h3>
+<p>
+  次に本番環境用で、Webアプリケーションを起動してみましょう。<a href="https://mojolicious.perlzemi.com/blog/20110122130016.html">hypnotoad</a>(ハイフノトード)コマンドを使うと、Webアプリケーションが本番環境用で起動します。
+</p>
+<pre>
+hypnotoad myapp.pl
+</pre>
+<p>
+  8080番ポートでWebアプリケーションが起動します。
+</p>
+<pre>
+Web application available at http://127.0.0.1:8080
+</pre>
+<p>
+  再起動するときは、もう一度実行します。
+</p>
+<pre>
+hypnotoad myapp.pl
+</pre>
+<p>
+  停止するときは「--stop」オプションを使用します。
+</p>
+<pre>
+hypnotoad --stop myapp.pl
+</pre>
+<h3>Mojoliciousアプリをリバースプロキシから接続する</h3>
+<p>
+  本番環境では、hypnotoadで起動したWebアプリケーションを、<a href="/blog/20200526151435.html">Apache</a>などのWebサーバーからリバースプロキシで接続します。
+</p>
+<p>
+  この手順については、以下を参考にしてください。
+</p>
+<ul>
+  <li><a href="/blog/20200306174004.html">WebアプリケーションをバーチャルホストとリバースプロキシでApacheから接続する</a></li>
+</ul>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/">Ubuntuサーバー構築入門</a></li>
+    <li><a href="/blog/20200529085516.html">パッケージ管理</a></li>
+    <li><a href="/blog/20200526151435.html">Apache</a></li>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発を学ぶ
+  </div>
+  <ul>
+    <li><a href="https://tutorial.perlzemi.com/">Perlプログラミングを学ぶ</a></li>
+    <li><a href="https://linux.perlzemi.com/">Linuxの仕組み・コマンドを学ぶ</a></li>
+    <li><a href="https://web.perlzemi.com/">Webシステム開発を学ぶ</a></li>
+  </ul>
+
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発の見積もり
+  </div>
+  <ul>
+    <li><a href="https://kimoto-system.co.jp/">Perl Webシステム開発の<br>木本システム株式会社</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="kimoto_system_link">
+  <a href="https://kimoto-system.co.jp">
+    <img src="https://kimoto-system.co.jp/images/kimoto-system-logo.png" alt="Perl Webシステム開発">
+    Perl Webシステム開発の木本システム
+  </a>
+</div>
+
+<div class="copyright">
+  Copyright © Yuki Kimoto
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>
