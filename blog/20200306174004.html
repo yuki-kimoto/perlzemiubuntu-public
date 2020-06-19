@@ -98,7 +98,7 @@
   リバースプロキシとは、簡単にいうと、Apacheへのアクセスを、他のサーバーへ転送する機能です。ユーザは、WebブラウザなどのHTTPクライアントからApacheに接続します。その接続を、別のサーバーに接続することができます。
 </p>
 <p>
-  PerlのWebサイトをHTTPサーバーとして起動して、特定のポートで待ち受けます。これは、Webフレームワークが提供している機能です。たとえば、20020番ポートで、待ち受けます。
+  PerlのWebサイトをHTTPサーバーとして起動して、特定のポートで待ち受けます。これは、Webフレームワークが提供している機能です。たとえば、8080番ポートで、待ち受けます。
 </p>
 <p>
   Apacheでリバースプロキシの設定を行って、これを、PerlのWebサイトに接続します。バーチャルホストを使うと、異なるドメインであれば、別のポートに接続することができますから、異なるポートでWebサイトを起動して、ドメインに応じて、接続すれば、複数のWebサイトを運用できます。
@@ -124,7 +124,7 @@ cd /etc/apache2/sites-available
 sudo vi www.mydomain.example.conf
 </pre>
 <p>
-  設定ファイルの内容は以下です。バーチャルホスト機能を使って、「www.mydomain.example」をリバースプロキシで「20020番ポート」に接続しているというところに注目してください。HTTPS対応した記述ですが、まだ本物のSSL証明書は使っておらず、<a href="/blog/20200307174004.html">自己SSL証明書</a>を使った状態になっています。
+  設定ファイルの内容は以下です。バーチャルホスト機能を使って、「www.mydomain.example」をリバースプロキシで「8080番ポート」に接続しているというところに注目してください。HTTPS対応した記述ですが、まだ本物のSSL証明書は使っておらず、<a href="/blog/20200307174004.html">自己SSL証明書</a>を使った状態になっています。
 </p>
 <pre>
 &lt;VirtualHost *:80&gt;
@@ -143,8 +143,8 @@ sudo vi www.mydomain.example.conf
 
   ProxyRequests Off
   ProxyPreserveHost On
-  ProxyPass / http://localhost:20020/ keepalive=On
-  ProxyPassReverse / http://localhost:20020/
+  ProxyPass / http://localhost:8080/ keepalive=On
+  ProxyPassReverse / http://localhost:8080/
   RequestHeader set X-Forwarded-Proto "https"
 
   SSLEngine on
@@ -174,8 +174,8 @@ sudo vi www.mydomain.example.conf
 
   ProxyRequests Off
   ProxyPreserveHost On
-  ProxyPass / http://localhost:20020/ keepalive=On
-  ProxyPassReverse / http://localhost:20020/
+  ProxyPass / http://localhost:8080/ keepalive=On
+  ProxyPassReverse / http://localhost:8080/
   RequestHeader set X-Forwarded-Proto "https"
 
   SSLEngine on
@@ -196,11 +196,11 @@ sudo vi www.mydomain.example.conf
   「ProxyPreserveHost On」は、Apacheにアクセスしたクライアントのホスト名を、そのままWebアプリケーションに渡します。
 </p>
 <pre>
-ProxyPass / http://localhost:20020/ keepalive=On
-ProxyPassReverse / http://localhost:20020/
+ProxyPass / http://localhost:8080/ keepalive=On
+ProxyPassReverse / http://localhost:8080/
 </pre>
 <p>
-  上記は、ローカルホストの20020番ポートに接続するという設定です。ふたつ書く必要があります。
+  上記は、ローカルホストの8080番ポートに接続するという設定です。ふたつ書く必要があります。
 </p>
 <p>
   「RequestHeader set X-Forwarded-Proto "https"」によって、PerlのWebアプリケーションが、HTTPSによる接続であることを知ることができます
@@ -224,7 +224,7 @@ sudo a2ensite www.mydomain.example
   有効化が終わったら<a href="/blog/20200519084454.html">Aapacheを再起動</a>してください。
 </p>
 <p>
-  20020番ポートでPerlでWebサイトが起動していることを確認してください。
+  8080番ポートでPerlでWebサイトが起動していることを確認してください。
 </p>
 <p>
   「https://www.mydomain.example」でWebサイトが表示できれば成功です。

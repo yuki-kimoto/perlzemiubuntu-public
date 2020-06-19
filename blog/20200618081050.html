@@ -7,7 +7,7 @@
 <link rel="icon" type="image/x-icon" href="/images/giblog-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>Let's EncryptのSSL証明書の取得・更新・更新の自動化 - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
+<title>HTTPS対応 - Let's EncryptでのSSL証明書の取得・更新・更新の自動化 - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
 <meta name="description" content="Let's EncryptのSSL証明書の取得・更新・更新の自動化の方法を解説します。">
   </head>
   <body>
@@ -55,21 +55,41 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200618081050.html">Let's EncryptのSSL証明書の取得・更新・更新の自動化</a></h2>
+    <h2><a href="/blog/20200618081050.html">HTTPS対応 - Let's EncryptでのSSL証明書の取得・更新・更新の自動化</a></h2>
 <p>
   Let's EncryptのSSL証明書の取得・更新・更新の自動化の方法を解説します。
 </p>
-<h3>Let's EncryptのSSL証明書の取得の前提</h3>
+<h3>Let's EncryptでのSSL証明書の取得の前提</h3>
 <p>
   Let's Encryptでは、Let's Encryptのクライアントが、Webサーバーにアクセスして、ドメイン所有者であることを確認する流れて、SSL証明書の発行を行います。
 </p>
 <p>
   このため、PerlでHTTPS対応のWebシステム開発環境を構築する前提として、Apacheの設定を終えて、Webアプリケーションが起動し、リバースプロキシで接続されている必要があることに注意してください。
 </p>
+<h4>DNSサーバーにおけるドメイン名とIPアドレスの設定</h3>
+<p>
+  本番サーバーで運用する場合は、ドメイン名とそれに紐づけられたサーバーのIPアドレスの対応をDNSサーバーで設定する必要があります。
+</p>
+<p>
+  ドメインを取得したサービスにおけるDNSサーバーの設定において、ドメイン名とサーバーのIPアドレスとの対応を記述してください。
+</p>
+<p>
+  ここでは、www.mydomain.exampleというドメイン名のAレコードが、サーバーのIPアドレス「111.122.133.144」に設定されているとして解説します。
+</p>
+<h4>certbotのインストール</h4>
+<p>
+  Let's Encryptのクライアントアプリケーションであるcertbotをインストールしてください。
+</p>
+<ul>
+  <li><a href="/blog/20200319174004.html">certbotのインストール - Let's EncryptのSSL証明書の取得と更新</a></li>
+</ul>
 <h4>Webアプリケーションの起動</h4>
 <p>
   次の手順で、Webアプリケーションを起動するところまでを行ってください。
 </p>
+<ul>
+  <li><a href="/blog/20200617081050.html">Webフレームワーク MojoliciousのインストールとWebアプリケーションの実行</a></li>
+</ul>
 <h4>バーチャルホストとリバースプロキシの設定</h3>
 <p>
   次の手順で、Webアプリケーションをリバースプロキシから接続する手順を行ってください。
@@ -84,6 +104,72 @@
 <ul>
   <li><a href="/blog/20200611082716.html">SSL証明書の設定をApacheの設定ファイルに記述する</a></li>
 </ul>
+<h3>Let's EncryptでのSSL証明書の取得</h3>
+<p>
+  myappというユーザー名で、ホームディレクトリの下に、Myappという名前で、Mojoliciousアプリケーションを作成したと想定して解説します。
+</p>
+<p>
+  またドメイン名は、www.mydomain.exampleという名前で取得しており、DNSサーバーにおける、ドメイン名とIPアドレスの対応の記述は済んでいるということ想定しています。
+</p>
+<p>
+  以下のcertbotコマンドを実行してください。
+</p>
+<pre>
+sudo certbot certonly --agree-tos --non-interactive -d www.mydomain.example --webroot -w /home/myapp/myapp/public --email kimoto.yuki@gmail.com
+</pre>
+<p>
+  もしApacheに自動設定するか聞かれた場合は、Noを選んでください。
+</p>
+<p>
+  SSL証明書が以下のディレクトリに作成されます。上から、SSLの証明書ファイル、SSL証明書の秘密鍵ファイル、中間証明書ファイルです。
+</p>
+<pre>
+/etc/letsencrypt/live/www.mydomain.example/cert.pem
+/etc/letsencrypt/live/www.mydomain.example/privkey.pem
+/etc/letsencrypt/live/www.mydomain.example/chain.pem
+</pre>
+<p>
+  以下の手順で、Apacheの設定ファイルにSSL証明書を追加してください。
+</p>
+<ul>
+  <li><a href="/blog/20200611082716.html">SSL証明書の設定をApacheの設定ファイルに記述する</a></li>
+</ul>
+<h3>Let's EncryptでのSSL証明書の更新</h3>
+<p>
+  Let's EncryptでのSSL証明書の更新には「certbot renew」コマンドを使用します。取得したすべてのSSL証明書に対して更新が必要かどうかの確認が行われ、更新期限が1ヵ月以内であれば証明書が更新されます。
+</p>
+<pre>
+sudo certbot renew -q --no-self-upgrade --post-hook "systemctl reload apache2"
+</pre>
+<p>
+  SSL証明書の再読み込みで、Apacheが再起動するので、注意してください。設定ファイルが間違っていた場合は、Apacheが止まります。
+</p>
+<h3>Let's EncryptでのSSL証明書の更新の自動化</h3>
+<p>
+  Let's EncryptでのSSL証明書の更新を手動で行うのは、手間がかかります。一週間に一回、自動的に更新するように設定しておきましょう。
+</p>
+<p>
+  一日一回の場合は、もしcertbotが間違っていた場合に、大量にSSL証明書を発行してしまって、しばらくSSL証明書が取得できないという事態になる可能性があるので、やめておきた方がリスクは避けられます。
+</p>
+<p>
+  1ヵ月に一回だと、もう少し頻度を上げた方が、間違っている場合の確認がしやすいかなと感じます。
+</p>
+<p>
+  というわけで、ここでは、1週間に1回、月曜日の9時に更新するという記述にしておきます。
+</p>
+<h4>rootのcrontabを設定</h4>
+<p>
+  rootのcrontabを設定しましょう。
+</p>
+<pre>
+sudo crontab
+</pre>
+<p>
+  crontabが起動したら、以下の内容を記述しましょう。<a href="https://linux.perlzemi.com/blog/20190401171737.html">vi</a>の使い方はこちら。
+</p>
+<pre>
+0 9 * * 1 certbot renew -q --no-self-upgrade --post-hook "systemctl reload apache2"
+</pre>
 
   </div>
   <div class="bottom">

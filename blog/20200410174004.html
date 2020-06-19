@@ -130,6 +130,21 @@
 <p>
   Ubuntuの場合は、CentOSのSeLinuxに該当する機能は、デフォルトでoffになっているようです。
 </p>
+<h3>Let's EncryptによるSSL証明書</h3>
+<p>
+  Ubuntuでは、certbotがaptからインストールできます。
+</p>
+<p>
+  CentOSでは、以下のようにcertbotをインストールします。
+</p>
+<pre>
+# Cent OS 7
+yum install epel-release
+yum install --enablerepo=epel certbot
+</pre>
+<p>
+  新しいCent OSのバージョンが出たばかりなど、certbotがepelレポジトリに含まれていない場合は、ソースコードからインストールしする必要があります。またcertbotは、certbot-autoという名前です。
+</p>
 <h3>ここ最近共通になったもの(2020年5月21日現在)</h3>
 <p>
   CentOSとUbuntuで、ここ最近共通になったもの。
