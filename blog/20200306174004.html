@@ -101,6 +101,32 @@
 <p>
   Apacheでリバースプロキシの設定を行って、これを、PerlのWebサイトに接続します。バーチャルホストを使うと、異なるドメインであれば、別のポートに接続することができますから、異なるポートでWebサイトを起動して、ドメインに応じて、接続すれば、複数のWebサイトを運用できます。
 </p>
+<h3>リバースプロキシのために必要なApacheモジュール</h3>
+<p>
+  リバースプロキシの設定ために必要なApacheモジュールは、mod_proxy, mod_proxy_httpです。
+</p>
+<ul>
+  <li><a href="/blog/20200310174004.html">Apacheでmod_proxyモジュールを有効にする</a></li>
+  <li><a href="/blog/20200220174004.html">Apacheでmod_proxy_httpモジュールを有効にする</a></li>
+</ul>
+<p>
+  また、HTTPをHTTPSにリダイレクトするために、mod_rewriteが必要です。
+</p>
+<ul>
+  <li><a href="/blog/20200311174004.html">Apacheでmod_rewriteモジュールを有効にする</a></li>
+</ul>
+<p>
+  HTTPSをサポートするためには、mod_sslが必要になります。
+</p>
+<ul>
+  <li><a href="/blog/20200318174004.html">ApacheでHTTPSで通信できるようにmod_sslを有効化</a></li>
+</ul>
+<p>
+  HTTPSであることをHTTPヘッダで教えるためにmod_headersモジュールが必要になります。
+</p>
+<ul>
+  <li><a href="/blog/20200309174004.html">Apacheでmod_headersモジュールを有効にする</a></li>
+</ul>
 <h3>Apacheのバーチャルホストとリバースプロキシの設定</h3>
 <p>
   まず設定ファイルは以下のディレクトリに配置します。

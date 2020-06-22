@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/ubuntu-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>Apacheでmod_proxyモジュールを有効にする - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
-<meta name="description" content="UbuntuのApacheでは、プロキシ機能を提供するmod_proxyモジュールがデフォルトでは有効になっていないので、有効にします。">
+<title>Apacheでmod_proxy_httpモジュールを有効にする - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
+<meta name="description" content="UbuntuのApacheでは、HTTP・HTTPSでプロキシ機能を提供するmod_proxy_httpモジュールがデフォルトでは有効になっていないので、有効にします。">
   </head>
   <body>
     <div class="container">
@@ -53,12 +53,12 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200310174004.html">Apacheでmod_proxyモジュールを有効にする</a></h2>
+    <h2><a href="/blog/20200220174004.html">Apacheでmod_proxy_httpモジュールを有効にする</a></h2>
 <p>
-  UbuntuのApacheでは、プロキシ機能を提供するmod_proxyモジュールがデフォルトでは有効になっていないので、有効にします。
+  UbuntuのApacheでは、HTTP・HTTPSでプロキシ機能を提供するmod_proxy_httpモジュールがデフォルトでは有効になっていないので、有効にします。
 </p>
 <pre>
-sudo a2enmod proxy
+sudo a2enmod proxy_http
 </pre>
 <p>
   設定を反映させるためには<a href="/blog/20200519084454.html">Apacheを再起動</a>してください。
@@ -70,11 +70,11 @@ sudo a2enmod proxy
   <li><a href="/blog/20200610082714.html">Apache設定ファイルを有効・無効にする - 基本設定・モジュール設定・サイト設定</a></li>
 </ul>
 <p>
-  HTTP・HTTPSをプロキシするには別途mod_proxy_httpが必要になるので注意してください。
+  mod_proxy_httpはmod_proxyに依存していることに注意してください。
 </p>
-<h3>mod_proxyが存在しない場合のApacheのエラーメッセージ</h3>
+<h3>mod_proxy_httpが存在しない場合のApacheのエラーメッセージ</h3>
 <p>
-  mod_proxyが存在しない場合にApacheのエラーメッセージの例。
+  mod_proxy_httpが存在しない場合にApacheのエラーメッセージの例。
 </p>
 <pre>
 Invalid command '&lt;Proxy', perhaps misspelled or defined by a module not included in the server configuration
