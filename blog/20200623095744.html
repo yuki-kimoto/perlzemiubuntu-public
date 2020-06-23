@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/ubuntu-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>ssh-keygenでSSH公開鍵認証のための秘密鍵と公開鍵のペアを作成する - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
+<meta name="description" content="ssh-keygenコマンドを使うと、SSH公開鍵認証ための秘密鍵と公開鍵のペアを作成することができます。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<h1>
+  <a href="/">Ubuntuサーバー構築入門</a>
+</h1>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+<style>
+  .ubuntu-version {
+    text-align:right;
+  }
+  .ubuntu-version ul {
+    
+  }
+  .ubuntu-version li {
+    display:inline-block;
+    background:pink;
+    color:white;
+    border-radisu:10px;
+    padding:3px 5px;
+    margin:0;
+    margin-right:5px;
+  }
+</style>
+
+<div class="ubuntu-version">
+  <ul>
+    <li>Ubuntu 20</li>
+    <li>Ubuntu 18</li>
+    <li>Ubuntu 16</li>
+  </ul>
+</div>
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200623095744.html">ssh-keygenでSSH公開鍵認証のための秘密鍵と公開鍵のペアを作成する</a></h2>
+<p>
+  <b>ssh-keygen</b>コマンドを使うと、<a href="https://linux.perlzemi.com/blog/20200621103220.html">SSH</a>公開鍵認証ための秘密鍵と公開鍵のペアを作成することができます。
+</p>
+<p>
+  まず、SSHの秘密鍵を保存しておくディレクトリに移動します。これは、本来は必要な作業ではないのですが、秘密鍵、あるいは、公開鍵のどちらかを「~/.ssh」ディレクトリに配置するだろうという推測に基づきます。
+</p>
+<pre>
+cd ~/.ssh
+</pre>
+<p>
+  公開鍵と秘密鍵のペアを生成するには、ssh-keygenコマンドを実行します。
+</p>
+<pre>
+ssh-keygen -t rsa
+</pre>
+<p>
+  生成するファイル名を聞かれますので「id_rsa_example」と入力しましょう。exampleの部分は、用途に応じて変えてください。
+</p>
+<p>
+  「id_rsa_example」と「id_rsa_example.pub」というファイルが作成されます。「id_rsa_example」は秘密鍵、「id_rsa_example.pub」は公開鍵です。
+</p>
+<p>
+  パスフレーズを入力してくださいと聞かれたときは、パスフレーズを入力する場合は、パスフレーズを、必要のない場合は、Enterを押してください。再入力を求められるので、同じパスフレーズ、パスフレーズを設定していない場合は、Enterを押してください。
+</p>
+<p>
+  パスフレーズとは、パスワードのことです。
+</p>
+<h3>公開鍵</h3>
+<h4>公開鍵の内容</h4>
+<p>
+  <a href="https://linux.perlzemi.com/blog/20200113083613.html">cat</a>コマンドで「id_rsa_example.pub」の中身を表示してみましょう。
+</p>
+<pre>
+-----BEGIN RSA PRIVATE KEY-----
+MIIEowIBAAKCAQEA4CEvH2b3HvgxOqRMKYaTpvcHmmYVuPGxg3784eQPGu9UJgl9
+tC/3xw7RJvK/pXm85Dee4vH1X8Z2W3tLrwvGZ+62imWADNvG33uiMGPOoO/d0RUp
+NgaO5ZnJTbe3T56BHRoI7+QOX5KICNq4RH6Qs3+1UFeAjlg0ASv0wauyCWuuR46/
+U0wWUT126Th5iN2uTNeF0mM3Y0Mb4TVgnH0fQPvEKF9lZApWUe7lYFeCgfJ5drP2
+yU7wv7g5jKiHjiiXS8wdn8SOB8n70JwM/IkbbyIqCKfGCR/hVxGZBxrAidn8uRzL
+Y2YkrZqvP62d6jvlJrgMjgA4yVr7viDYjwN7KwIDAQABAoIBAQCCNYUk3zLOQS6I
+fQ7qSQ7av0UhhBE2ouOYG1xa95127neaqYTn+74dXRRRZlHEltcQVuftvNfqzmfQ
+ee7cQSEBHIPcH1+nGL+O8kqlhjZy9SeO4pZQlrrJ1PBIQGU00kb8WzW5+GoJSB3T
+1w2abVUvkxAJHuzGxaNg0uKc6VzDbz877+dPgJD4vnLvYsyy8IKyCR2KrDRdv+JT
+hR/2OlqlPuFLKWyA1xDHcIuv9ie8u0yaOQU0rnMJSEp7BCedsPUXV0RBgFgcT49O
+61G7ufVDvQxEe3tFEWfpT1guFlMtYlveUPo3gsJDQZo/zfZofcqyHC/gE8I1KkMd
+c9kDOnvRAoGBAPAyljHDjG1KKgTyETggzO9RKxlYT0ALvd8xrDoFCWIavcfoA6Gl
+/RYOt2iihh6PXQO99Igvyffkikaar4FNGxnHE72VJbwQdChxYWnN/gUlphQr/nsJ
+fauALRWNxGueOJTaaz9vnGbTL8Ky5RLkzPjf/hp9ujr/sllyGatFJz8NAoGBAO7f
++ulN6Rot9OGUrdnV7F99HtMOSNkjnIcRW0V4rp6c4Q89LhXx9kWVmcR3jkoYdV16
+ouZ5AXUc43OTPosydVOdMTeSo0YfCNPu/fU7PWTqpp6qn/ZKAdeiiHgIspYkix1k
+o2xY7v4h0yU8MOvMwDEPle7qQoGssI17b/vLY9UXAoGASG3YoHTo+WOtvAQKcTRi
+159QMbpRW2yu+oiN+IjgRXbu10L9JVdaM7aIU8L+UmTElYZIIHDYpCmEELpARess
+St+e8kHxOP51KGTYDQGSoZayt850VEGOZZKnBaLUIed6BFjAkkZjkRYJhtpO/R2F
+OV7Bztcuuu+zpgkj+GNH7FkCgYAzp8O+h9aMjruRvHEL1jLTQ19TDJe8PPMwUhSG
+pV49dndEsFoy7KvwyDUEQ0ZFx5w5prdrV2d1R9X3vDOeLj8o4aku90rPcw6ZpejN
+Cw5vsD5vuT32KHLVipQwQNE9npFmvciJOYIU+oOKXcXGd/Rnp5MoowfWut1C+xpw
+PL9N6QKBgAzbxGL41apbLHuZ+duuz5D8Kbolhcke61+MSXNjvJIvOJruDt6F8TZY
+mJ4gSaRUf9C9315+kRg0UmZafRNW6rVYcxbU9sDVLMPWS1LYd3JXx03Ac5sHK7Ks
+BxFxFujQ1PG44DZBGRWoUGht+Bu/ZBtf9faiS8yR6U5p9AKARGE2
+-----END RSA PRIVATE KEY-----
+</pre>
+<h4>SSH公開鍵認証における公開鍵の設定ファイル</h4>
+<p>
+  リモートサーバーの公開鍵は、リモートサーバーの「~/.ssh/authorized_keys」に設定します。ssh-keygenで作成した公開鍵ファイルをそのまま設置しておくわけではないので、注意してください。
+</p>
+<p>
+  ssh-keygenで作成した公開鍵ファイルの内容を「~/.ssh/authorized_keys」ファイルの中に追記します。公開鍵の内容は、複数記述することができ、その場合は、1行以上空けてください。
+</p>
+<pre>
+~/.ssh/authorized_keys
+</pre>
+<p>
+  パーミッションは600にします。
+</p>
+<pre>
+chmod 600 ~/.ssh/authorized_keys
+</pre>
+<p>
+  この設定は、自身がリモートサーバーとして接続される場合の設定です。自身がリモートサーバーに接続する場合には、不要ですので注意してください。
+</p>
+<h3>秘密鍵</h3>
+<h4>秘密鍵の内容</h4>
+<p>
+  <a href="https://linux.perlzemi.com/blog/20200113083613.html">cat</a>コマンドで「id_rsa_example」の中身を表示してみましょう。
+</p>
+<pre>
+cat id_rsa_example
+</pre>
+<p>
+  以下のように表示されます。
+</p>
+<pre>
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjSsucYA958wTIKUcPRXC2iZxb84FXkzm41/jzpfnUeBFsypS8xfTXpfDaSIYeMDyr9pIUfDuWWPykoofL4WZaJYDy5pQclFwby/KttDRAnm0XZQ2ZDUtnrUUdva55mxOcTJP0c1VWXpwrhBA+JSFLOGB8wxCV8UFh9XWXI4c5QKQ/Hyl8//nXT6suQf199VNf4Ru31rs+49FDW9FyvoX1GGEEBJCT2ROVD6qi1xY766PuhM/4OMQeIxZmZg8ysML307viqkKh/2mecwkdV1mxGQt8GbO3gvTOX5h9p7tGEwa3zSHhxudux1Kf6Pfcg4FwKuld8r77DKMXEszpRI11 myapp@myhost
+</pre>
+<h4>秘密鍵のパーミッションは600</h4>
+<p>
+  秘密鍵のパーミッションは600である必要があります。ssh-keygenを使って作成した場合は、パーミッションは600に設定されますが、他のサーバーから秘密鍵の内容をコピーしてきた場合は、<a href="https://linux.perlzemi.com/blog/20200519082545.html">chmod</a>コマンドを使って、パーミッションを600にしましょう。
+</p>
+<pre>
+chmod 600 id_rsa_example
+</pre>
+<h4>sshコマンドのデフォルトで利用される秘密鍵はid_rsa</h4>
+<p>
+  デフォルトで利用される秘密鍵はid_rsaです。このことを知らないと、秘密鍵をつかってSSH公開鍵認証を行う場合に、とまどいます。秘密鍵ファイルを指定する方法や、特定のドメインへの秘密鍵ファイルのパスを設定ファイルに指定する方法は、sshコマンドの記事を参考にしてください。
+</p>
+<ul>
+  <li><a href="/blog/20200621103220.html">sshコマンド - SSHサーバーへ接続する</a></li>
+</ul>
+<h3>SSHの秘密鍵と公開鍵のペアを必要とする場合の例</h3>
+<h4>rsyncによるバックアップの自動化</h4>
+<p>
+  <a href="/blog/20190130171737.html">rsync</a>によるバックアップの自動化を行う場合に、パスワードの入力を求められると自動化できないので、秘密鍵と公開鍵のペアを使ってSSHの鍵認証を行います。
+</p>
+<h4>ユーザーログイン</h4>
+<p>
+  SSHのログインにユーザーパスワードではなく、SSHの鍵認証を行う場合に、必要になります。
+</p>
+<h4>Github</h4>
+<p>
+  Github上で、SSHを使って、Gitリポジトリを取得・更新するときは、Githubに公開鍵を登録必要する必要があります。
+</p>
+<ul>
+  <li><a href="/blog/20200613091136.html">Githubに公開鍵を登録する</a></li>
+</ul>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/">Ubuntuサーバー構築入門</a></li>
+    <li><a href="/blog/20200529085516.html">パッケージ管理</a></li>
+    <li><a href="/blog/20200526151435.html">Apache</a></li>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発を学ぶ
+  </div>
+  <ul>
+    <li><a href="https://tutorial.perlzemi.com/">Perlプログラミングを学ぶ</a></li>
+    <li><a href="https://linux.perlzemi.com/">Linuxの仕組み・コマンドを学ぶ</a></li>
+    <li><a href="https://web.perlzemi.com/">Webシステム開発を学ぶ</a></li>
+  </ul>
+
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発の見積もり
+  </div>
+  <ul>
+    <li><a href="https://kimoto-system.co.jp/">Perl Webシステム開発の<br>木本システム株式会社</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="kimoto_system_link">
+  <a href="https://kimoto-system.co.jp">
+    <img src="https://kimoto-system.co.jp/images/kimoto-system-logo.png" alt="Perl Webシステム開発">
+    Perl システム開発の木本システム株式会社<br>
+    
+    リアルタイムWebとクラウドサーバー対応の<br>
+    
+    Webシステム開発・業務システム開発<br>
+  </a>
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>
