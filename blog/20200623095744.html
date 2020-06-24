@@ -58,13 +58,23 @@
   <b>ssh-keygen</b>コマンドを使うと、<a href="https://linux.perlzemi.com/blog/20200621103220.html">SSH</a>公開鍵認証ための秘密鍵と公開鍵のペアを作成することができます。
 </p>
 <p>
-  まず、SSHの秘密鍵を保存しておくディレクトリに移動します。これは、本来は必要な作業ではないのですが、秘密鍵、あるいは、公開鍵のどちらかを「~/.ssh」ディレクトリに配置するだろうという推測に基づきます。
+  まず、SSHの秘密鍵を保存しておくディレクトリに移動します。このディレクトリ中で、<b>ssh-keygen</b>コマンドで秘密鍵と公開鍵のペアを作成します。
+</p>
+<p>
+  これは、ssh-keygenコマンドにとっては、本来は必要な作業ではないのですが、公開鍵をリモートサーバーに配布する場合に、秘密鍵の方を「~/.ssh」の中に残しておくので、このことを想定した手順になっています。
 </p>
 <pre>
 cd ~/.ssh
 </pre>
 <p>
-  公開鍵と秘密鍵のペアを生成するには、ssh-keygenコマンドを実行します。
+  もし「~/.ssh」ディレクトリが存在しないという場合は、<a href="https://linux.perlzemi.com/blog/20191211133524.html">mkdir</a>コマンドで、作成します。不適切なパーミッションだとトラブルの元なので、パーミッション 700 を指定するのが推奨です。<a href="https://linux.perlzemi.com/blog/20200519082545.html">chmod</a>コマンドで、パーミッションを設定しています。
+</p>
+<pre>
+mkdir ~/.ssh
+chmod 700 ~/.ssh
+</pre>
+<p>
+  公開鍵と秘密鍵のペアを生成するには、<b>ssh-keygen</b>コマンドを実行します。
 </p>
 <pre>
 ssh-keygen -t rsa
@@ -76,15 +86,21 @@ ssh-keygen -t rsa
   「id_rsa_example」と「id_rsa_example.pub」というファイルが作成されます。「id_rsa_example」は秘密鍵、「id_rsa_example.pub」は公開鍵です。
 </p>
 <p>
-  パスフレーズを入力してくださいと聞かれたときは、パスフレーズを入力する場合は、パスフレーズを、必要のない場合は、Enterを押してください。再入力を求められるので、同じパスフレーズ、パスフレーズを設定していない場合は、Enterを押してください。
+  パスフレーズを入力してくださいと聞かれたときは、パスフレーズを入力する場合は、パスフレーズを、必要のない場合は、Enterを押してください。再入力を求められるので、同じパスフレーズを、入力してください。パスフレーズを設定していない場合は、Enterを押してください。
 </p>
 <p>
-  パスフレーズとは、パスワードのことです。
+  パスフレーズとは「鍵を保護する目的で秘密鍵ファイルに設定するもの」のことで、「ログイン用パスワードとは別」のものです。
 </p>
-<h3>公開鍵</h3>
-<h4>公開鍵の内容</h4>
+<h3>秘密鍵</h3>
+<h4>秘密鍵の内容</h4>
 <p>
-  <a href="https://linux.perlzemi.com/blog/20200113083613.html">cat</a>コマンドで「id_rsa_example.pub」の中身を表示してみましょう。
+  <a href="https://linux.perlzemi.com/blog/20200113083613.html">cat</a>コマンドで「id_rsa_example」の中身を表示してみましょう。
+</p>
+<pre>
+cat id_rsa_example
+</pre>
+<p>
+  以下のように表示されます。
 </p>
 <pre>
 -----BEGIN RSA PRIVATE KEY-----
@@ -115,39 +131,6 @@ mJ4gSaRUf9C9315+kRg0UmZafRNW6rVYcxbU9sDVLMPWS1LYd3JXx03Ac5sHK7Ks
 BxFxFujQ1PG44DZBGRWoUGht+Bu/ZBtf9faiS8yR6U5p9AKARGE2
 -----END RSA PRIVATE KEY-----
 </pre>
-<h4>SSH公開鍵認証における公開鍵の設定ファイル</h4>
-<p>
-  リモートサーバーの公開鍵は、リモートサーバーの「~/.ssh/authorized_keys」に設定します。ssh-keygenで作成した公開鍵ファイルをそのまま設置しておくわけではないので、注意してください。
-</p>
-<p>
-  ssh-keygenで作成した公開鍵ファイルの内容を「~/.ssh/authorized_keys」ファイルの中に追記します。公開鍵の内容は、複数記述することができ、その場合は、1行以上空けてください。
-</p>
-<pre>
-~/.ssh/authorized_keys
-</pre>
-<p>
-  パーミッションは600にします。
-</p>
-<pre>
-chmod 600 ~/.ssh/authorized_keys
-</pre>
-<p>
-  この設定は、自身がリモートサーバーとして接続される場合の設定です。自身がリモートサーバーに接続する場合には、不要ですので注意してください。
-</p>
-<h3>秘密鍵</h3>
-<h4>秘密鍵の内容</h4>
-<p>
-  <a href="https://linux.perlzemi.com/blog/20200113083613.html">cat</a>コマンドで「id_rsa_example」の中身を表示してみましょう。
-</p>
-<pre>
-cat id_rsa_example
-</pre>
-<p>
-  以下のように表示されます。
-</p>
-<pre>
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjSsucYA958wTIKUcPRXC2iZxb84FXkzm41/jzpfnUeBFsypS8xfTXpfDaSIYeMDyr9pIUfDuWWPykoofL4WZaJYDy5pQclFwby/KttDRAnm0XZQ2ZDUtnrUUdva55mxOcTJP0c1VWXpwrhBA+JSFLOGB8wxCV8UFh9XWXI4c5QKQ/Hyl8//nXT6suQf199VNf4Ru31rs+49FDW9FyvoX1GGEEBJCT2ROVD6qi1xY766PuhM/4OMQeIxZmZg8ysML307viqkKh/2mecwkdV1mxGQt8GbO3gvTOX5h9p7tGEwa3zSHhxudux1Kf6Pfcg4FwKuld8r77DKMXEszpRI11 myapp@myhost
-</pre>
 <h4>秘密鍵のパーミッションは600</h4>
 <p>
   秘密鍵のパーミッションは600である必要があります。ssh-keygenを使って作成した場合は、パーミッションは600に設定されますが、他のサーバーから秘密鍵の内容をコピーしてきた場合は、<a href="https://linux.perlzemi.com/blog/20200519082545.html">chmod</a>コマンドを使って、パーミッションを600にしましょう。
@@ -162,14 +145,51 @@ chmod 600 id_rsa_example
 <ul>
   <li><a href="/blog/20200621103220.html">sshコマンド - SSHサーバーへ接続する</a></li>
 </ul>
-<h3>SSHの秘密鍵と公開鍵のペアを必要とする場合の例</h3>
+<h3>公開鍵</h3>
+<h4>公開鍵の内容</h4>
+<p>
+  <a href="https://linux.perlzemi.com/blog/20200113083613.html">cat</a>コマンドで「id_rsa_example.pub」の中身を表示してみましょう。
+</p>
+<pre>
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjSsucYA958wTIKUcPRXC2iZxb84FXkzm41/jzpfnUeBFsypS8xfTXpfDaSIYeMDyr9pIUfDuWWPykoofL4WZaJYDy5pQclFwby/KttDRAnm0XZQ2ZDUtnrUUdva55mxOcTJP0c1VWXpwrhBA+JSFLOGB8wxCV8UFh9XWXI4c5QKQ/Hyl8//nXT6suQf199VNf4Ru31rs+49FDW9FyvoX1GGEEBJCT2ROVD6qi1xY766PuhM/4OMQeIxZmZg8ysML307viqkKh/2mecwkdV1mxGQt8GbO3gvTOX5h9p7tGEwa3zSHhxudux1Kf6Pfcg4FwKuld8r77DKMXEszpRI11 myapp@myhost
+</pre>
+<p>
+  リモートサーバーに渡す公開鍵はの内容がこれです。
+</p>
+<h4>サーバー側における公開鍵の登録</h4>
+<p>
+  クライアント側で生成された公開鍵を、サーバー側で設定するには「~/.ssh/authorized_keys」に登録します。ssh-keygenで作成した公開鍵ファイルをそのまま設置するわけではないので、注意してください。<a href="https://linux.perlzemi.com/blog/20190401171737.html">vi</a>コマンドで「~/.ssh/authorized_keys」を開いて、公開鍵を登録します。
+</p>
+<pre>
+vi ~/.ssh/authorized_keys
+</pre>
+<pre>
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjSsucYA958wTIKUcPRXC2iZxb84FXkzm41/jzpfnUeBFsypS8xfTXpfDaSIYeMDyr9pIUfDuWWPykoofL4WZaJYDy5pQclFwby/KttDRAnm0XZQ2ZDUtnrUUdva55mxOcTJP0c1VWXpwrhBA+JSFLOGB8wxCV8UFh9XWXI4c5QKQ/Hyl8//nXT6suQf199VNf4Ru31rs+49FDW9FyvoX1GGEEBJCT2ROVD6qi1xY766PuhM/4OMQeIxZmZg8ysML307viqkKh/2mecwkdV1mxGQt8GbO3gvTOX5h9p7tGEwa3zSHhxudux1Kf6Pfcg4FwKuld8r77DKMXEszpRI11 myapp@myhost
+</pre>
+<p>
+  公開鍵は、複数登録することができます。その場合は、行を変えて記述してください。
+</p>
+<pre>
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjSsucYA958wTIKUcPRXC2iZxb84FXkzm41/jzpfnUeBFsypS8xfTXpfDaSIYeMDyr9pIUfDuWWPykoofL4WZaJYDy5pQclFwby/KttDRAnm0XZQ2ZDUtnrUUdva55mxOcTJP0c1VWXpwrhBA+JSFLOGB8wxCV8UFh9XWXI4c5QKQ/Hyl8//nXT6suQf199VNf4Ru31rs+49FDW9FyvoX1GGEEBJCT2ROVD6qi1xY766PuhM/4OMQeIxZmZg8ysML307viqkKh/2mecwkdV1mxGQt8GbO3gvTOX5h9p7tGEwa3zSHhxudux1Kf6Pfcg4FwKuld8r77DKMXEszpRI11 myapp@myhost
+ssh-rsa CCCAB3NzaC1yc2EAAAADAQAnAABAQCjSsucYA958wTIKUcPRXC2iZxb84FXkzm41/jzpfnUeBFsypS8xfTXpfDaSIYeMDyr9pIUfDuWWPykoofL4WZaJYDy5pQclFwby/KttDRAnm0XZQ2ZDUtnrUUdva55mxOcTJP0c1VWXpwrhBA+JSFLOGB8wxCV8UFh9XWXI4c5QKQ/Hyl8//nXT6suQf199VNf4Ru31rs+49FDW9FyvoX1GGEEBJCT2ROVD6qi1xY766PuhM/4OMQeIxZmZg8ysML307viqkKh/2mecwkdV1mxGQt8GbO3gvTOX5h9p7tGEwa3zSHhxudux1Kf6Pfcg4FwKuld8r77DKMXEszpRI11 myapp2@myhost
+</pre>
+<p>
+  パーミッションは600にしましょう。こちらは、必須ではないですが、600にすることが推奨されています。
+</p>
+<pre>
+chmod 600 ~/.ssh/authorized_keys
+</pre>
+<p>
+  この手順は、自身がサーバーとして接続される場合のものです。自身がリモートサーバーに接続する場合には、公開鍵を渡して、登録してもらえばOKです。
+</p>
+<h3>SSH公開鍵認証を使う例</h3>
 <h4>rsyncによるバックアップの自動化</h4>
 <p>
-  <a href="/blog/20190130171737.html">rsync</a>によるバックアップの自動化を行う場合に、パスワードの入力を求められると自動化できないので、秘密鍵と公開鍵のペアを使ってSSHの鍵認証を行います。
+  <a href="/blog/20190130171737.html">rsync</a>によるバックアップの自動化を行う場合に、パスワードの入力を求められると自動化できないので、SSH公開鍵認証を使ってSSHのユーザー認証を行います。
 </p>
 <h4>ユーザーログイン</h4>
 <p>
-  SSHのログインにユーザーパスワードではなく、SSHの鍵認証を行う場合に、必要になります。
+  SSHのログインにユーザーのパスワードではなく、SSHの鍵認証を行いたい場合。
 </p>
 <h4>Github</h4>
 <p>
