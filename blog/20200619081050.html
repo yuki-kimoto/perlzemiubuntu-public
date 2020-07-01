@@ -158,19 +158,20 @@ certbot 0.27.0
   Let's Encryptのアカウント情報は「/etc/letsencrypt/accounts/etc/letsencrypt/accounts」の中にあるようだ。引っ越しに必要そうだ。
 </p>
 <p>
-  「/etc/letsencrypt/archive」の中には、過去のLet's EncryptのSSL証明書の情報があるようです。これは、いらなさそう。
+  「/etc/letsencrypt/archive」の中には、過去からのすべてのLet's EncryptのSSL証明書の情報があるようです。この証明書情報は、liveディレクトリの中から参照されています。これは、必要だ。
 </p>
 <p>
   「/etc/letsencrypt/csr」と「/etc/letsencrypt/keys」は、バックアップ用だけに存在しているようです。これは、いらなさそう。
 </p>
+<p>
+  というわけで、そのまま全部移動するのが、無難なようです。
+</p>
 <h4>Let's EncryptのSSL証明書の引っ越しに必要なもの</h4>
 <p>
-  Let's EncryptのSSL証明書の引っ越しに必要なもの。
+  Let's EncryptのSSL証明書の引っ越しに必要なもの。「/etc/letsencrypt」以下をすべて移動させましょう。
 </p>
 <ul>
-  <li>/etc/letsencrypt/live</li>
-  <li>/etc/letsencrypt/renewal</li>
-  <li>/etc/letsencrypt/accounts</li>
+  <li>/etc/letsencrypt</li>
 </ul>
 <h3>root権限で移動しないといけない</h3>
 <p>
@@ -208,6 +209,14 @@ sudo chown -R root:root /etc/letsencrypt/
 <p>
   上記で記述した、不必要なファイルは、消す。消さなくっても、そのままにしておいてもよいが。
 </p>
+<h3>renewalディレクトリの中の設定ファイルのwebroot_mapのチェック</h3>
+<p>
+  引っ越し作業をしたときに、ユーザー名が変更されている場合などは、renewalディレクトリの中の設定ファイルに記述されているパスの更新が必要です。
+</p>
+<pre>
+[[webroot_map]]
+www.myhost.example = /home/myapp/fooapp/public
+</pre>
 
   </div>
   <div class="bottom">

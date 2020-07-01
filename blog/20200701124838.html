@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/ubuntu-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>Let's EncryptのアクセスURLだけをApacheのベーシック認証から除外する - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
+<meta name="description" content="Let's EncryptがSSL証明書を発行するときには、Let's Encryptのクライアントはそのサイトにアクセスできることを調べます。ひとつ注意しないといけないのは、ベーシック認証をサイト全体にかけている場合に、Let's Encryptのクライアントがアクセスできなくなってしまうということです。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<h1>
+  <a href="/">Ubuntuサーバー構築入門</a>
+</h1>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+<style>
+  .ubuntu-version {
+    text-align:right;
+  }
+  .ubuntu-version ul {
+    
+  }
+  .ubuntu-version li {
+    display:inline-block;
+    background:pink;
+    color:white;
+    border-radisu:10px;
+    padding:3px 5px;
+    margin:0;
+    margin-right:5px;
+  }
+</style>
+
+<div class="ubuntu-version">
+  <ul>
+    <li>Ubuntu 20</li>
+    <li>Ubuntu 18</li>
+    <li>Ubuntu 16</li>
+  </ul>
+</div>
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200701124838.html">Let's EncryptのアクセスURLだけをApacheのベーシック認証から除外する</a></h2>
+<p>
+  Let's EncryptがSSL証明書を発行するときには、Let's Encryptのクライアントはそのサイトにアクセスできることを調べます。ひとつ注意しないといけないのは、ベーシック認証をサイト全体にかけている場合に、Let's Encryptのクライアントがアクセスできなくなってしまうということです。
+</p>
+<p>
+  ここでは、Let's EncryptのアクセスURLだけを、ベーシック認証から除外する方法を解説します。
+</p>
+<p>
+  Apacheの設定ファイルで以下のように設定してください。
+</p>
+<pre>
+&lt;Location / &gt;
+  AuthType Basic
+  AuthName "Secret Zone"
+  AuthUserFile /var/www/.htpasswd
+  Require user foo
+&lt;/Location&gt;
+
+&lt;Location /.well-known/acme-challenge &gt;
+  Require all granted
+&lt;/Location&gt;
+</pre>
+<p>
+  Let's Encryptが使うパスだけは、接続をすべて許可してください。
+</p>
+<pre>
+/.well-known/acme-challenge
+</pre>
+<p>
+  がLet's Encryptが使うパスです。
+</p>
+<p>
+  「/」がベーシック認証のパスになっていますが、その後ろの設定で「/.well-known/acme-challenge」のパスに対しては、すべての接続が許可されます。
+</p>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/">Ubuntuサーバー構築入門</a></li>
+    <li><a href="/blog/20200529085516.html">パッケージ管理</a></li>
+    <li><a href="/blog/20200526151435.html">Apache</a></li>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発を学ぶ
+  </div>
+  <ul>
+    <li><a href="https://tutorial.perlzemi.com/">Perlプログラミングを学ぶ</a></li>
+    <li><a href="https://linux.perlzemi.com/">Linuxの仕組み・コマンドを学ぶ</a></li>
+    <li><a href="https://web.perlzemi.com/">Webシステム開発を学ぶ</a></li>
+  </ul>
+
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発の見積もり
+  </div>
+  <ul>
+    <li><a href="https://kimoto-system.co.jp/">Perl Webシステム開発の<br>木本システム株式会社</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="kimoto_system_link">
+  <a href="https://kimoto-system.co.jp">
+    <img src="https://kimoto-system.co.jp/images/kimoto-system-logo.png" alt="Perl Webシステム開発">
+    Perl システム開発の木本システム株式会社<br>
+    
+    リアルタイムWebとクラウドサーバー対応の<br>
+    
+    Webシステム開発・業務システム開発<br>
+  </a>
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>
