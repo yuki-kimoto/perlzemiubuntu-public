@@ -92,19 +92,21 @@ sudo rsync -e "ssh -p22" -av --delete /etc_letsencrypt/ myapp@133.242.230.50:/da
 <p>
   本番機で、<a href="/blog/20200623095744.html">ssh-keygenコマンド</a>を使って、秘密鍵と公開鍵のペアを作成し公開鍵をバックアップサーバーに登録しましょう。
 </p>
+<p>
+  rootのディレクトリに秘密鍵と公開鍵のペアを生成します。
+</p>
 <pre>
-mkdir -p ~/.ssh
-chmod 700 ~/.ssh
-cd ~/.ssh
+sudo mkdir -p /root/.ssh
+sudo chmod 700 /root/.ssh
 
-# ファイル名はid_rsa_backup
-ssh-keygen -t rsa
+# ファイル名は「/root/.ssh/id_rsa_backup」
+sudo ssh-keygen -t rsa
 </pre>
 <p>
   公開鍵を表示します。
 </p>
 <pre>
-cat id_rsa_backup.pub
+sudo cat /root/.ssh/id_rsa_backup.pub
 </pre>
 <p>
   表示された公開鍵をコピーしておきます。
