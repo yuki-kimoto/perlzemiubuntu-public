@@ -70,7 +70,7 @@ cd ~/.ssh
   もし「~/.ssh」ディレクトリが存在しないという場合は、<a href="https://linux.perlzemi.com/blog/20191211133524.html">mkdir</a>コマンドで、作成します。不適切なパーミッションだとトラブルの元なので、パーミッション 700 を指定するのが推奨です。<a href="https://linux.perlzemi.com/blog/20200519082545.html">chmod</a>コマンドで、パーミッションを設定しています。
 </p>
 <pre>
-mkdir ~/.ssh
+mkdir -p ~/.ssh
 chmod 700 ~/.ssh
 </pre>
 <p>
