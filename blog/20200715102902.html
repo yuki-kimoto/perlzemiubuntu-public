@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/ubuntu-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>SSHのポートを変更する - デフォルトの22番ポートはセキュリティ的に危険が高い - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
+<meta name="description" content="SSHポートを変更する方法を解説します。デフォルトの22番ポートはセキュリティ的に危険が高いので、異なる番号に変えておきましょう。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<h1>
+  <a href="/">Ubuntuサーバー構築入門</a>
+</h1>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+<style>
+  .ubuntu-version {
+    text-align:right;
+  }
+  .ubuntu-version ul {
+    
+  }
+  .ubuntu-version li {
+    display:inline-block;
+    background:pink;
+    color:white;
+    border-radisu:10px;
+    padding:3px 5px;
+    margin:0;
+    margin-right:5px;
+  }
+</style>
+
+<div class="ubuntu-version">
+  <ul>
+    <li>Ubuntu 20</li>
+    <li>Ubuntu 18</li>
+    <li>Ubuntu 16</li>
+  </ul>
+</div>
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200715102902.html">SSHのポートを変更する - デフォルトの22番ポートはセキュリティ的に危険が高い</a></h2>
+<p>
+  SSHポートを変更する方法を解説します。デフォルトの22番ポートはセキュリティ的に危険が高いので、異なる番号に変えておきましょう。
+</p>
+<p>
+  SSHサーバーの設定ファイルは以下にあるので、<a href="https://linux.perlzemi.com/blog/20190401171737.html">vi</a>で開きます。
+</p>
+<pre>
+cd /etc/ssh
+sudo vi sshd_config
+</pre>
+<p>
+  次に以下の行を見つけてください。ポート番号がコメントアウトされています。この場合はデフォルトの22番ポートになります。
+</p>
+<pre>
+#Port 22
+</pre>
+<p>
+  ポート番号を変更しましょう。今回は、一行下にポート番号の指定を55550にしました。
+</p>
+<pre>
+#Port 22
+Port 55550
+</pre>
+<p>
+  Escをおして「:wq」と入力後Enterで保存して終了します。
+</p>
+<h4>SSHサーバーの再起動</h4>
+<p>
+  設定ファイルを反映させるために、SSHサーバーを再起動します。
+</p>
+<pre>
+sudo systemctl restart sshd
+</pre>
+<p>
+  再起動されたのを確認します。
+</p>
+<pre>
+sudo systemctl status sshd
+</pre>
+<p>
+  ここで、大事なことは、現在のSSHの接続を切らないことです。変更したポートで接続できることが確認できるまで、現在の接続を維持しておきましょう。そうすれば、SSHサーバーの設定間違いがあった場合に、修正することができます。
+</p>
+<p>
+  もし、SSHで接続することが、不可能になってしまった場合は、VPSやパブリッククラウドのWeb管理画面には、必ずコンソールという機能がありますので、その画面から、SSHの設定ファイルを修正しましょう。
+</p>
+<h3>22番ポートは、どれくらいセキュリティ的に危険なの?</h3>
+<p>
+  よく知られたクラウドサービスの場合は、世界中からの攻撃者が大量に存在すると考えてください。侵入しようとしている悪い人がたくさんいます。
+</p>
+<p>
+  22番ポートは、デフォルトのSSHポートなので、インターネットから、ポートスキャニングされています。家の鍵はどんな感じだろうとチェックしています。
+</p>
+<p>
+  次に、IDとパスワードを試してきます。まぁいわゆる、ピッキングですね。
+</p>
+<p>
+  IDとパスワードを検出したら、侵入してきます。
+</p>
+<p>
+  侵入されると、そのユーザーで可能なことはなんでもできます。踏み台サーバーとして利用したり、勝手にコマンドを実行されたりします。
+</p>
+<p>
+  そのユーザーがsudoユーザーであったら、さぁ大変。すべてのファイルを書き換えることができますし、悪意のあるプログラムを配置できます。
+</p>
+<p>
+  調べる側は、どこに悪意のあるプログラムが設置されたかは、簡単にはわかりません。
+</p>
+<p>
+  そうなると、本当の意味でのセキュリティの完全な復旧は、サーバー再構築です。これは、大変な作業です。
+</p>
+<p>
+  SSHのデフォルトポートを変更しない場合は、上記のようなリスクがあります。
+</p>
+<h3>何番ポートにしたらいいの?</h3>
+<p>
+  ウェルノウンポート(0–1023)以外で、自分のWebアプリケーションが使うポート番号(たとえば、3000と8080をWebアプリで使う)と被らない、65535より小さな値にしましょう。
+</p>
+<p>
+  <a href="https://mariadb.perlzemi.com/">MaridDB</a>やRedisなどのサーバーアプリケーションのデフォルトのポート番号も避けておくのがよいでしょう。
+</p>
+<p>
+  以下は、SSHのポート番号の例です。
+</p>
+<pre>
+20000
+20405
+54938
+</pre>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    目次
+  </div>
+  <ul>
+    <li><a href="/">Ubuntuサーバー構築入門</a></li>
+    <li><a href="/blog/20200529085516.html">パッケージ管理</a></li>
+    <li><a href="/blog/20200526151435.html">Apache</a></li>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発を学ぶ
+  </div>
+  <ul>
+    <li><a href="https://tutorial.perlzemi.com/">Perlプログラミングを学ぶ</a></li>
+    <li><a href="https://linux.perlzemi.com/">Linuxの仕組み・コマンドを学ぶ</a></li>
+    <li><a href="https://web.perlzemi.com/">Webシステム開発を学ぶ</a></li>
+  </ul>
+
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発の見積もり
+  </div>
+  <ul>
+    <li><a href="https://kimoto-system.co.jp/">Perl Webシステム開発の<br>木本システム株式会社</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="kimoto_system_link">
+  <a href="https://kimoto-system.co.jp">
+    <img src="https://kimoto-system.co.jp/images/kimoto-system-logo.png" alt="Perl Webシステム開発">
+    Perl システム開発の木本システム株式会社<br>
+    
+    リアルタイムWebとクラウドサーバー対応の<br>
+    
+    Webシステム開発・業務システム開発<br>
+  </a>
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>
