@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
 <title>Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
-<meta name="description" content="Ubuntuサーバー構築入門は、Ubuntuを使って、PerlによるWebシステム開発ができる環境を構築するための入門的なテキストです。">
+<meta name="description" content="Ubuntuサーバー構築入門では、Ubuntuを使って、PerlによるWebシステム開発環境を構築するための手順を紹介します。Linux仮想マシン上に、スケーラブルで、リアルタイムWeb対応のWebアプリケーションを比較的簡単に構築できることは、Perl Webシステム開発の特徴です。">
   </head>
   <body>
     <div class="container">
@@ -53,9 +53,12 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/">Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</a></h2>
+    <h2><a href="/">Ubuntuサーバー構築入門 - Ubuntu&PerlでWebシステム開発</a></h2>
 <p>
-  <b>Ubuntuサーバー構築入門</b>は、Ubuntuを使って、PerlによるWebシステム開発ができる環境を構築するための入門的なテキストです。
+  <b>Ubuntuサーバー構築入門</b>では、Ubuntuを使って、PerlによるWebシステム開発環境を構築するための手順を紹介します。Linux仮想マシン上に、スケーラブルで、リアルタイムWeb対応のWebアプリケーションを比較的簡単に構築できることは、Perl Webシステム開発の特徴です。
+</p>
+<p>
+  Ubuntu上にWebサーバーを構築、PerlのWebアプリケーションを作って、Webサーバーからリバースプロキシでつなぐ設定して、外部へ公開できるところまでを解説します。
 </p>
 <p>
   Ubuntuは、Linuxディストリビューションの一つで、Linuxデスクトップの分野で知られています。2020年現在では、サーバー側の新しい技術を積極的に取り入れていく「Ubuntu Server」としても知られるようになりました。また5年間の長期保証のLTSが存在します。
@@ -73,6 +76,10 @@
 <ul>
   <li><a href="/blog/20200512074242.html">Ubuntuサーバー構築の手引きとは</a></li>
   <li><a href="/blog/20200508174004.html">Ubuntuを使ってPerlでWebシステム開発ができる環境を構築する手順</a></li>
+</ul>
+<h3>Webサーバー Apache</h3>
+<ul>
+  <li><a href="/blog/20200526151435.html">Apache Webサーバー</a></li>
 </ul>
 <h3>Ubuntuの利用方法</h3>
 <ul>
@@ -119,10 +126,6 @@
   <li><a href="/blog/20200605104005.html">systemctl - systemdで管理されているサーバーアプリケーションの管理</a></li>
   <li><a href="/blog/20200602135100.html">journalctlコマンド - systemdで管理されているサーバーのログを見る</a></li>
 </ul>
-<h3>Webサーバー Apache</h3>
-<ul>
-  <li><a href="/blog/20200526151435.html">Apache Webサーバー</a></li>
-</ul>
 <h3>データベースサーバー MariaDB</h3>
 <ul>
   <li><a href="/blog/20200417174004.html">MariaDBの起動・停止・再起動・状態確認</a></li>
@@ -132,6 +135,7 @@
 <h3>Redisサーバー - 揮発性データ保存サーバー</h3>
 <ul>
   <li><a href="/blog/20200225174004.html">Redisサーバーの起動・停止・再起動・状態確認</a></li>
+  <li><a href="/blog/20200720125704.html">redis-cli - RedisクライアントからRedisコマンドを実行する</a></li>
 </ul>
 <h3>FTPサーバー</h3>
 <ul>

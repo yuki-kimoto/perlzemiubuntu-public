@@ -7,7 +7,7 @@
 <link rel="icon" type="image/x-icon" href="/images/ubuntu-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>redis-serverのインストールする - Redisサーバー 揮発性データの高速保存 - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
+<title>redis-serverのインストール - Redisサーバー 揮発性データの高速保存とPub/Sub - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
 <meta name="description" content="Redisサーバーをインストールするにはredis-serverパッケージをインストールします。">
   </head>
   <body>
@@ -72,7 +72,7 @@
     </li>
   </ul>
 </div>
-<h2><a href="/blog/20200525135533.html">redis-serverのインストールする - Redisサーバー 揮発性データの高速保存</a></h2>
+<h2><a href="/blog/20200525135533.html">redis-serverのインストール - Redisサーバー 揮発性データの高速保存とPub/Sub</a></h2>
 <p>
   Redisサーバーをインストールするにはredis-serverパッケージをインストールします。
 </p>
@@ -86,7 +86,18 @@ sudo apt install -y redis-server
 <pre>
 sudo systemctl status redis-server
 </pre>
-<h4>Redisサーバーの用途</h4>
+<h3>Redisクライアント - redis-cli</h4>
+<p>
+  RedisサーバーをインストールするとRedisコマンドを実行できるredis-cliというコマンドラインアプリケーションもインストールされます。
+</p>
+<ul>
+  <li><a href="/blog/20200720125704.html">redis-cli - RedisクライアントからRedisコマンドを実行する</a></li>
+</ul>
+<h3>Redisサーバーの用途</h3>
+<p>
+  Redisサーバーには主に二つの用途があります。
+</p>
+<h4>揮発性データの高速保存</h4>
 <p>
   Redisサーバーは、揮発性データを高速に保存できます。
 </p>
@@ -99,12 +110,19 @@ sudo systemctl status redis-server
 <p>
   またセッションは、HTTPリクエストのたびに取得しないといけないので、リレーショナルデータベースよりもRedisが、パフォーマンスがよいです。
 </p>
+<h4>Pub/Subによるpush通知</h4>
 <p>
-  Redisは、Pub/Subと呼ばれるpush通知の仕組みを持っているので、リアルタイムチャット、リアルタイム更新、という分野でも使われているようです。
+  Redisは、Pub/Subと呼ばれるpush通知の仕組みを持っているので、リアルタイムチャット、リアルタイム更新、という分野の実装を比較的簡単に行うことができます。
 </p>
 <p>
   Redisは、Web APIを持っているので、Webフレームワークがノンブロッキング対応している場合は、ノンブロッキングのHTTPリクエストでRedisにアクセスできます。
 </p>
+<p>
+  Mojolicious、WebSocket、Redisを使ったリアルタイムチャットのサンプルについては、以下を参考にしてください。
+</p>
+<ul>
+  <li><a href="https://mojolicious.perlzemi.com/blog/20100403127089.html">Mojolicious、WebSocket、Redisを使ったリアルタイムチャットのサンプル</a>
+</ul>
 
   </div>
   <div class="bottom">
