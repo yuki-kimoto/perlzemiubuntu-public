@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/ubuntu-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>自己SSL証明書の場所 - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
-<meta name="description" content="本番環境では、本物のSSL証明書を使いますが、試験環境では、HTTPSの試験を行うためだけに、SSL証明書を取得するのは手間がかかかるので、自己SSL証明書を使いたい場合があります。">
+<title>ユーザー管理方法をマスターしよう - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
+<meta name="description" content="Ubuntuにおけるユーザー管理について解説します。">
   </head>
   <body>
     <div class="container">
@@ -53,26 +53,42 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200307174004.html">自己SSL証明書の場所</a></h2>
+    <div class="bread">
+  <ul itemscope itemtype="http://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+      <a itemprop="item" href="/">
+        <span itemprop="name">Ubuntu</span>
+      </a>
+      <meta itemprop="position" content="1" />
+    </li>
+    <li>
+      here
+    </li>
+  </ul>
+</div>
+<h2><a href="/blog/20200723101434.html">ユーザー管理方法をマスターしよう</a></h2>
 <p>
-  本番環境では、本物のSSL証明書を使いますが、試験環境では、HTTPSの試験を行うためだけに、SSL証明書を取得するのは手間がかかかるので、自己SSL証明書を使いたい場合があります。
+  Ubuntuにおけるユーザー管理について解説します。
 </p>
-<p>
-  Ubuntuにおける自己SSL証明書の場所は以下になります。自己SSL証明書と自己SSL証明書の秘密鍵です。
-</p>
-<pre>
-自己SSL証明書      /etc/ssl/certs/ssl-cert-snakeoil.pem
-自己SSL証明書の秘密鍵 /etc/ssl/private/ssl-cert-snakeoil.key
-</pre>
-<h4>Apacheにおける自己SSL証明書と自己SSL証明書の秘密鍵の設定</h4>
-<p>
-  Apacheにおける自己SSL証明書と自己SSL証明書の秘密鍵の設定です。中間証明書ファイルは、指定する必要がありません。
-</p>
-<pre>
-  SSLEngine on
-  SSLCertificateFile      /etc/ssl/certs/ssl-cert-snakeoil.pem
-  SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
-</pre>
+<h4>ユーザー管理</h4>
+<ul>
+  <li><a href="/blog/20200511173052.html">ユーザーを追加する - useraddコマンド</a></li>
+  <li><a href="/blog/20200402174004.html">ユーザーを削除する - userdelコマンド</a></li>
+  <li><a href="/blog/20200401174004.html">ユーザーの一覧を表示する 「/etc/passwd」ファイル</a></li>
+  <li><a href="/blog/20200510173052.html">パスワードの設定 - passwdコマンド</a></li>
+</ul>
+<h4>グループ管理</h4>
+<ul>
+  <li><a href="/blog/20200405174004.html">グループを追加する - groupaddコマンド</a></li>
+  <li><a href="/blog/20200404174004.html">グループを削除する - groupdelコマンド</a></li>
+  <li><a href="/blog/20200403174004.html">すべてのグループとグループに所属するユーザーを表示する 「/etc/group」ファイル</a></li>
+  <li><a href="/blog/20200330174004.html">ユーザーをグループに追加する - gpasswd -a</a></li>
+  <li><a href="/blog/20200329174004.html">ユーザーをグループから削除する - gpasswd -d</a></li>
+</ul>
+<h4>sudo</h4>
+<ul>
+  <li><a href="/blog/20200531085516.html">管理者権限で実行する - sudo</a></li>
+</ul>
 
   </div>
   <div class="bottom">
