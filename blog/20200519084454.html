@@ -150,34 +150,26 @@ sudo systemctl reload apache2
   systemdのログにApacheの起動・停止ログが出力されています。
 </p>
 <p>
-  systemdのログを見るにはjournalctlコマンドを使ます。grepコマンドで「apache」を絞り込みます。大文字・小文字を区別しない「-i」オプションを使うと「Apache」「apache」の両方が拾えます。sudoで実行しないとapache2のログが見れないので注意してください。
+  systemdのログを見るには<a href="/blog/20200602135100.html">journalctlコマンド</a>を使います。「-u」オプションでユニット「apache2」を指定します。sudoで実行しないとApacheのログが見れないので注意してください。ログの最後の部分だけ見たい場合は「-r」オプションを組み合わせます。
 </p>
 <pre>
-sudo journalctl | grep -i apache
-</pre>
-<p>
-  ログの最後の部分だけ見たい場合は<a href="https://linux.perlzemi.com/blog/20200203124238.html">tailコマンド</a>を組み合わせましょう。
-</p>
-<pre>
-sudo journalctl | grep -i apache | tail -20;
+sudo journalctl -r -u apache2
 </pre>
 <p>
   ログのサンプルです。
 </p>
 <pre>
-May 16 08:17:42 development-batch sshd[89734]: Invalid user apache2 from 13.66.3.11 port 43506
-May 16 08:17:48 development-batch sshd[89734]: Failed password for invalid user apache2 from 13.66.3.11 port 43506 ssh2
-May 16 08:17:54 development-batch sshd[89734]: Connection closed by invalid user apache2 13.66.3.11 port 43506 [preauth]
-May 16 10:42:06 development-batch sudo[104035]:   admins : TTY=pts/0 ; PWD=/home/admins ; USER=root ; COMMAND=/usr/bin/apt install apache2
-May 19 08:51:33 development-batch sudo[120356]:   admins : TTY=pts/0 ; PWD=/home/admins ; USER=root ; COMMAND=/bin/systemctl start apache2
-May 19 08:51:40 development-batch sudo[120383]:   admins : TTY=pts/0 ; PWD=/home/admins ; USER=root ; COMMAND=/bin/systemctl start apache2
-May 19 08:52:07 development-batch sudo[120412]:   admins : TTY=pts/0 ; PWD=/home/admins ; USER=root ; COMMAND=/bin/systemctl stop apache2
-May 19 08:59:09 development-batch sudo[120944]:   admins : TTY=pts/0 ; PWD=/home/admins ; USER=root ; COMMAND=/bin/systemctl start apache2
-May 19 09:04:13 development-batch sudo[121384]:   admins : TTY=pts/0 ; PWD=/home/admins ; USER=root ; COMMAND=/bin/systemctl restart apache2
-May 19 09:21:13 development-batch sudo[122691]:   admins : TTY=pts/0 ; PWD=/home/admins ; USER=root ; COMMAND=/bin/systemctl reload apache2
-May 19 09:45:41 development-batch sudo[124545]:   admins : TTY=pts/0 ; PWD=/home/admins ; USER=root ; COMMAND=/bin/systemctl reload apache2
-May 19 09:51:51 development-batch sudo[125080]:   admins : TTY=pts/0 ; PWD=/home/admins ; USER=root ; COMMAND=/bin/systemctl reload apache2
-May 19 09:51:58 development-batch sudo[125154]:   admins : TTY=pts/0 ; PWD=/home/admins ; USER=root ; COMMAND=/bin/systemctl status apache2
+- Logs begin at Mon 2020-06-01 15:51:16 JST, end at Thu 2020-07-23 14:37:14 JST. --
+Jul 22 13:34:22 shinshina-development-app-00000001 systemd[1]: apache2.service: Failed with result 'exit-code'.
+Jul 22 13:34:22 shinshina-development-app-00000001 systemd[1]: apache2.service: Main process exited, code=exited, status=1/FAILURE
+Jul 22 13:24:35 shinshina-development-app-00000001 systemd[1]: Started The Apache HTTP Server.
+Jul 22 13:24:35 shinshina-development-app-00000001 apachectl[1299]: AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 10.0.0.4. Set the 'ServerName' direct
+Jul 22 13:24:33 shinshina-development-app-00000001 systemd[1]: Starting The Apache HTTP Server...
+-- Reboot --
+Jul 22 13:13:48 shinshina-development-app-00000001 systemd[1]: Stopped The Apache HTTP Server.
+Jul 22 13:13:47 shinshina-development-app-00000001 systemd[1]: Stopping The Apache HTTP Server...
+Jul 22 06:25:03 shinshina-development-app-00000001 systemd[1]: Reloaded The Apache HTTP Server.
+Jul 22 06:25:03 shinshina-development-app-00000001 systemd[1]: Reloading The Apache HTTP Server.
 </pre>
 <h3>再起動前にApacheの設定ファイルが正しいか確認する</h3>
 <p>

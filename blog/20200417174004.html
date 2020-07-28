@@ -154,47 +154,37 @@ sudo systemctl restart mariadb
   systemdのログにMariaDBの起動・停止ログが出力されています。
 </p>
 <p>
-  systemdのログを見るにはjournalctlコマンドを使ます。grepコマンドで「apache」を絞り込みます。大文字・小文字を区別しない「-i」オプションを使うと「MariaDB」「apache」の両方が拾えます。sudoで実行しないとmariadbのログが見れないので注意してください。
+  systemdのログを見るには<a href="/blog/20200602135100.html">journalctlコマンド</a>を使います。「-u」オプションでユニット「mariadb」を指定します。sudoで実行しないとmariadbのログが見れないので注意してください。ログの最後の部分だけ見たい場合は「-r」オプションを組み合わせます。
 </p>
 <pre>
-sudo journalctl | grep -i mariadb
-</pre>
-<p>
-  ログの最後の部分だけ見たい場合は<a href="https://linux.perlzemi.com/blog/20200203124238.html">tailコマンド</a>を組み合わせましょう。
-</p>
-<pre>
-sudo journalctl | grep -i mariadb | tail -20;
+sudo journalctl -r -u mariadb
 </pre>
 <p>
   ログのサンプルです。
 </p>
 <pre>
-May 18 12:24:23 development-batch sudo[31843]:   admins : TTY=pts/0 ; PWD=/home/admins ; USER=root ; COMMAND=/usr/bin/apt install mariadb-client
-May 18 12:38:12 development-batch sudo[33279]:   admins : TTY=pts/0 ; PWD=/home/admins ; USER=root ; COMMAND=/usr/bin/apt install mariadb-server
-May 18 12:38:27 development-batch mysqld_safe[33553]: 2020-05-18 12:38:27 140529379429504 [Note] /usr/sbin/mysqld (mysqld 10.1.44-MariaDB-0ubuntu0.18.04.1) starting as process 33585 ...
-May 18 12:38:36 development-batch mysqld_safe[33553]: 2020-05-18 12:38:36 139753750428800 [Note] /usr/sbin/mysqld (mysqld 10.1.44-MariaDB-0ubuntu0.18.04.1) starting as process 33621 ...
-May 18 12:38:38 development-batch mysqld_safe[33553]: 2020-05-18 12:38:38 139890079628416 [Note] /usr/sbin/mysqld (mysqld 10.1.44-MariaDB-0ubuntu0.18.04.1) starting as process 33655 ...
-May 18 12:38:42 development-batch mysqld_safe[33689]: 2020-05-18 12:38:42 139909251894400 [Note] /usr/sbin/mysqld (mysqld 10.1.44-MariaDB-0ubuntu0.18.04.1) starting as process 33688 ...
-May 18 12:38:48 development-batch systemd[1]: Starting MariaDB 10.1.44 database server...
-May 18 12:38:49 development-batch mysqld[33941]: 2020-05-18 12:38:49 139735888055424 [Note] /usr/sbin/mysqld (mysqld 10.1.44-MariaDB-0ubuntu0.18.04.1) starting as process 33941 ...
-May 18 12:38:49 development-batch systemd[1]: Started MariaDB 10.1.44 database server.
-May 18 13:01:27 development-batch sudo[36068]:   admins : TTY=pts/0 ; PWD=/home/admins ; USER=root ; COMMAND=/usr/bin/apt install libmariadb-dev
-May 19 10:52:11 development-batch sudo[129592]:   admins : TTY=pts/1 ; PWD=/home/admins ; USER=root ; COMMAND=/bin/systemctl status mariadb
-May 19 10:52:39 development-batch sudo[129633]:   admins : TTY=pts/1 ; PWD=/home/admins ; USER=root ; COMMAND=/bin/systemctl status mariadb
-May 19 10:52:47 development-batch sudo[129640]:   admins : TTY=pts/1 ; PWD=/home/admins ; USER=root ; COMMAND=/bin/systemctl status mariadb
-May 19 10:53:01 development-batch sudo[129666]:   admins : TTY=pts/1 ; PWD=/home/admins ; USER=root ; COMMAND=/bin/systemctl stop mariadb
-May 19 10:53:01 development-batch systemd[1]: Stopping MariaDB 10.1.44 database server...
-May 19 10:53:02 development-batch systemd[1]: Stopped MariaDB 10.1.44 database server.
-May 19 10:53:09 development-batch sudo[129699]:   admins : TTY=pts/1 ; PWD=/home/admins ; USER=root ; COMMAND=/bin/systemctl status mariadb
-</pre>
-<h3>MariaDBのsystemdの設定ファイルを見るには</h3>
-<p>
-  MariaDBのsystemdの設定ファイルは「systemctl status mariadb」で見れます。
-</p>
-<p>
-  設定ファイルを<a href="https://linux.perlzemi.com/blog/20200113083613.html">catコマンド</a>で見てみましょう。
-</p>
-<pre>
+-- Logs begin at Mon 2020-06-01 15:51:16 JST, end at Thu 2020-07-23 14:33:01 JST. --
+Jul 22 13:24:37 shinshina-development-app-00000001 /etc/mysql/debian-start[1896]: Triggering myisam-recover for all MyISAM tables and aria-recover for all Aria tables
+Jul 22 13:24:37 shinshina-development-app-00000001 /etc/mysql/debian-start[1869]: Checking for insecure root accounts.
+Jul 22 13:24:37 shinshina-development-app-00000001 /etc/mysql/debian-start[1826]: This installation of MySQL is already upgraded to 10.1.44-MariaDB, use --force if you still need to run mysql_upgrade
+Jul 22 13:24:37 shinshina-development-app-00000001 /etc/mysql/debian-start[1826]: Looking for 'mysqlcheck' as: /usr/bin/mysqlcheck
+Jul 22 13:24:37 shinshina-development-app-00000001 /etc/mysql/debian-start[1826]: Looking for 'mysql' as: /usr/bin/mysql
+Jul 22 13:24:37 shinshina-development-app-00000001 /etc/mysql/debian-start[1826]: /usr/bin/mysql_upgrade: the '--basedir' option is always ignored
+Jul 22 13:24:36 shinshina-development-app-00000001 systemd[1]: Started MariaDB 10.1.44 database server.
+Jul 22 13:24:36 shinshina-development-app-00000001 /etc/mysql/debian-start[1822]: Upgrading MySQL tables if necessary.
+Jul 22 13:24:35 shinshina-development-app-00000001 mysqld[1536]: 2020-07-22 13:24:35 139798878784640 [Note] /usr/sbin/mysqld (mysqld 10.1.44-MariaDB-0ubuntu0.18.04.1) starting as process 1536 ...
+Jul 22 13:24:33 shinshina-development-app-00000001 systemd[1]: Starting MariaDB 10.1.44 database server...
+-- Reboot --
+Jul 22 13:13:50 shinshina-development-app-00000001 systemd[1]: Stopped MariaDB 10.1.44 database server.
+Jul 22 13:13:47 shinshina-development-app-00000001 systemd[1]: Stopping MariaDB 10.1.44 database server...&lt;/pre&gt;
+
+&lt;h3&gt;MariaDBのsystemdの設定ファイルを見るには&lt;/h3&gt;
+
+MariaDBのsystemdの設定ファイルは「systemctl status mariadb」で見れます。
+
+設定ファイルを&lt;a href="https://linux.perlzemi.com/blog/20200113083613.html"&gt;catコマンド&lt;/a&gt;で見てみましょう。
+
+&lt;pre&gt;
 cat /lib/systemd/system/mariadb.service
 </pre>
 <h3>MariaDBの他の情報</h3>

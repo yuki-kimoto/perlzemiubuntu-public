@@ -7,7 +7,7 @@
 <link rel="icon" type="image/x-icon" href="/images/ubuntu-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>UbuntuとCentOSの違うところ・共通化されたところ - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
+<title>UbuntuとCentOSの違いと共通化された部分 - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
 <meta name="description" content="UbuntuとCentOSの違うところをここでまとめておきます。両方で動くようになるのがよいですね。">
   </head>
   <body>
@@ -53,16 +53,19 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200410174004.html">UbuntuとCentOSの違うところ・共通化されたところ</a></h2>
+    <h2><a href="/blog/20200410174004.html">UbuntuとCentOSの違いと共通化された部分</a></h2>
 <p>
-  UbuntuとCentOSの違うところをここでまとめておきます。両方で動くようになるのがよいですね。
+  Ubuntuと<a href="https://centos.perlzemi.com/">CentOS</a>の違うところをここでまとめておきます。両方で動くようになるのがよいですね。
 </p>
-<h3>CentOSでは「/bin/sh」は「/bin/bash」にシンボリックリンクが張られている</h3>
+<h3>シェルのシェバン「/bin/sh」</h3>
 <p>
-  CentOSでは「/bin/sh」は「/bin/bash」にシンボリックリンクが張られている。
+  CentOSでは「/bin/sh」は「/bin/bash」にシンボリックリンクが張られているので、bashで実行されます。
 </p>
 <p>
-  シェバンを以下のように書いているとCentOSでは、bashで実行されるのに対して、Ubuntuでは、shで実行される。
+  Ubuntuでは「/bin/sh」で実行されます。実装は「dash」と呼ばれるシェルになっています。
+</p>
+<p>
+  シェバンを以下のように書いているとCentOSでは、bashで実行されるのに対して、Ubuntuでは「/bin/sh」で実行されます。
 </p>
 <pre>
 #!/bin/sh
@@ -74,19 +77,56 @@
 ./morbo: 10: ./morbo: Syntax error: "(" unexpected
 </pre>
 <p>
-  ポータビリティを持たせるためには、明示的にbashとシェバンを書くのがよい。
+  <a href="https://linux.perlzemi.com/">Linux</a>間ポータビリティを持たせるためには、明示的にbashとシェバンと明示的に書きます。
 </p>
 <pre>
 #!/bin/bash
 </pre>
+<p>
+  Unix間ともポータビリティを持たせる場合はshの文法で書き直す必要があるでしょう。
+</p>
+<p>
+  <a href="https://tutorial.perlzemi.com/">Perl</a>で書けば、Unix/Linux間で、ポータブルなプログラムが書けます。
+</p>
 <h3>パッケージ管理</h3>
 <p>
-  パッケージ管理ツールUbuntuではapt、CentOSではyumの違いがある。パッケージ名も異なります。
+  パッケージ管理ツールUbuntuではapt、CentOSではyumの違いがあります。
+</p>
+<p>
+  CentOS 8からはdnfがyumを置き換えます。yumはdnfのエイリアスになります。
+</p>
+<p>
+  パッケージ名も異なります。パッケージ管理は現在のところ共通化できなさそうです。
 </p>
 <h3>sudo</h3>
 <p>
-  Ubuntuは、sudoがデフォルトです。CentOSと、手順を共通化するには、CentOSでも、sudoを使うように、サーバー管理を行いましょう。
+  Ubuntuは、sudoがデフォルトで利用可能です。
 </p>
+<p>
+  sudoを許可するには、Ubuntuでは、ユーザーをsudoグループに追加します。
+</p>
+<pre>
+# Ubuntuでsudoを許可
+gpasswd -a myapp sudo
+</pre>
+<p>
+  CentOSでは、sudoが有効になっていません。visudoでsudoが利用可能になる設定を行います。(CentOS 7の場合)
+</p>
+<p>
+  「%wheel ALL=(ALL) ALL」のコメントを外します。
+</p>
+<pre>
+## Allows people in group wheel to run all commands
+#%wheel ALL=(ALL) ALL
+%wheel ALL=(ALL) ALL
+</pre>
+<p>
+  sudoを許可するには、ユーザーをwheelグループに追加します。
+</p>
+<pre>
+# CentOSでsudoを許可
+gpasswd -a myapp wheel
+</pre>
 <h3>サーバー</h3>
 <h4>Apache</h4>
 <p>
@@ -106,13 +146,16 @@
 </p>
 <h3>ファイアーウォール</h3>
 <p>
-  ファイアーウォールは、Ubuntuはufw、CentOSはfirewalldと異なる。
+  ファイアーウォールは、Ubuntuはufw、CentOSはfirewalldです。
 </p>
 <p>
   ファイアーウォールは、コマンドラインでの設定は、非常にややこしく、やりたくないという気持ちは強い。
 </p>
 <p>
-  VPS、クラウドサービスには、たいてい、ネットワークのパケット制御が存在するので、それで設定すると、Linux自体のファイアーウォールを意識しないですむ。
+  VPS、クラウドサービスには、たいてい、ファイアーウォールの設定が存在するので、それで設定すると、Linux自体のファイアーウォールを意識しないですむ。ネットワークの設定でパケット制御を行う部分があります。
+</p>
+<p>
+  オンプレミスの場合は、コマンドでファイアーウォール管理を行う。
 </p>
 <h3>cron</h3>
 <p>
@@ -123,10 +166,10 @@
 </p>
 <h3>SeLinux</h3>
 <p>
-  CentOSの場合は、SeLinuxがデフォルトでonになっている。この機能、リバースプロキシでの接続で、プロキシエラーになっちゃうので、SeLinuxを無効にするか、リバースプロキシができる設定にする必要があります。
+  Ubuntuの場合は、CentOSのSeLinuxに該当する機能は、デフォルトでoffになっています。
 </p>
 <p>
-  Ubuntuの場合は、CentOSのSeLinuxに該当する機能は、デフォルトでoffになっているようです。
+  CentOSの場合は、SeLinuxがデフォルトでonになっている。この機能、リバースプロキシでの接続で、プロキシエラーになっちゃうので、SeLinuxを無効にするか、リバースプロキシができる設定にする必要があります。
 </p>
 <h3>Let's EncryptによるSSL証明書</h3>
 <p>
@@ -143,7 +186,7 @@ yum install --enablerepo=epel certbot
 <p>
   新しいCent OSのバージョンが出たばかりなど、certbotがepelレポジトリに含まれていない場合は、ソースコードからインストールしする必要があります。またcertbotは、certbot-autoという名前です。
 </p>
-<h3>ここ最近共通になったもの(2020年5月21日現在)</h3>
+<h3>UbuntuとCentOSで共通になったもの</h3>
 <p>
   CentOSとUbuntuで、ここ最近共通になったもの。
 </p>
@@ -151,9 +194,22 @@ yum install --enablerepo=epel certbot
 <p>
   CentOSもUbuntuもサービス(サーバーとして起動する者)は、systemdで管理するようになって、管理コマンドもsystemctlになりました。
 </p>
+<p>
+  CentOS 7からはsystemctlコマンドをUbuntuと共通で使うことができます。
+</p>
 <h4>journalctl</h4>
 <p>
   systemdのログ管理もjournalctlがUbuntuとCentOSで共通で使える。
+</p>
+<p>
+  CentOS 7からはjournalctlコマンドをUbuntuと共通で使うことができます。
+</p>
+<h3>バージョン間の変化の大きさ</h3>
+<p>
+  Ubuntuは、変化はあれども、なるべく互換性が保たれ、大きな変更は少ない感じがします。
+</p>
+<p>
+  CentOSの方が変化が大きく。バージョン間の差分は大きく感じる。CentOS 5, 6, 7, 8で、変化は多い。
 </p>
 
   </div>

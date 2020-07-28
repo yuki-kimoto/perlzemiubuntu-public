@@ -83,74 +83,123 @@ Jun 02 14:11:19 myhost systemd[88231]: Startup finished in 20ms.
 </p>
 <h3>特定のアプリケーションのログだけを取り出す</h3>
 <p>
-  <a href="https://linux.perlzemi.com/blog/20200602093211.html">grep</a>コマンドと組み合わせると簡単です。「-i」オプションで大文字小文字を区別しないともれなくとれだせます。
+  特定のアプリケーションのログだけを取り出すには、「-u」でユニット名を指定します。「-r」オプションを指定すると最新のログから見ることができます。
 </p>
-<pre>
-# Apache
-sudo journalctl | grep -i apache
-
-# MariaDB
-sudo journalctl | grep -i mariadb
-
-# sshd
-sudo journalctl | grep -i sshd
-
-# Postfix
-sudo journalctl | grep -i postfix
-
-# sudo 
-sudo journalctl | grep -i sudo
-
-# cron
-sudo journalctl | grep -i cron
-</pre>
-<h3>ログの末尾だけを取り出す</h3>
+<h4>Apacheのログを見る</h4>
 <p>
-  ログの末尾だけを取り出すのは、<a href="https://linux.perlzemi.com/blog/20200203124238.html">tail</a>コマンドと組み合わせるのが簡単です。
+  <a href="/blog/20200526151435.html">Apache</a>のログを表示します。
 </p>
 <pre>
 # Apache
-sudo journalctl | grep -i apache | tail -50
-
+sudo journalctl -r -u apache2
+</pre>
+<h4>MariaDBのログを見る</h4>
+<p>
+  MariaDBのログを表示します。
+</p>
+<pre>
 # MariaDB
-sudo journalctl | grep -i mariadb | tail -50
-
-# sshd
-sudo journalctl | grep -i sshd | tail -50
-
+sudo journalctl -r -u mariadb
+</pre>
+<h4>SSHサーバーのログを見る</h4>
+<p>
+  SSHサーバーのログを表示します。
+</p>
+<pre>
+# SSHサーバー
+sudo journalctl -r -u sshd
+</pre>
+<h4>Postfixのログを見る</h4>
+<pre>
 # Postfix
-sudo journalctl | grep -i postfix | tail -50
-
-# sudo 
-sudo journalctl | grep -i sudo | tail -50
-
+sudo journalctl -r -u postfix
+</pre>
+<h4>cronのログを見る</h4>
+<pre>
 # cron
-sudo journalctl | grep -i cron | tail -50
+sudo journalctl -r -u cron
+</pre>
+<h4>FTPサーバーのログを見る</h4>
+<pre>
+# FTPサーバー
+sudo journalctl -r -u vsftpd
+</pre>
+<h4>Redisサーバーのログを見る</h4>
+<pre>
+# Redisサーバー
+sudo journalctl -r -u redis-server
 </pre>
 <h3>journalctlのオプション</h3>
 <p>
   journalctlのオプションです。
 </p>
 <pre>
+journalctl [オプション...] [マッチ...]
+
+ジャーナルをクエリします。
+
 オプション：
-     --system システムジャーナルを表示する
-     --user 現在のユーザーのユーザージャーナルを表示します
-  -M --マシン=コンテナはローカルコンテナで動作します
-  -S --SINCE=DATE 指定した日付より古くないエントリを表示します
-  -U --until=DATE 指定した日付より新しいエントリを表示
-  -c --カーソル=CURSOR 指定されたカーソルから開始するエントリを表示します。
-     --after-cursor=CURSOR 指定されたカーソルの後にエントリを表示する
-     --show-cursor すべてのエントリの後にカーソルを表示します
-  -b --boot[=ID] 現在のブートまたは指定されたブートを表示する
-     --リスト-ブーツ記録されたブーツに関する簡潔な情報を表示
-  -k --dmesg 現在のブートからカーネルメッセージログを表示する
-  -u --unit=UNIT 指定されたユニットのログを表示します。
-     --user-unit=UNIT 指定されたユーザーユニットのログを表示します。
-  -t --識別子 =文字列 指定された syslog 識別子を持つエントリを表示します。
-  -p --優先順位=範囲 指定された優先度のエントリを表示します
-  -g --grep=パターンは、パターンに一致する MESSSAGE を持つエントリを表示します
-     --大文字と小文字を区別する[=BOOL] 大文字と小文字を区別する、または無感覚の一致を強制する
-  -e --pager-end 直ちにページャーの最後にジャンプする
+     --systemシステムジャーナルを表示します
+     --user現在のユーザーのユーザージャーナルを表示します
+  -M --machine = CONTAINERローカルコンテナーで動作します
+  -S --since = DATE指定した日付より古いエントリを表示します
+  -U --until = DATE指定された日付よりも新しいエントリを表示します
+  -c --cursor = CURSOR指定されたカーソルで始まるエントリを表示します
+     --after-cursor = CURSOR指定したカーソルの後にエントリを表示します
+     --show-cursorすべてのエントリの後にカーソルを出力します
+  -b --boot [= ID]現在のブートまたは指定されたブートを表示します
+     --list-boots記録されたブーツに関する簡潔な情報を表示します
+  -k --dmesg現在のブートからのカーネルメッセージログを表示します
+  -u --unit = UNIT指定されたユニットからのログを表示します
+     --user-unit = UNIT指定されたユーザーユニットのログを表示します
+  -t --identifier = STRING指定されたsyslog識別子を持つエントリを表示します
+  -p --priority = RANGE指定された優先度のエントリを表示します
+  -g --grep = PATTERN MESSSAGEがPATTERNに一致するエントリを表示します
+     --case-sensitive [= BOOL]大文字と小文字を区別するか無意識に一致させる
+  -e --pager-endポケットベルの最後にすぐにジャンプします
+  -f --followジャーナルをフォローする
+  -n --lines [= INTEGER]表示するジャーナルエントリの数
+     --no-tailフォローモードでもすべての行を表示します
+  -r --reverse最新のエントリを最初に表示します
+  -o --output = STRINGジャーナル出力モードを変更します（short、short-precise、
+                               short-iso、short-iso-precise、short-full、
+                               短い単調、短いUNIX、冗長、エクスポート、
+                               json、json-pretty、json-sse、cat）
+     --output-fields = LIST詳細/エクスポート/ jsonモードで印刷するフィールドを選択します
+     --utc協定世界時（UTC）のエクスプレス時間
+  -x --catalog可能な場合、メッセージの説明を追加します
+     --no-full Ellipsizeフィールド
+  -a --all長くて印刷できないものを含む、すべてのフィールドを表示します
+  -q --quiet情報メッセージと特権警告を表示しません
+     --no-pager出力をページャーにパイプしません
+     --no-hostnameホスト名フィールドの出力を抑制します
+  -m --merge利用可能なすべてのジャーナルのエントリを表示します
+  -D --directory = PATHディレクトリのジャーナルファイルを表示します
+     --file = PATHジャーナルファイルを表示
+     --root = ROOTルートディレクトリ以下のファイルを操作します
+     --interval = TIME FSSシーリングキーを変更するための時間間隔
+     --verify-key = KEY FSS検証キーを指定します
+     --force --setup-keysを使用したFSS鍵ペアのオーバーライド
+
+コマンド：
+  -h --helpこのヘルプテキストを表示します
+     --versionパッケージのバージョンを表示
+  -N --fields現在使用されているすべてのフィールド名をリストします
+  -F --field = FIELD指定されたフィールドが取るすべての値をリストします
+     --disk-usageすべてのジャーナルファイルの合計ディスク使用量を表示します
+     --vacuum-size = BYTESディスク使用量を指定されたサイズ未満に減らします
+     --vacuum-files = INT指定した数のジャーナルファイルのみを残す
+     --vacuum-time = TIME指定された時間より古いジャーナルファイルを削除します
+     --verifyジャーナルファイルの整合性を確認します
+     --sync書き込まれていないジャーナルメッセージをディスクに同期
+     --flush / runから/ varにすべてのジャーナルデータをフラッシュします
+     --rotateジャーナルファイルの即時ローテーションを要求します。
+     --headerジャーナルのヘッダー情報を表示します
+     --list-catalogカタログ内のすべてのメッセージIDを表示します
+     --dump-catalogメッセージカタログのエントリを表示します
+     --update-catalogメッセージカタログデータベースを更新します
+     --new-id128新しい128ビットIDを生成します
+     --setup-keys新しいFSS鍵ペアを生成します
 </pre>
 
   </div>

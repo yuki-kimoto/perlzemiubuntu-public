@@ -156,32 +156,26 @@ sudo systemctl restart cron
   systemdのログにcronの起動・停止ログが出力されています。
 </p>
 <p>
-  systemdのログを見るにはjournalctlコマンドを使ます。grepコマンドで「cron」を絞り込みます。大文字・小文字を区別しない「-i」オプションを使うと「cron」「cron」の両方が拾えます。sudoで実行しないとcronのログが見れないので注意してください。
+  systemdのログを見るには<a href="/blog/20200602135100.html">journalctlコマンド</a>を使います。「-u」オプションでユニット「cron」を指定します。sudoで実行しないとcronのログが見れないので注意してください。ログの最後の部分だけ見たい場合は「-r」オプションを組み合わせます。
 </p>
 <pre>
-sudo journalctl | grep -i cron
-</pre>
-<p>
-  ログの最後の部分だけ見たい場合は<a href="https://linux.perlzemi.com/blog/20200203124238.html">tailコマンド</a>を組み合わせましょう。
-</p>
-<pre>
-sudo journalctl | grep -i cron | tail -20;
+sudo journalctl -r -u cron
 </pre>
 <p>
   ログのサンプルです。
 </p>
 <pre>
-May 20 10:50:01 tk2-261-40258.vs.sakura.ne.jp CROND[15947]: (root) CMD (/usr/lib64/sa/sa1 1 1)
-May 20 10:50:01 tk2-261-40258.vs.sakura.ne.jp CROND[15948]: (admins) CMD ($HOME/$SDIR/customer/osasoi_many_view_bukken.pl)
-May 20 10:54:01 tk2-261-40258.vs.sakura.ne.jp CROND[15958]: (root) CMD (run-parts /etc/cron.hourly)
-May 20 10:55:01 tk2-261-40258.vs.sakura.ne.jp CROND[15967]: (admins) CMD ($HOME/$SDIR/customer/write_osasoi_message.pl)
-May 20 10:55:01 tk2-261-40258.vs.sakura.ne.jp CROND[15968]: (admins) CMD ($HOME/$SDIR/customer/write_oshirase_message.pl)
-May 20 10:55:01 tk2-261-40258.vs.sakura.ne.jp CROND[15969]: (admins) CMD ($HOME/$SDIR/customer/oshirase_osusume_bukken.pl)
-May 20 11:00:01 tk2-261-40258.vs.sakura.ne.jp CROND[15985]: (root) CMD (/usr/lib64/sa/sa1 1 1)
-May 20 11:00:01 tk2-261-40258.vs.sakura.ne.jp CROND[15986]: (admins) CMD ($HOME/$SDIR/customer/osasoi_many_view_bukken.pl)
-May 20 11:05:01 tk2-261-40258.vs.sakura.ne.jp CROND[16000]: (admins) CMD ($HOME/$SDIR/customer/oshirase_osusume_bukken.pl)
-May 20 11:05:01 tk2-261-40258.vs.sakura.ne.jp CROND[15998]: (admins) CMD ($HOME/$SDIR/customer/write_osasoi_message.pl)
-May 20 11:05:01 tk2-261-40258.vs.sakura.ne.jp CROND[15999]: (admins) CMD ($HOME/$SDIR/customer/write_oshirase_message.pl)
+Jul 23 14:40:03 shinshina-development-app-00000001 CRON[35501]: pam_unix(cron:session): session closed for user myapp
+Jul 23 14:40:01 shinshina-development-app-00000001 CRON[35502]: (myapp) CMD ($HOME/$SDIR/customer/osasoi_many_view_bukken.pl)
+Jul 23 14:40:01 shinshina-development-app-00000001 CRON[35501]: pam_unix(cron:session): session opened for user myapp by (uid=0)
+Jul 23 14:39:01 shinshina-development-app-00000001 CRON[35409]: pam_unix(cron:session): session closed for user root
+Jul 23 14:39:01 shinshina-development-app-00000001 CRON[35410]: (root) CMD (  [ -x /usr/lib/php/sessionclean ] &amp;&amp; if [ ! -d /run/systemd/system ]; then /usr/lib/php/sessionclean; fi)
+Jul 23 14:39:01 shinshina-development-app-00000001 CRON[35409]: pam_unix(cron:session): session opened for user root by (uid=0)
+Jul 23 14:35:37 shinshina-development-app-00000001 CRON[35332]: pam_unix(cron:session): session closed for user myapp
+Jul 23 14:35:05 shinshina-development-app-00000001 CRON[35331]: pam_unix(cron:session): session closed for user myapp
+Jul 23 14:35:05 shinshina-development-app-00000001 CRON[35330]: pam_unix(cron:session): session closed for user myapp
+Jul 23 14:35:01 shinshina-development-app-00000001 CRON[35329]: pam_unix(cron:session): session closed for user root
+Jul 23 14:35:01 shinshina-development-app-00000001 CRON[35336]: (myapp) CMD ($HOME/$SDIR/customer/oshirase_osusume_bukken.pl)
 </pre>
 <p>
   自動実行されたジョブを確認できます。
