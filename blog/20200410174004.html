@@ -204,6 +204,18 @@ yum install --enablerepo=epel certbot
 <p>
   CentOS 7からはjournalctlコマンドをUbuntuと共通で使うことができます。
 </p>
+<h3>Perl</h3>
+<p>
+  Ubuntuの一般的な構成ではデフォルトで<a href="https://tutorial.perlzemi.com/">Perl</a>がインストールされています。
+</p>
+<p>
+  CentOSの一般的な構成ではデフォルトでPerlがインストールされていないことが多いです。さらに、付け加えておくと、Perlのコアモジュールがperlパッケージから分離されて別になっています。
+</p>
+<pre>
+# CentOSにおけるPerlのインストール
+yum install perl
+yum install perl-core
+</pre>
 <h3>バージョン間の変化の大きさ</h3>
 <p>
   Ubuntuは、変化はあれども、なるべく互換性が保たれ、大きな変更は少ない感じがします。
