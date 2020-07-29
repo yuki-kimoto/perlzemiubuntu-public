@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
 <title>Ubuntuを使ってPerlでWebシステム開発ができる環境を構築する手順 - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
-<meta name="description" content="Ubuntuを使ってPerlでWebシステム開発ができる環境を構築する手順をここに書いていきます。">
+<meta name="description" content="Ubuntuを使ってPerlでWebシステム開発ができる環境を構築する手順をここに書いていきます。ここに記述する手順は、パブリッククラウドやVPSやオンプレミスなど、すべてのホスティングサービスで利用可能な手順です。特定のホスティングサービスについて、まとめた記事は、別のところで記述します。">
   </head>
   <body>
     <div class="container">
@@ -55,7 +55,7 @@
   <div class="middle">
     <h2><a href="/blog/20200508174004.html">Ubuntuを使ってPerlでWebシステム開発ができる環境を構築する手順</a></h2>
 <p>
-  Ubuntuを使ってPerlでWebシステム開発ができる環境を構築する手順をここに書いていきます。
+  Ubuntuを使ってPerlでWebシステム開発ができる環境を構築する手順をここに書いていきます。ここに記述する手順は、パブリッククラウドやVPSやオンプレミスなど、すべてのホスティングサービスで利用可能な手順です。特定のホスティングサービスについて、まとめた記事は、別のところで記述します。
 </p>
 <h3>Ubuntuを利用できるようにする</h3>
 <p>
@@ -180,16 +180,6 @@
 <ul>
   <li><a href="/blog/20200225174004.html">Redisサーバーの起動・停止・再起動・状態確認</a></li>
 </ul>
-<h3>ユーザーPerlとcpanmのインストール</h3>
-<p>
-  安定性を求める場合は、CPANモジュールのインストールや警告表示などで不具合のない「perl-5.20.3」をインストール。
-</p>
-<p>
-  セキュアな最新版が良い場合は「perl-5.30.3」をインストール。
-</p>
-<ul>
-  <li><a href="/blog/20200413174004.html">ユーザーPerlとcpanmのインストール</a></li>
-</ul>
 <h3>サーバーの起動確認</h3>
 <p>
   インストールしたサーバーの起動確認をしましょう。postfixは、設定ファイルがデフォルトではなく起動していないので、postfix以外のサーバーの起動確認を行います。
@@ -279,6 +269,35 @@ sudo mkdir /datadrive
 </p>
 <ul>
   <li><a href="/blog/20200224174004.html">MariaDBの初期設定とユーザーの作成</a></li>
+</ul>
+<h3>ファイアーウォールの設定</h3>
+<p>
+  ホスティングサービスが用意するネットーワークのファイアーウォール設定で以下のポートを開いてください。またオンプレミスでサーバーを構築している場合はufwコマンドを使って、以下のポートを開いてください。
+</p>
+<table>
+  <tr><td>HTTP</td><td>80</td>
+  <tr><td>HTTPS</td><td>443</td>
+  <tr><td>SSH</td><td><a href="/blog/20200715102902.html">SSHで利用するポート</a>(デフォルトの22番ポートは危険)</td>
+  <tr><td>開発Webアプリ</td><td>3000</td>
+</table>
+<p>
+  開発Webアプリの3000番ポートは、<a href="https://mojolicious.perlzemi.com/">Mojolicious</a>の開発サーバーのデフォルトのポートです。他のWebフレームワークの開発サーバーのデフォルトポートが異なる場合は、異なる値にします。
+</p>
+<h3>Perl Web開発環境の構築</h3>
+<p>
+  安定性を求める場合は、CPANモジュールのインストールや警告表示などで不具合のない「perl-5.20.3」をインストール。
+</p>
+<p>
+  セキュアな最新版が良い場合は「perl-5.30.3」をインストール。
+</p>
+<ul>
+  <li><a href="/blog/20200413174004.html">ユーザーPerlとcpanmのインストール</a></li>
+</ul>
+<p>
+  次にWebアプリケーションをデプロイします。
+</p>
+<ul>
+  <li><a href="/blog/20200729134756.html">MojoliciousによるWebアプリケーションのデプロイ</a></li>
 </ul>
 <p>
   ここまで完成。

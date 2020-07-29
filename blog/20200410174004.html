@@ -133,7 +133,7 @@ gpasswd -a myapp wheel
   Apacheは名前が異なります。CentOSではhttpdなのに対して、Ubuntuでは、apache2です。
 </p>
 <p>
-  設定ファイルの場所や、systemctlコマンドを実行するときの名前が異なっています。
+  設定ファイルの場所や、<a href="/blog/20200605104005.html">systemctl</a>コマンドを実行するときの名前が異なっています。
 </p>
 <p>
   設定ファイルの構成も、CentOSとUbuntuで異なっています。
@@ -215,6 +215,23 @@ yum install --enablerepo=epel certbot
 # CentOSにおけるPerlのインストール
 yum install perl
 yum install perl-core
+</pre>
+<h3>パッケージのインストール後のサーバーの状態</h3>
+<p>
+  サーバーアプリケーションをインストールした場合は、Ubuntuの場合は、起動されます。
+</p>
+<p>
+  サーバーアプリケーションをインストールした場合は、CentOSの場合は、起動されていません。
+</p>
+<h3>標準パッケージの種類</h3>
+<p>
+  Ubuntuでは標準パッケージでLet's Encryptのクライアントであるcertbotと、Redisサーバーが提供されています。
+</p>
+<p>
+  CentOSの場合は(CentOS 7の場合)は、上記が提供されていません。Linux 用の拡張パッケージ(EPEL)リポジトリをインストールすることで利用可能になります。
+</p>
+<pre>
+sudo yum -y install epel-release
 </pre>
 <h3>バージョン間の変化の大きさ</h3>
 <p>

@@ -81,7 +81,7 @@ sudo apt install -y redis-server
 </pre>
 <h4>Redisサーバーがインストールされたことの確認</h4>
 <p>
-  Redisサーバーがインストールされたことをsystemctlのstatusコマンドで確認してみましょう。
+  Redisサーバーがインストールされたことを<a href="/blog/20200605104005.html">systemctl</a>のstatusコマンドで確認してみましょう。
 </p>
 <pre>
 sudo systemctl status redis-server
@@ -108,7 +108,7 @@ sudo systemctl status redis-server
   セッション情報は、一定期間で消しますし、もし消えたとしても、ユーザーにログイン画面からやりなおしてもらうだけです。セッション情報は、揮発性のデータといえます。
 </p>
 <p>
-  またセッションは、HTTPリクエストのたびに取得しないといけないので、リレーショナルデータベースよりもRedisが、パフォーマンスがよいです。
+  またセッションは、HTTPリクエストのたびに取得しないといけないので、<a href="https://mariadb.perlzemi.com/">MariaDB</a>のようなリレーショナルデータベースよりもRedisが、パフォーマンスがよいです。
 </p>
 <h4>Pub/Subによるpush通知</h4>
 <p>
