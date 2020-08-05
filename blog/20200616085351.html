@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/ubuntu-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>Perlのインストール - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
-<meta name="description" content="UbuntuにPerlがインストールされていない場合はPerlをインストールしましょう。">
+<title>UbuntuへのPerlのインストール - Ubuntuサーバー構築入門 - Ubuntu&Perlでシステム開発</title>
+<meta name="description" content="UbuntuへのPerlのインストール方法です。aptコマンドを使ってPerlをインストールします。">
   </head>
   <body>
     <div class="container">
@@ -53,19 +53,39 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200616085351.html">Perlのインストール</a></h2>
+    <h2><a href="/blog/20200616085351.html">UbuntuへのPerlのインストール</a></h2>
 <p>
-  UbuntuにPerlがインストールされていない場合はPerlをインストールしましょう。
+  UbuntuへのPerlのインストール方法です。<a href="/blog/20200530085516.html">apt</a>コマンドを使ってPerlをインストールします。
 </p>
 <pre>
 sudo apt install -y perl
 </pre>
 <p>
-  Perlのバージョンが確認できればインストールが成功しています。
+  Ubuntuでは、デフォルトでPerlがインストールされていることが多いですが、UbuntuにPerlがインストールされていない場合はPerlをインストールしましょう。
+</p>
+<p>
+  Perlのバージョンが確認できればUbuntuへのPerlのインストールが成功しています。
 </p>
 <pre>
 perl -v
 </pre>
+<h3>Ubuntuバージョン12以下におけるPerlのインストール</h3>
+<p>
+  aptコマンドは、Ubuntu 14から導入されたものですので、Ubuntuバージョン12以下の場合は、<a href="http://manpages.ubuntu.com/manpages/cosmic/ja/man8/apt-get.8.html">apt-get</a>を使いましょう。
+</p>
+<pre>
+sudo apt-get install -y perl
+</pre>
+<h3>ユーザー環境へのPerlのインストール</h3>
+<p>
+  このページで解説しているPerlは、システムへインストールするシステムPerlです。
+</p>
+<p>
+  ユーザー環境へのPerlのインストールは以下で解説しています。
+</p>
+<ul>
+  <li><a href="/blog/20200413174004.html">ユーザー環境へのPerlのインストール + cpanmのインストール</a>
+</ul>
 
   </div>
   <div class="bottom">
