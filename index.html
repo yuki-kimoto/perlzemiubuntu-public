@@ -72,127 +72,289 @@
 <p>
   2020年6月16日現在、Ubuntuのバージョンは、Ubuntu 18で確認していますが、特別な注記がない限り、Ubuntu 20、Ubuntu 16でも、動作すると想定しています。
 </p>
-<h3>初めての方へ</h3>
-<ul>
-  <li><a href="/blog/20200512074242.html">Ubuntuサーバー構築の手引きとは</a></li>
-  <li><a href="/blog/20200508174004.html">Ubuntuを使ってPerlでWebシステム開発ができる環境を構築する手順</a></li>
-</ul>
-<h3>Webサーバー Apache</h3>
-<ul>
-  <li><a href="/blog/20200526151435.html">Apache - ドキュメントが豊富で、機能が必要十分な、オーソドックスなWebサーバー</a></li>
-</ul>
-<h3>Ubuntuの利用方法</h3>
+<p>
+  Ubuntuサーバー管理入門は、<a href="https://tutorial.perlzemi.com/">Perl</a>で<a href="https://web.perlzemi.com/">Webシステム開発</a>を行う環境をUbuntuを使って構築するためのPerlゼミのコンテンツの一つです。
+</p>
+<h3>Ubuntuとは</h3>
+<p>
+  Ubuntuは、Linuxディストリビューションの一つです。Ubuntuはかつては、Linuxデスクトップの分野で知られていましたが、サーバー側の新しい技術を積極的に取り入れていくLinuxディストリビューションとしても知られるようになりました。
+</p>
+<p>
+  Ubuntuサーバー管理入門でUbuntuといった場合は、Ubuntuサーバーのことを指します。
+</p>
+<p>
+  Windows 10上で、Linux開発環境を構築できるWSL(Windows Subsystem for Linux)と呼ばれる仕組みがありますが、これには、Ubuntuが採用されています。
+</p>
+<p>
+  WSLは、2020年現在、まだ安定的とはいえませんが、(まだ試していませんが)ちらっと見たところでは、WSL上のファイルを、仮想的なネットワークごしに、編集できるようになり、ファイルの破損がしなくなったように見えます。
+</p>
+<p>
+  ですので、2020年は、利用機会が、増えていくんじゃないかと感じています。
+</p>
+<h3>このサイトについて</h3>
+<p>
+  Ubuntuサーバー管理入門の主要な目的は、Perlを使ってWebシステム開発を行える環境構築の手順を解説することです。
+</p>
+<p>
+  Ubuntuの使い方、Webサーバー、データベースサーバーのインストール、設定ファイル、運用などを解説します。
+</p>
+<p>
+  Perlと<a href="https://mojolicious.perlzemi.com/">WebフレームワークMojolicious</a>を使って、アプリケーションサーバーを起動して、リバースプロキシで、Webサーバーから接続する方法を解説します。
+</p>
+<p>
+  アプリケーションサーバーから、データベースサーバーへ接続する方法も解説します。
+</p>
+<p>
+  Ubuntuを使ってPerlでWebシステム開発ができる環境を構築する手順をここに書いていきます。ここに記述する手順は、パブリッククラウドやVPSやオンプレミスなど、すべてのホスティングサービスで利用可能な手順です。特定のホスティングサービスについて、まとめた記事は、別のところで記述します。
+</p>
+<h3>Ubuntuを利用できるようにする</h3>
+<p>
+  まず最初に、Ubuntuを利用できるようにしましょう。
+</p>
+<p>
+  VPSと呼ばれるサービスが価格が安く始めやすいです。
+</p>
+<p>
+  Windows 10であれば、WSLを使うことで、手元のPCでUbuntuを試すことができます。
+</p>
+<p>
+  自作したLinuxパソコンにチャレンジすることも可能です。
+</p>
 <ul>
   <li><a href="/blog/20200509155552.html">Ubuntuの利用方法</a></li>
 </ul>
-<h3>パッケージ管理</h3>
+<p>
+  コマンドを実行できるコンソール画面を表示するところまで進んで、初期ユーザーでログインするところまで進めましたか。
+</p>
+<h3>ユーザーの作成</h3>
+<p>
+  次は、コンソール画面でユーザーを作成します。Webアプリケーションの実行ユーザー(myapp)を作成するのと、自分自身のユーザー(たとえばkimoto)の二つを作成してみましょう。
+</p>
+<p>
+  ユーザー追加「-m」オプションあり、パスワードの設定、<a href="/blog/20200406174004.html">sudo</a>グループへ追加の手順を行いましょう。
+</p>
 <ul>
-  <li><a href="/blog/20200529085516.html">Ubuntuにけるパッケージ管理</a></li>
+  <li><a href="/blog/20200511173052.html">ユーザーの追加 - useraddコマンド</a></li>
 </ul>
-<h3>ユーザー管理</h3>
+<h3>グループの作成</h3>
+<p>
+  Webアプリケーションで必要になる「myapp-group」グループを作成します。これは、データディレクトリにWebアプリケーションのユーザー、開発ユーザー、Apacheユーザーが、アクセスするために必要になります。
+</p>
 <ul>
-  <li><a href="/blog/20200723101434.html">ユーザー管理方法をマスターしよう</a></li>
+  <li><a href="/blog/20200405174004.html">グループを追加する - groupaddコマンド</a></li>
 </ul>
-<h3>ロケール</h3>
+<p>
+  次に、myappユーザーと開発者ユーザ(たとえばkimoto)を「myapp-group」に追加しましょう。
+</p>
 <ul>
-  <li><a href="/blog/20200513083020.html">ロケールの確認と変更 - localectlコマンド</a></li>
+  <li><a href="/blog/20200330174004.html">ユーザーをグループに追加する - gpasswd -a</a></li>
 </ul>
-<h3>タイムゾーン</h3>
+<h3>タイムゾーンの設定</h3>
+<p>
+  タイムゾーンを「Asia/Tokyo」に設定しましょう。
+</p>
 <ul>
   <li><a href="/blog/20200507174004.html">タイムゾーンの確認と設定 - timedatectlコマンド</a></li>
 </ul>
-<h3>OS情報</h3>
+<h3>パッケージのインストール</h3>
+<p>
+  PerlにおけるWebシステム開発に必要なパッケージをインストールしましょう。<a href="http://59.106.185.196:3000/blog/20200506174004.html">デフォルトパッケージ</a>では、足りないものをインストールしていきます。
+</p>
+<p>
+  インストールがうまくいかない場合があるので、最初にaptを最新のバージョンにしましょう。
+</p>
 <ul>
-  <li><a href="/blog/20200505174004.html">Ubuntuのバージョン情報</a></li>
+  <li><a href="/blog/20200524135533.html">aptのアップデート - apt update</a></li>
 </ul>
-<h3>サーバーアプリケーションの管理</h3>
+<p>
+  まずは、ひとつのマシンの中に、Webサーバー、アプリケーションサーバー、メール送信サーバー、DBサーバーをすべて構築しましょう。
+</p>
+<h4>コンパイラ・リンカ</h4>
+<p>
+  Perlのモジュールのインストールに必要なコンパイラ・リンカのインストール。
+</p>
 <ul>
-  <li><a href="/blog/20200605104005.html">systemctl - systemdで管理されているサーバーアプリケーションの管理</a></li>
-  <li><a href="/blog/20200602135100.html">journalctlコマンド - systemdで管理されているサーバーのログを見る</a></li>
+  <li><a href="/blog/20200514084132.html">makeのインストール</a></li>
+  <li><a href="/blog/20200504174004.html">gccのインストール</a></li>
+  <li><a href="/blog/20200503174004.html">g++のインストール</a></li>
 </ul>
-<h3>データベースサーバー MariaDB</h3>
+<h4>SSL通信</h4>
 <ul>
-  <li><a href="/blog/20200417174004.html">MariaDBの起動・停止・再起動・状態確認</a></li>
-  <li><a href="/blog/20200224174004.html">MariaDBの初期設定とユーザーの作成</a></li>
-  <li><a href="/blog/20200223174004.html">UbuntuのMariaDBサーバーの設定ファイルの場所</a></li>
+  <li><a href="/blog/20200412174004.html">libssl-devのインストール - OpenSSLのヘッダファイルとライブラリ</a></li>
 </ul>
-<h3>Redisサーバー - 揮発性データ保存サーバー</h3>
+<h4>画像処理</h4>
+<ul>
+  <li><a href="/blog/20200501174004.html">libpng-devのインストール</a></li>
+  <li><a href="/blog/20200502174004.html">libgif-devのインストール</a></li>
+  <li><a href="/blog/20200426174004.html">libjpeg-devのインストール</a></li>
+</ul>
+<h4>圧縮・解凍</h4>
+<ul>
+  <li><a href="/blog/20200323174004.html">zipのインストール - ZIP形式のファイルの圧縮・解凍</a></li>
+</ul>
+<h3>ネットワーク</h3>
+<ul>
+  <li><a href="/blog/20200324174004.html">net-toolsのインストール - 非推奨だがとりあえずifconfig、arp、route、netstatを使いたい場合</a></li>
+</ul>
+<h4>Perl</h4>
+<ul>
+  <li><a href="/blog/20200616085351.html">Perlのインストール</a></li>
+  <li><a href="/blog/20200516081846.html">perl-docパッケージのインストール - perldocコマンド</a></li>
+  <li><a href="/blog/20200515081846.html">libio-socket-ssl-perlのインストール - PerlのIO::Socket::SSL</a></li>
+  <li><a href="/blog/20200606082859.html">libreadline-devのインストール - コマンド実行履歴を保存・検索するためのReadLineのライブラリ</a></li>
+  <li><a href="/blog/20200227174004.html">libterm-readline-gnu-perlのインストール - PerlのTerm::ReadLine::Gnuモジュール</a></li>
+</ul>
+<h4>リポジトリ管理</h4>
+<ul>
+  <li><a href="/blog/20200607082859.html">gitのインストール - Git分散リポジトリ管理システム</a></li>
+</ul>
+<h4>Webサーバー</h4>
+<ul>
+  <li><a href="/blog/20200424174004.html">apache2のインストール - WebサーバーであるApacheのバージョン2系</a></li>
+</ul>
+<h4>SSL証明書</h4>
+<ul>
+  <li><a href="/blog/20200319174004.html">certbotのインストール - Let's EncryptのSSL証明書の取得と更新</a></li>
+</ul>
+<h4>データベースサーバー</h4>
+<ul>
+  <li><a href="/blog/20200422174004.html">mariadb-clientのインストール - MariaDBクライアント</a></li>
+  <li><a href="/blog/20200421174004.html">mariadb-serverのインストール - MariaDBデータベースサーバー</a></li>
+  <li><a href="/blog/20200411174004.html">libmysqlclient-dev のインストール - MariaDBクライアントのヘッダとライブラリ</a></li>
+  <li><a href="/blog/20200419174004.html">libmariadb-devのインストール - MariaDBデータベースのヘッダとライブラリ</a></li>
+</ul>
+<h4>Redisサーバー</h4>
+<p>
+  会員登録機能を実装する場合にセッション情報の保存に利用するRedisサーバーです。また、push通知、リアルタイムチャット、リアルタイム更新機能などのリアルタイムWeb対応ができます。
+</p>
 <ul>
   <li><a href="/blog/20200225174004.html">Redisサーバーの起動・停止・再起動・状態確認</a></li>
-  <li><a href="/blog/20200720125704.html">redis-cli - RedisクライアントからRedisコマンドを実行する</a></li>
 </ul>
-<h3>FTPサーバー</h3>
-<ul>
-  <li><a href="/blog/20200415174004.html">vsftpd FTPサーバーの起動・停止・再起動・状態確認</a></li>
-</ul>
-<h3>cron ジョブ定期自動実行</h3>
+<h3>サーバーの起動確認</h3>
+<p>
+  インストールしたサーバーの起動確認をしましょう。postfixは、設定ファイルがデフォルトではなく起動していないので、postfix以外のサーバーの起動確認を行います。
+</p>
+<h4>cronの起動確認</h4>
+<p>
+  定期プログラム実行の常駐アプリケーションであるcronの起動確認を行います。
+</p>
+<p>
+  以下の記事の「sudo systemctl status cron」を実行してApacheが起動していることを確認してください。
+</p>
 <ul>
   <li><a href="/blog/20200520084454.html">cronの起動・停止・再起動・状態確認, cronの実行ログ</a></li>
-  <li><a href="/blog/20200604085516.html">crontab - cronで定期実行するプログラムを記述する</a></li>
 </ul>
-<h3>設定ファイル</h3>
-<h4>ホスト名、IPアドレス</h4>
+<h4>Apacheの起動確認</h4>
+<p>
+  WebサーバーであるApacheの起動確認を行います。
+</p>
+<p>
+  以下の記事の「sudo systemctl status apache2」を実行してApacheが起動していることを確認してください。
+</p>
 <ul>
-  <li><a href="/blog/20200414174004.html">hostsファイル「/etc/hosts」 - ホスト名とIPアドレスの対応</a></li>
+  <li><a href="/blog/20200519084454.html">Aapacheの起動・停止・再起動・状態確認</a></li>
 </ul>
-<h3>Perl</h3>
-<h4>ユーザーPerlとcpanmのインストール</h4>
+<h4>MariaDBの起動確認</h4>
+<p>
+  WebサーバーであるMariaDBの起動確認を行います。
+</p>
+<p>
+  以下の記事の「sudo systemctl status mariadb」を実行してMariaDBが起動していることを確認してください。
+</p>
 <ul>
-  <li><a href="/blog/20200413174004.html">ユーザーPerlとcpanmのインストール</a></li>
-  <li><a href="/blog/20200729134756.html">MojoliciousによるWebアプリケーションのデプロイ</a></li>
+  <li><a href="/blog/20200417174004.html">MariaDBの起動・停止・再起動・状態確認</a></li>
 </ul>
-<h4>Webアプリケーションに必要なモジュール</h4>
+<h4>Redisサーバーの起動確認</h4>
+<p>
+  揮発性の情報の保存サーバーであるRedisサーバーの起動確認を行います。
+</p>
+<p>
+  以下の記事の「sudo systemctl status redis-server」を実行してRedisサーバーが起動していることを確認してください。
+</p>
 <ul>
-  <li><a href="/blog/20200617081050.html">Webフレームワーク MojoliciousのインストールとWebアプリケーションの実行</a></li>
+  <li><a href="/blog/20200417174004.html">Redisサーバーの起動・停止・再起動・状態確認</a></li>
 </ul>
-<h4>C言語ライブラリに依存するPerlモジュール</h4>
+<h3>メール送信サーバー</h3>
+<p>
+  メール送信サーバーのインストールは、少し難しいので、つまった場合は、会員登録などで、メール送信が必要な時になって、設定しても大丈夫です。
+</p>
 <ul>
-  <li><a href="/blog/20200221174004.html">ユーザーPerlにcpanmでXML::LibXMLをインストールする</a></li>
-  <li><a href="/blog/20200622115851.html">ユーザーPerlにcpanmでImage::Magickをインストールする</a></li>
+  <li><a href="/blog/20200423174004.html">postfixのインストール - メール送信 sendmailコマンド</a></li>
 </ul>
-<h3>クラウドサービスとの連携</h3>
-<h4>クラウドメール配信</h4>
+<p>
+  もしサーバーが、パブリッククラウドサーバーで、ポート25番からの送信を制限されている場合は、SendGridにリレーすることによって、メール送信ができます。
+</p>
 <ul>
   <li><a href="/blog/20200521085509.html">クラウドメール配信SendGridとPostfixとの連携</a></li>
 </ul>
-<h3>ディスク管理</h3>
+<h3>データ用ディレクトリの作成</h3>
+<p>
+  Webアプリケーションからアップロードされたファイルを保存したり、バッチ処理でデータを要約したJSONを保存しておくための、データ用のディレクトリを作成します。このディレクトリは「myapp」ユーザー、他の開発ユーザーが立ち上げた、Webアプリケーションが、ファイルをアップロードする場所です。適切なパーミッションを設定しておきましょう。
+</p>
+<p>
+  もし、アタッチされたディスクを使って、それをデータ用のディレクトリにする場合は、こちらの手順を先に行っていください。「/datadrive」というデータ用のディレクトリが作成されます。
+</p>
 <ul>
   <li><a href="/blog/20200601085516.html">物理的に接続されているディスクを確認する</a></li>
   <li><a href="/blog/20200528085516.html">新しい物理ディスクの初期フォーマットとファイルシステムへのマウント</a></li>
-  <li><a href="/blog/20200326174004.html">ディスク容量とディレクトリ容量を確認する</a></li>
 </ul>
-<h3>ファイルシステム</h3>
+<p>
+  アプリケーションサーバーのデフォルトのディスクを使う場合は「/datadrive」をmkdirコマンドで作成してください。
+</p>
+<pre>
+sudo mkdir /datadrive
+</pre>
+<p>
+  次に、このデータディレクトリに、アプリケーションユーザーと他の開発ユーザーが書き込めるようにします。
+</p>
 <ul>
   <li><a href="/blog/20200327174004.html">データディレクトリに複数のユーザーが読み書きする方法 - Webアプリのファイルアップロードディレクトリ</a></li>
 </ul>
-<h3>エディタ</h3>
+<p>
+  これで、データ用ディレクトリが完成しました。
+</p>
+<h3>MariaDBサーバーの初期設定</h3>
+<p>
+  データベースサーバーである<a href="https://mariadb.perlzemi.com/">MariaDB</a>の初期設定を行いましょう。
+</p>
 <ul>
-  <li><a href="/blog/20200325174004.html">select-editor - デフォルトの編集エディタを変更する</a></li>
+  <li><a href="/blog/20200224174004.html">MariaDBの初期設定とユーザーの作成</a></li>
 </ul>
-<h3>Git</h3>
+<h3>ファイアーウォールの設定</h3>
+<p>
+  ホスティングサービスが用意するネットーワークのファイアーウォール設定で以下のポートを開いてください。またオンプレミスでサーバーを構築している場合はufwコマンドを使って、以下のポートを開いてください。
+</p>
+<table>
+  <tr><td>HTTP</td><td>80</td>
+  <tr><td>HTTPS</td><td>443</td>
+  <tr><td>SSH</td><td><a href="/blog/20200715102902.html">SSHで利用するポート</a>(デフォルトの22番ポートは危険)</td>
+  <tr><td>開発Webアプリ</td><td>3000</td>
+</table>
+<p>
+  開発Webアプリの3000番ポートは、<a href="https://mojolicious.perlzemi.com/">Mojolicious</a>の開発サーバーのデフォルトのポートです。他のWebフレームワークの開発サーバーのデフォルトポートが異なる場合は、異なる値にします。
+</p>
+<h3>Perl Web開発環境の構築</h3>
+<p>
+  安定性を求める場合は、CPANモジュールのインストールや警告表示などで不具合のない「perl-5.20.3」をインストール。
+</p>
+<p>
+  セキュアな最新版が良い場合は「perl-5.30.3」をインストール。
+</p>
 <ul>
-  <li><a href="/blog/20200219174004.html">Ubuntuでgitのcommit時のエディタをviに変更する</a></li>
+  <li><a href="/blog/20200413174004.html">ユーザーPerlとcpanmのインストール</a></li>
 </ul>
-<h3>sshd - SSHサーバー</h3>
+<p>
+  次にWebアプリケーションをデプロイします。
+</p>
 <ul>
-  <li><a href="/blog/20200715102902.html">SSHポートを変更する - デフォルトの22番ポートはセキュリティ的に危険が高い</a></li>
+  <li><a href="/blog/20200729134756.html">MojoliciousによるWebアプリケーションのデプロイ</a></li>
 </ul>
-<h3>SSH公開鍵認証</h3>
-<ul>
-  <li><a href="/blog/20200623095744.html">ssh-keygenでSSH公開鍵認証のための秘密鍵と公開鍵のペアを作成する</a></li>
-</ul>
-<h3>ポート番号</h3>
-<ul>
-  <li><a href="/blog/20200716102902.html">使用されているポート番号とサーバーの対応の一覧を表示 - lsof -i TCP -P</a></li>
-</ul>
-<h3>バックアップ運用</h3>
-<ul>
-  <li><a href="/blog/20200702091244.html">cronとrsyncを使ったファイルバックアップ自動化</a></li>
-</ul>
-<h3>CentOSとの違い</h3>
-<ul>
-  <li><a href="/blog/20200410174004.html">UbuntuとCentOSの違うところ・共通化されたところ</a></li>
-</ul>
+<p>
+  ここまで完成。
+</p>
+<p>
+  <a href="http://59.106.185.196:3000/all.html">すべての記事を見る</h2>
+</p>
 
   </div>
   <div class="bottom">
@@ -206,30 +368,25 @@
           <!-- side -->
 <div class="side-list">
   <div class="side-list-title">
-    目次
+    Webシステム開発 環境構築
   </div>
   <ul>
-    <li><a href="/">Ubuntuサーバー構築入門</a></li>
+    <li><a href="/">Ubuntu+Perlで<br>Webシステム開発 環境構築</a></li>
+    <li><a href="/blog/20200723101434.html">ユーザー管理</a></li>
     <li><a href="/blog/20200529085516.html">パッケージ管理</a></li>
     <li><a href="/blog/20200526151435.html">Apache</a></li>
-    <li><a href="/blog/20200723101434.html">ユーザー管理</a></li>
+    <li><a href="/all.html">すべての記事</a></li>
     <li><a href="/list.html">新着情報</a></li>
   </ul>
   <div class="side-list-title" style="margin-top:30px">
-    Webシステム開発
+    Webシステム開発へ進む
   </div>
   <ul>
-    <li><a href="https://tutorial.perlzemi.com/">Perlプログラミングを学ぶ</a></li>
-    <li><a href="https://linux.perlzemi.com/">Linuxの仕組み・コマンドを学ぶ</a></li>
     <li><a href="https://web.perlzemi.com/">Webシステム開発を学ぶ</a></li>
+    <li><a href="https://linux.perlzemi.com/">Linuxの仕組み・コマンドを学ぶ</a></li>
+    <li><a href="https://tutorial.perlzemi.com/">Perlプログラミングを学ぶ</a></li>
   </ul>
 
-  <div class="side-list-title" style="margin-top:30px">
-    Webシステム開発の見積もり
-  </div>
-  <ul>
-    <li><a href="https://kimoto-system.co.jp/">Perl Webシステム開発の<br>木本システム株式会社</a></li>
-  </ul>
 </div>
 
         </div>
