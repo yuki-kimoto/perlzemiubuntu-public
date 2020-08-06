@@ -58,10 +58,7 @@
   <b>ssh-keygen</b>コマンドを使うと、<a href="https://linux.perlzemi.com/blog/20200621103220.html">SSH</a>公開鍵認証ための秘密鍵と公開鍵のペアを作成することができます。
 </p>
 <p>
-  まず、SSHの秘密鍵を保存しておくディレクトリに移動します。このディレクトリ中で、<b>ssh-keygen</b>コマンドで秘密鍵と公開鍵のペアを作成します。
-</p>
-<p>
-  これは、ssh-keygenコマンドにとっては、本来は必要な作業ではないのですが、公開鍵をリモートサーバーに配布する場合に、秘密鍵の方を「~/.ssh」の中に残しておくので、このことを想定した手順になっています。
+  まず、SSHの秘密鍵を保存しておくディレクトリ「~/.ssh」に移動します。このディレクトリ中で、<b>ssh-keygen</b>コマンドで秘密鍵と公開鍵のペアを作成します。
 </p>
 <pre>
 cd ~/.ssh
@@ -142,6 +139,9 @@ chmod 600 id_rsa_example
 <p>
   デフォルトで利用される秘密鍵はid_rsaです。このことを知らないと、秘密鍵をつかってSSH公開鍵認証を行う場合に、とまどいます。秘密鍵ファイルを指定する方法や、特定のドメインへの秘密鍵ファイルのパスを設定ファイルに指定する方法は、sshコマンドの記事を参考にしてください。
 </p>
+<p>
+  SSHクライアントは、秘密鍵と公開鍵のペアを使って、SSHサーバーに接続します。公開鍵がない場合は、秘密鍵から公開鍵を生成してくれます。
+</p>
 <ul>
   <li><a href="/blog/20200621103220.html">sshコマンド - SSHサーバーへ接続する</a></li>
 </ul>
@@ -154,7 +154,7 @@ chmod 600 id_rsa_example
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjSsucYA958wTIKUcPRXC2iZxb84FXkzm41/jzpfnUeBFsypS8xfTXpfDaSIYeMDyr9pIUfDuWWPykoofL4WZaJYDy5pQclFwby/KttDRAnm0XZQ2ZDUtnrUUdva55mxOcTJP0c1VWXpwrhBA+JSFLOGB8wxCV8UFh9XWXI4c5QKQ/Hyl8//nXT6suQf199VNf4Ru31rs+49FDW9FyvoX1GGEEBJCT2ROVD6qi1xY766PuhM/4OMQeIxZmZg8ysML307viqkKh/2mecwkdV1mxGQt8GbO3gvTOX5h9p7tGEwa3zSHhxudux1Kf6Pfcg4FwKuld8r77DKMXEszpRI11 myapp@myhost
 </pre>
 <p>
-  リモートサーバーに渡す公開鍵はの内容がこれです。
+  リモートサーバーに登録する公開鍵はの内容がこれです。
 </p>
 <h4>サーバー側における公開鍵の登録</h4>
 <p>
@@ -167,7 +167,10 @@ vi ~/.ssh/authorized_keys
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjSsucYA958wTIKUcPRXC2iZxb84FXkzm41/jzpfnUeBFsypS8xfTXpfDaSIYeMDyr9pIUfDuWWPykoofL4WZaJYDy5pQclFwby/KttDRAnm0XZQ2ZDUtnrUUdva55mxOcTJP0c1VWXpwrhBA+JSFLOGB8wxCV8UFh9XWXI4c5QKQ/Hyl8//nXT6suQf199VNf4Ru31rs+49FDW9FyvoX1GGEEBJCT2ROVD6qi1xY766PuhM/4OMQeIxZmZg8ysML307viqkKh/2mecwkdV1mxGQt8GbO3gvTOX5h9p7tGEwa3zSHhxudux1Kf6Pfcg4FwKuld8r77DKMXEszpRI11 myapp@myhost
 </pre>
 <p>
-  公開鍵は、複数登録することができます。その場合は、行を変えて記述してください。
+  「authorized_keys」は公開鍵を複数登録でき、公開鍵ごとの設定を行うこともできます。
+</p>
+<p>
+  複数登録する場合は、行を変えて記述してください。
 </p>
 <pre>
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjSsucYA958wTIKUcPRXC2iZxb84FXkzm41/jzpfnUeBFsypS8xfTXpfDaSIYeMDyr9pIUfDuWWPykoofL4WZaJYDy5pQclFwby/KttDRAnm0XZQ2ZDUtnrUUdva55mxOcTJP0c1VWXpwrhBA+JSFLOGB8wxCV8UFh9XWXI4c5QKQ/Hyl8//nXT6suQf199VNf4Ru31rs+49FDW9FyvoX1GGEEBJCT2ROVD6qi1xY766PuhM/4OMQeIxZmZg8ysML307viqkKh/2mecwkdV1mxGQt8GbO3gvTOX5h9p7tGEwa3zSHhxudux1Kf6Pfcg4FwKuld8r77DKMXEszpRI11 myapp@myhost
@@ -179,9 +182,6 @@ ssh-rsa CCCAB3NzaC1yc2EAAAADAQAnAABAQCjSsucYA958wTIKUcPRXC2iZxb84FXkzm41/jzpfnUe
 <pre>
 chmod 600 ~/.ssh/authorized_keys
 </pre>
-<p>
-  この手順は、自身がサーバーとして接続される場合のものです。自身がリモートサーバーに接続する場合には、公開鍵を渡して、登録してもらえばOKです。
-</p>
 <h3>SSH公開鍵認証を使う例</h3>
 <h4>rsyncによるバックアップの自動化</h4>
 <p>
