@@ -62,7 +62,7 @@
 </p>
 <h3>DNSとは</h3>
 <p>
-  DNSとは、ドメインネームサービスのことで、ドメイン名(例: kimoto-system.co.jp)とIPアドレス(59.106.185.188)を対応させる仕組みのことです。
+  DNSとは、ドメインネームシステムのことで、ドメイン名(例: kimoto-system.co.jp)とIPアドレス(59.106.185.188)を対応させる仕組みのことです。
 </p>
 <p>
   お名前.comなどの、ドメイン名取得サービスで取得することができます。
@@ -71,26 +71,48 @@
   <li><a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3513971&pid=886673689" rel="nofollow"><img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3513971&pid=886673689" height="1" width="1" border="0">お名前.com</a></a>
 </ul>
 <p>
-  価格は、.comなどの一般的なドメインで、年間で1000円程度。会社用のco.jpドメインで、年間2000円程度を見積もっておくとよいでしょう。
+  価格は、.comなどの一般的なドメイン「(例)kimoto-system.com」で、年間で1000円程度。会社用のco.jpドメイン「(例)kimoto-system.co.jp」で、年間2000円程度を見積もっておくとよいでしょう。
 </p>
+<h3>Aレコードの設定</h3>
 <p>
   DNSの設定は以下のページで解説されています。
 </p>
 <ul>
   <li><a href="https://www.onamae.com/guide/p/70">ネームサーバー/DNSについて</a></li>
 </ul>
-<h3>IPアドレスの調べ方</h3>
 <p>
-  一方で、サーバーには、IPアドレスが存在しています。正確に書くと、サーバーに接続されているNIC(ネットワークインターフェースカード)に、IPアドレスが設定されてます。
+  DNSサーバーによって、設定方法に若干の違いがありますが、基本は、AレコードにIPアドレスを設定して、それに対応するドメイン名を設定します。ドメイン名は、サブドメインでも、ドメイン名そのものでもかまいません。
+</p>
+<p>
+  サブドメインとは「www.kimoto-system.co.jp」というようなドメイン名の前に「文字列.」が付いたものです。
+</p>
+<p>
+  サブドメインの作成はAレコードか、後で解説するCレコードを使って行います。
+</p>
+<p>
+  「kimoto-system.co.jp」というドメイン名で「59.106.185.191」というIPアドレスをもつWebサーバーにアクセスさせたい場合は、以下の設定を行います。
+</p>
+<table>
+  <tr><th>kimoto-system.co.jp</th><td>Aレコード</td><td>59.106.185.191</td></tr>
+</table>
+<p>
+  「www.kimoto-system.co.jp」というドメイン名で「59.106.185.191」というIPアドレスをもつWebサーバーにアクセスさせたい場合は、以下の設定を行います。
+</p>
+<table>
+  <tr><th>www.kimoto-system.co.jp</th><td>Aレコード</td><td>59.106.185.191</td></tr>
+</table>
+<h3>サーバーのIPアドレスの調べ方</h3>
+<p>
+  サーバーのIPアドレスの調べ方を書いておきます。DNSサーバーの設定を行う場合は、サーバーのIPアドレスが必要でだからです。
+</p>
+<p>
+  サーバーには、IPアドレスが存在しています。正確に書くと、サーバーに接続されているNIC(ネットワークインターフェースカード)に、IPアドレスが設定されてます。
 </p>
 <p>
   ネットワークは仮想化されているかもしれませんが、Webアプリケーションを作成するエンジニアから見た場合は、気にする必要はありません。VPSサービスやクラウドサービスのサーバー情報やネットワーク設定のページに記載されているIPアドレスをメモしておきましょう。
 </p>
 <p>
   パブリッククラウドでないのであればipコマンドやifconfigコマンドを使うと、サーバーのIPアドレスを見ることができます。
-</p>
-<p>
-  ユーザーは、Webサイトに、ドメイン名でアクセスしますね。
 </p>
 <h3>メールアドレスの設定</h3>
 <p>
@@ -103,6 +125,21 @@
 <p>
   メール用のドメイン(例: mail.kimoto-system.co.jp)とIPアドレス(59.106.185.188)
 </p>
+<p>
+  メールアドレスの管理は、メールアドレスを作成できる共有レンタルサーバーを使うのが簡単です。
+</p>
+<p>
+  <b>メールアドレスを作成できる共有レンタルサーバー</b>
+</p>
+<ul>
+  <li><a href="https://px.a8.net/svt/ejp?a8mat=3BK6BY+4EDBOY+50+5SIFHE" rel="nofollow">ConoHa WING(コノハウィング)</a>
+<p>
+  <img border="0" width="1" height="1" src="https://www10.a8.net/0.gif?a8mat=3BK6BY+4EDBOY+50+5SIFHE" alt=""></li>
+</p>
+</ul>
+<p>
+  共有レンタルサーバーを使う場合は、Aレコードには、共有レンタルサーバーのIPアドレスを指定します。
+</p>
 <h4>MXレコードの設定</h4>
 <p>
   メールアドレスの形式(ユーザー名@kimoto-system.co.jp)が認識されるようにMXレコードを設定します。
@@ -110,8 +147,45 @@
 <ul>
   <li><a href="https://help.onamae.com/answer/7889">【ドメイン】MXレコードの設定方法は？</a></li>
 </ul>
+<h3>Cレコードの利用</h3>
 <p>
-  途中。
+  Cレコードを使うと、ドメイン名の別名を設定することができます。
+</p>
+<p>
+  Cレコードを設定できるのは、サブドメイン(www.kimoto-system.co.jpやacount.kimoto-system.co.jp)だけです。ネイキッドドメイン(kimoto-system.co.jp)に設定できないので注意してください。
+</p>
+<h4>Cレコードの設定の例</h4>
+<p>
+  複数のサブドメインに同じIPアドレスを設定する場合は、Cレコードが便利です。
+</p>
+<p>
+  あるサーバーのIPアドレスが「59.106.185.179」だったとします。
+</p>
+<p>
+  このサーバーを識別するサブドメイン名をAレコードを使って、まず作成します。
+</p>
+<table>
+  <tr><th>prod001.kimoto-system.co.jp</th><td>Aレコード</td><td>59.106.185.179</td></tr>
+</table>
+<p>
+  次にCレコードを使って、上記のドメイン名に対する別名を作成します。
+</p>
+<table>
+  <tr><th>foo.kimoto-system.co.jp</th><td>Cレコード</td><td>prod001.kimoto-system.co.jp</td></tr>
+  <tr><th>bar.kimoto-system.co.jp</th><td>Cレコード</td><td>prod001.kimoto-system.co.jp</td></tr>
+</table>
+<p>
+  「foo.kimoto-system.co.jp」は「prod001.kimoto-system.co.jp」の別名になりました。
+</p>
+<p>
+  「bar.kimoto-system.co.jp」は「prod001.kimoto-system.co.jp」の別名になりました。
+</p>
+<p>
+  DNSサーバーへの問い合わせでは「foo.kimoto-system.co.jp」も「bar.kimoto-system.co.jp」も「prod001.kimoto-system.co.jp」のAレコードに設定した「59.106.185.179」を返します。
+</p>
+<h3>DNSレコードの問い合わせ</h3>
+<p>
+  DNSレコードの問い合わせは<a href="https://linux.perlzemi.com/blog/20200622141433.html">dig</a>コマンドを使うのが簡単です。Aレコード、Cレコード、MXレコードの設定の確認ができます。
 </p>
 
   </div>
