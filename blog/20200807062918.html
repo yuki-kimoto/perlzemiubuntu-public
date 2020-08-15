@@ -87,7 +87,7 @@
   サブドメインとは「www.kimoto-system.co.jp」というようなドメイン名の前に「文字列.」が付いたものです。
 </p>
 <p>
-  サブドメインの作成はAレコードか、後で解説するCレコードを使って行います。
+  サブドメインの作成はAレコードか、後で解説するCNAMEレコードを使って行います。
 </p>
 <p>
   「kimoto-system.co.jp」というドメイン名で「59.106.185.191」というIPアドレスをもつWebサーバーにアクセスさせたい場合は、以下の設定を行います。
@@ -147,16 +147,16 @@
 <ul>
   <li><a href="https://help.onamae.com/answer/7889">【ドメイン】MXレコードの設定方法は？</a></li>
 </ul>
-<h3>Cレコードの利用</h3>
+<h3>CNAMEレコードの利用</h3>
 <p>
-  Cレコードを使うと、ドメイン名の別名を設定することができます。
+  CNAMEレコードを使うと、ドメイン名の別名を設定することができます。
 </p>
 <p>
-  Cレコードを設定できるのは、サブドメイン(www.kimoto-system.co.jpやacount.kimoto-system.co.jp)だけです。ネイキッドドメイン(kimoto-system.co.jp)に設定できないので注意してください。
+  CNAMEレコードを設定できるのは、サブドメイン(www.kimoto-system.co.jpやacount.kimoto-system.co.jp)だけです。ネイキッドドメイン(kimoto-system.co.jp)に設定できないので注意してください。
 </p>
-<h4>Cレコードの設定の例</h4>
+<h4>CNAMEレコードの設定の例</h4>
 <p>
-  複数のサブドメインに同じIPアドレスを設定する場合は、Cレコードが便利です。
+  複数のサブドメインに同じIPアドレスを設定する場合は、CNAMEレコードが便利です。
 </p>
 <p>
   あるサーバーのIPアドレスが「59.106.185.179」だったとします。
@@ -168,11 +168,11 @@
   <tr><th>prod001.kimoto-system.co.jp</th><td>Aレコード</td><td>59.106.185.179</td></tr>
 </table>
 <p>
-  次にCレコードを使って、上記のドメイン名に対する別名を作成します。
+  次にCNAMEレコードを使って、上記のドメイン名に対する別名を作成します。
 </p>
 <table>
-  <tr><th>foo.kimoto-system.co.jp</th><td>Cレコード</td><td>prod001.kimoto-system.co.jp</td></tr>
-  <tr><th>bar.kimoto-system.co.jp</th><td>Cレコード</td><td>prod001.kimoto-system.co.jp</td></tr>
+  <tr><th>foo.kimoto-system.co.jp</th><td>CNAMEレコード</td><td>prod001.kimoto-system.co.jp</td></tr>
+  <tr><th>bar.kimoto-system.co.jp</th><td>CNAMEレコード</td><td>prod001.kimoto-system.co.jp</td></tr>
 </table>
 <p>
   「foo.kimoto-system.co.jp」は「prod001.kimoto-system.co.jp」の別名になりました。
@@ -185,7 +185,7 @@
 </p>
 <h3>DNSレコードの問い合わせ</h3>
 <p>
-  DNSレコードの問い合わせは<a href="https://linux.perlzemi.com/blog/20200622141433.html">dig</a>コマンドを使うのが簡単です。Aレコード、Cレコード、MXレコードの設定の確認ができます。
+  DNSレコードの問い合わせは<a href="https://linux.perlzemi.com/blog/20200622141433.html">dig</a>コマンドを使うのが簡単です。Aレコード、CNAMEレコード、MXレコードの設定の確認ができます。
 </p>
 
   </div>
