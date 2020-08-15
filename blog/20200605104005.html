@@ -160,6 +160,50 @@ Restart=on-abort
 [Install]
 WantedBy=multi-user.target
 </pre>
+<h3>systemdの設定ファイル</h3>
+<p>
+  systemdの設定ファイルは「/lib/systemd/system」にあります。以下はApacheの設定ファイルです。
+</p>
+<pre>
+/lib/systemd/system/apache2.service
+</pre>
+<h3>systemdのサービスとして追加</h3>
+<p>
+  systemdで管理される新しいアプリケーションを追加するには、systemdの設定ファイルがあるディレクトリの中に設定ファイルを追加します。
+</p>
+<p>
+  MojoliciousでWebアプリケーションを作成してhypnotoadで起動している場合にこれを<a href="https://docs.mojolicious.org/Mojolicious/Guides/Cookbook">systemdで管理する場合の公式ドキュメントのサンプル</a>は以下のようになっています。
+</p>
+<pre>
+[Unit]
+Description=My Mojolicious application
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=/home/sri/myapp/script/hypnotoad.pid
+ExecStart=/path/to/hypnotoad /home/sri/myapp/script/my_app
+ExecReload=/path/to/hypnotoad /home/sri/myapp/script/my_app
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
+</pre>
+<p>
+  ファイル名は以下のようにします。「mywebapp」の部分は任意の名前でOKです。viを使って、編集して、内容を追記しましょう。
+</p>
+<pre>
+sudo vi /lib/systemd/system/mywebapp.service
+</pre>
+<p>
+  systemdにサービスとして登録しておくと、OSの再起動時に、Webアプリケーションを自動起動させることができます。
+</p>
+<p>
+  設定ファイルが正しいく記述されているかどうかはsystemctlコマンドのstatusで確認することができます。
+</p>
+<pre>
+systemctl status mywebapp
+</pre>
 
   </div>
   <div class="bottom">
