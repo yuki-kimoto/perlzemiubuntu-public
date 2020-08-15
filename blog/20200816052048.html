@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/ubuntu-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>さくらVPS+Ubuntu 18+PerlでWebシステム開発 環境構築 - Ubuntu+PerlでWebシステム開発 環境構築</title>
+<meta name="description" content="さくらVPS+Ubuntu 18+PerlでWebシステム開発環境を行う手順のまとめ。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- header -->
+<h1>
+  <a href="/">Ubuntu+PerlでWebシステム開発 環境構築</a>
+</h1>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+<style>
+  .ubuntu-version {
+    text-align:right;
+  }
+  .ubuntu-version ul {
+    
+  }
+  .ubuntu-version li {
+    display:inline-block;
+    background:pink;
+    color:white;
+    border-radisu:10px;
+    padding:3px 5px;
+    margin:0;
+    margin-right:5px;
+  }
+</style>
+
+<div class="ubuntu-version">
+  <ul>
+    <li>Ubuntu 20</li>
+    <li>Ubuntu 18</li>
+    <li>Ubuntu 16</li>
+  </ul>
+</div>
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200816052048.html">さくらVPS+Ubuntu 18+PerlでWebシステム開発 環境構築</a></h2>
+<p>
+  さくらVPS+Ubuntu 18+PerlでWebシステム開発環境を行う手順のまとめ。
+</p>
+<h3>さくらVPSの申し込み</h3>
+<p>
+  さくらVPSを申し込みます。
+</p>
+<p>
+  <a href="https://vps.sakura.ad.jp/specification/">さくらVPS 料金・仕様一覧</a>
+</p>
+<h3>さくらVPSへUbuntu 18をインストール</h3>
+<p>
+  さくらVPSへUbuntu 18をインストールしましょう。インストール手順は、2020年8月16日に試したものです。
+</p>
+<p>
+  <a href="https://secure.sakura.ad.jp/vps/#/login">さくらVPSコントールパネル</a>からログイン。
+</p>
+<p>
+  右上、サーバー新規追加をクリック。
+</p>
+<p>
+  ゾーンを選択。石狩 第1ゾーン。東京 第2ゾーン。大阪 第3ゾーン。
+</p>
+<p>
+  コストが安く、サービスを行う場所に近いゾーンを選ぶのが良いでしょう。
+</p>
+<p>
+  プラン選択。512, 1G, 2Gの中からまずは選択しましょう。ストレージは100G程度あったほうが、後ほど困らないと経験的に感じますが、最初に始めるなら、一番コストの小さなプランもお勧めです。
+</p>
+<p>
+  ストレージを増やしたい場合は、ストレージ変更オプションで、ストレージを増やしましょう。料金は初回のみです。ストレージ性能が下がるリスクについて書かれているので、速度をとるか容量をとるかで決めましょう。
+</p>
+<p>
+  次へ進む。
+</p>
+<p>
+  サーバーの名前は、任意項目なので、そのまま。
+</p>
+<p>
+  サーバーの説明も、任意項目なので、そのまま。
+</p>
+<p>
+  インストールするOSは、Ubuntu 18.04amd64(64bit)です。
+</p>
+<p>
+  管理ユーザ名は固定で「ubuntu」となっています。
+</p>
+<p>
+  「新しい管理ユーザのパスワード」と「新しい管理ユーザのパスワード（確認のため再入力）」を入力します。これは、実質的にはrootパスワードになります。
+</p>
+<p>
+  スタートアップスクリプトは、利用しません。
+</p>
+<p>
+  パケットフィルタの設定は、デフォルトでSSHの22番ポートのみとなっています。これは、後で変更します。
+</p>
+<p>
+  公開鍵の登録は、登録しないを選択します。
+</p>
+<p>
+  次へ進む。
+</p>
+<p>
+  支払いパターンを選択します。月払いか年間一括払いを選択できます。
+</p>
+<p>
+  支払い方法を選択します。クレジットカード、銀行振込、請求書払いを選択できます。
+</p>
+<p>
+  クーポンは、空白にしておきます。クーポンがあって、使いたい場合は入力してください。
+</p>
+<p>
+  次へ進む。
+</p>
+<p>
+  お申し込み確認の画面になりますので、同意するを選択して、申し込みをクリック。
+</p>
+<p>
+  これで、さくらVPSで、Ubuntu 18を使えるようになります。
+</p>
+<p>
+  (ここまで完了。)
+</p>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    Webシステム開発 環境構築
+  </div>
+  <ul>
+    <li><a href="/">Ubuntu+Perlで<br>Webシステム開発 環境構築</a></li>
+    <li><a href="/blog/20200723101434.html">ユーザー管理</a></li>
+    <li><a href="/blog/20200529085516.html">パッケージ管理</a></li>
+    <li><a href="/blog/20200526151435.html">Apache</a></li>
+    <li><a href="/all.html">すべての記事</a></li>
+    <li><a href="/list.html">新着情報</a></li>
+  </ul>
+  <div class="side-list-title" style="margin-top:30px">
+    Webシステム開発へ進む
+  </div>
+  <ul>
+    <li><a href="https://web.perlzemi.com/">Webシステム開発を学ぶ</a></li>
+    <li><a href="https://linux.perlzemi.com/">Linuxの仕組み・コマンドを学ぶ</a></li>
+    <li><a href="https://tutorial.perlzemi.com/">Perlプログラミングを学ぶ</a></li>
+  </ul>
+
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="kimoto_system_link">
+  <a href="https://kimoto-system.co.jp">
+    <img src="https://kimoto-system.co.jp/images/kimoto-system-logo.png" alt="Perl Webシステム開発">
+    Perl システム開発の木本システム株式会社<br>
+    
+    リアルタイムWebとクラウドサーバー対応の<br>
+    
+    Webシステム開発・業務システム開発<br>
+  </a>
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>
