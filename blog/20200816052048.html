@@ -379,6 +379,32 @@ sudo gpasswd -a myapp sudo
 <ul>
   <li><a href="/blog/20200715102902.html">SSHポートを変更する - デフォルトの22番ポートはセキュリティ的に危険が高い</a></li>
 </ul>
+<h3>タイムゾーンの設定</h3>
+<p>
+  タイムゾーンを「Asia/Tokyo」に設定しましょう。<a href="/blog/20200507174004.html">timedatectlでタイムゾーンの設定・確認</a>ができます。
+</p>
+<pre>
+# タイムゾーンを「Asia/Tokyo」に設定
+sudo timedatectl set-timezone Asia/Tokyo
+</pre>
+<p>
+  タイムゾーンの確認。
+</p>
+<pre>
+# タイムゾーンの確認
+timedatectl
+</pre>
+<h3>パッケージのインストール</h3>
+<p>
+  Perl Webシステム開発で必要になるパッケージをインストールしましょう。
+</p>
+<h4>aptのアップデート</h4>
+<p>
+  <a href="/blog/20200530085516.html">apt</a>コマンドは、パッケージのインストールコマンドですが、apt自体が古いとパッケージのダウンロードが失敗する場合があるので<a href="/blog/20200524135533.html">aptをアップデート</a>します。
+</p>
+<pre>
+sudo apt update
+</pre>
 
   </div>
   <div class="bottom">
@@ -395,12 +421,18 @@ sudo gpasswd -a myapp sudo
     Webシステム開発 環境構築
   </div>
   <ul>
-    <li><a href="/">Ubuntu+Perlで<br>Webシステム開発 環境構築</a></li>
+    <li><a href="/">Ubuntu+PerlでWebシステム開発 環境構築 ホーム</a></li>
     <li><a href="/blog/20200723101434.html">ユーザー管理</a></li>
     <li><a href="/blog/20200529085516.html">パッケージ管理</a></li>
     <li><a href="/blog/20200526151435.html">Apache</a></li>
     <li><a href="/all.html">すべての記事</a></li>
     <li><a href="/list.html">新着情報</a></li>
+  </ul>
+  <div class="side-list-title">
+    ホスティングサービスでWebサイトを公開
+  </div>
+  <ul>
+    <li><a href="/blog/20200816052048.html">さくらVPS+Ubuntu 18+PerlでWebシステム開発 環境構築</a></li>
   </ul>
   <div class="side-list-title" style="margin-top:30px">
     Webシステム開発へ進む
