@@ -149,6 +149,19 @@
 <ul>
   <li><a href="/blog/20200330174004.html">ユーザーをグループに追加する - gpasswd -a</a></li>
 </ul>
+<h3>ファイアーウォールの設定</h3>
+<p>
+  ホスティングサービスが用意するネットーワークのファイアーウォール設定で以下のポートを開いてください。またオンプレミスでサーバーを構築している場合はufwコマンドを使って、以下のポートを開いてください。
+</p>
+<table>
+  <tr><td>HTTP</td><td>80</td>
+  <tr><td>HTTPS</td><td>443</td>
+  <tr><td>SSH</td><td><a href="/blog/20200715102902.html">SSHで利用するポート</a>(デフォルトの22番ポートは危険)</td>
+  <tr><td>開発Webアプリ</td><td>3000</td>
+</table>
+<p>
+  開発Webアプリの3000番ポートは、<a href="https://mojolicious.perlzemi.com/">Mojolicious</a>の開発サーバーのデフォルトのポートです。他のWebフレームワークの開発サーバーのデフォルトポートが異なる場合は、異なる値にします。
+</p>
 <h3>SSHクライアントの利用</h3>
 <p>
   パソコン上からSSHでサーバーへの接続して、コマンド実行とファイル編集ができるようにしましょう。
@@ -203,6 +216,10 @@
 <p>
   まずは、ひとつのマシンの中に、Webサーバー、アプリケーションサーバー、メール送信サーバー、DBサーバーをすべて構築しましょう。
 </p>
+<h4>コマンド履歴</h4>
+<ul>
+  <li><a href="/blog/20200820162441.html">historyパッケージのインストール</a></li>
+</ul>
 <h4>コンパイラ・リンカ</h4>
 <p>
   Perlのモジュールのインストールに必要なコンパイラ・リンカのインストール。
@@ -230,9 +247,9 @@
 <ul>
   <li><a href="/blog/20200324174004.html">net-toolsのインストール - 非推奨だがとりあえずifconfig、arp、route、netstatを使いたい場合</a></li>
 </ul>
-<h4>コマンド履歴</h4>
+<h4>リポジトリ管理</h4>
 <ul>
-  <li><a href="/blog/20200820162441.html">historyパッケージのインストール</a></li>
+  <li><a href="/blog/20200607082859.html">gitのインストール - Git分散リポジトリ管理システム</a></li>
 </ul>
 <h4>Perl</h4>
 <ul>
@@ -242,74 +259,9 @@
   <li><a href="/blog/20200606082859.html">libreadline-devのインストール - コマンド実行履歴を保存・検索するためのReadLineのライブラリ</a></li>
   <li><a href="/blog/20200227174004.html">libterm-readline-gnu-perlのインストール - PerlのTerm::ReadLine::Gnuモジュール</a></li>
 </ul>
-<h4>リポジトリ管理</h4>
-<ul>
-  <li><a href="/blog/20200607082859.html">gitのインストール - Git分散リポジトリ管理システム</a></li>
-</ul>
 <h4>SSL証明書</h4>
 <ul>
   <li><a href="/blog/20200319174004.html">certbotのインストール - Let's EncryptのSSL証明書の取得と更新</a></li>
-</ul>
-<h4>データベースサーバー</h4>
-<ul>
-  <li><a href="/blog/20200422174004.html">mariadb-clientのインストール - MariaDBクライアント</a></li>
-  <li><a href="/blog/20200421174004.html">mariadb-serverのインストール - MariaDBデータベースサーバー</a></li>
-  <li><a href="/blog/20200411174004.html">libmysqlclient-dev のインストール - MariaDBクライアントのヘッダとライブラリ</a></li>
-  <li><a href="/blog/20200419174004.html">libmariadb-devのインストール - MariaDBデータベースのヘッダとライブラリ</a></li>
-</ul>
-<h4>Redisサーバー</h4>
-<p>
-  会員登録機能を実装する場合にセッション情報の保存に利用するRedisサーバーです。また、push通知、リアルタイムチャット、リアルタイム更新機能などのリアルタイムWeb対応ができます。
-</p>
-<ul>
-  <li><a href="/blog/20200225174004.html">Redisサーバーの起動・停止・再起動・状態確認</a></li>
-</ul>
-<h3>サーバーの起動確認</h3>
-<p>
-  インストールしたサーバーの起動確認をしましょう。postfixは、設定ファイルがデフォルトではなく起動していないので、postfix以外のサーバーの起動確認を行います。
-</p>
-<h4>cronの起動確認</h4>
-<p>
-  定期プログラム実行の常駐アプリケーションであるcronの起動確認を行います。
-</p>
-<p>
-  以下の記事の「sudo systemctl status cron」を実行してApacheが起動していることを確認してください。
-</p>
-<ul>
-  <li><a href="/blog/20200520084454.html">cronの起動・停止・再起動・状態確認, cronの実行ログ</a></li>
-</ul>
-<h4>MariaDBの起動確認</h4>
-<p>
-  WebサーバーであるMariaDBの起動確認を行います。
-</p>
-<p>
-  以下の記事の「sudo systemctl status mariadb」を実行してMariaDBが起動していることを確認してください。
-</p>
-<ul>
-  <li><a href="/blog/20200417174004.html">MariaDBの起動・停止・再起動・状態確認</a></li>
-</ul>
-<h4>Redisサーバーの起動確認</h4>
-<p>
-  揮発性の情報の保存サーバーであるRedisサーバーの起動確認を行います。
-</p>
-<p>
-  以下の記事の「sudo systemctl status redis-server」を実行してRedisサーバーが起動していることを確認してください。
-</p>
-<ul>
-  <li><a href="/blog/20200417174004.html">Redisサーバーの起動・停止・再起動・状態確認</a></li>
-</ul>
-<h3>メール送信サーバー</h3>
-<p>
-  メール送信サーバーのインストールは、少し難しいので、つまった場合は、会員登録などで、メール送信が必要な時になって、設定しても大丈夫です。
-</p>
-<ul>
-  <li><a href="/blog/20200423174004.html">postfixのインストール - メール送信 sendmailコマンド</a></li>
-</ul>
-<p>
-  もしサーバーが、パブリッククラウドサーバーで、ポート25番からの送信を制限されている場合は、SendGridにリレーすることによって、メール送信ができます。
-</p>
-<ul>
-  <li><a href="/blog/20200521085509.html">クラウドメール配信SendGridとPostfixとの連携</a></li>
 </ul>
 <h3>データ用ディレクトリの作成</h3>
 <p>
@@ -337,6 +289,65 @@ sudo mkdir /datadrive
 <p>
   これで、データ用ディレクトリが完成しました。
 </p>
+<h3>Redisサーバー</h3>
+<p>
+  会員登録機能を実装する場合にセッション情報の保存に利用するRedisサーバーです。また、push通知、リアルタイムチャット、リアルタイム更新機能などのリアルタイムWeb対応ができます。
+</p>
+<ul>
+  <li><a href="/blog/20200225174004.html">Redisサーバーの起動・停止・再起動・状態確認</a></li>
+</ul>
+<h3>cron</h3>
+<p>
+  定期プログラム実行の常駐アプリケーションであるcronの起動確認を行います。
+</p>
+<p>
+  以下の記事の「sudo systemctl status cron」を実行してApacheが起動していることを確認してください。
+</p>
+<ul>
+  <li><a href="/blog/20200520084454.html">cronの起動・停止・再起動・状態確認, cronの実行ログ</a></li>
+</ul>
+<h4>Redisサーバー</h4>
+<p>
+  揮発性の情報の保存サーバーであるRedisサーバーのインストールと起動確認を行います。
+</p>
+<p>
+  以下の記事の「sudo systemctl status redis-server」を実行してRedisサーバーが起動していることを確認してください。
+</p>
+<ul>
+  <li><a href="/blog/20200525135533.html">redis-serverをインストールする</a></li>
+  <li><a href="/blog/20200417174004.html">Redisサーバーの起動・停止・再起動・状態確認</a></li>
+</ul>
+<h3>データベースサーバー MariaDB</h3>
+<p>
+  データベースサーバーであるMariaDBのインストールと起動確認を行います。
+</p>
+<h4>データベースサーバーと関連ライブラリのインストール</h4>
+<ul>
+  <li><a href="/blog/20200422174004.html">mariadb-clientのインストール - MariaDBクライアント</a></li>
+  <li><a href="/blog/20200421174004.html">mariadb-serverのインストール - MariaDBデータベースサーバー</a></li>
+  <li><a href="/blog/20200411174004.html">libmysqlclient-dev のインストール - MariaDBクライアントのヘッダとライブラリ</a></li>
+  <li><a href="/blog/20200419174004.html">libmariadb-devのインストール - MariaDBデータベースのヘッダとライブラリ</a></li>
+</ul>
+<h4>データベースサーバーの起動確認</h4>
+<p>
+  以下の記事の「sudo systemctl status mariadb」を実行してMariaDBが起動していることを確認してください。
+</p>
+<ul>
+  <li><a href="/blog/20200417174004.html">MariaDBの起動・停止・再起動・状態確認</a></li>
+</ul>
+<h3>メール送信サーバー</h3>
+<p>
+  メール送信サーバーのインストールは、少し難しいので、つまった場合は、会員登録などで、メール送信が必要な時になって、設定しても大丈夫です。
+</p>
+<ul>
+  <li><a href="/blog/20200423174004.html">postfixのインストール - メール送信 sendmailコマンド</a></li>
+</ul>
+<p>
+  もしサーバーが、パブリッククラウドサーバーで、ポート25番からの送信を制限されている場合は、SendGridにリレーすることによって、メール送信ができます。
+</p>
+<ul>
+  <li><a href="/blog/20200521085509.html">クラウドメール配信SendGridとPostfixとの連携</a></li>
+</ul>
 <h3>MariaDBサーバーの初期設定</h3>
 <p>
   データベースサーバーである<a href="https://mariadb.perlzemi.com/">MariaDB</a>の初期設定を行いましょう。
@@ -344,19 +355,6 @@ sudo mkdir /datadrive
 <ul>
   <li><a href="/blog/20200224174004.html">MariaDBの初期設定とユーザーの作成</a></li>
 </ul>
-<h3>ファイアーウォールの設定</h3>
-<p>
-  ホスティングサービスが用意するネットーワークのファイアーウォール設定で以下のポートを開いてください。またオンプレミスでサーバーを構築している場合はufwコマンドを使って、以下のポートを開いてください。
-</p>
-<table>
-  <tr><td>HTTP</td><td>80</td>
-  <tr><td>HTTPS</td><td>443</td>
-  <tr><td>SSH</td><td><a href="/blog/20200715102902.html">SSHで利用するポート</a>(デフォルトの22番ポートは危険)</td>
-  <tr><td>開発Webアプリ</td><td>3000</td>
-</table>
-<p>
-  開発Webアプリの3000番ポートは、<a href="https://mojolicious.perlzemi.com/">Mojolicious</a>の開発サーバーのデフォルトのポートです。他のWebフレームワークの開発サーバーのデフォルトポートが異なる場合は、異なる値にします。
-</p>
 <h3>Perl Web開発環境の構築</h3>
 <p>
   安定性を求める場合は、CPANモジュールのインストールや警告表示などで不具合のない「perl-5.20.3」をインストール。
@@ -416,7 +414,8 @@ sudo mkdir /datadrive
   リバースプロキシは、Apacheで受けたHTTPリクエストを、他の場所に、透過的に渡す仕組みです。PerlでWebアプリケーションを作成した場合は、リバースプロキシは、HTTPリクエストを、Webアプリケーションに渡します。
 </p>
 <ul>
-  <li><a href="/blog/20200306174004.html">WebアプリケーションをバーチャルホストとリバースプロキシでApacheから接続する</a></ul>
+  <li><a href="/blog/20200306174004.html">WebアプリケーションをバーチャルホストとリバースプロキシでApacheから接続する</a>
+</ul>
 <h4>SSL証明書の取得とSSLの設定</h4>
 <p>
   HTTPSでリクエストを受けるために、SSL証明書の発行とSSLの設定を行います。開発環境の場合は、

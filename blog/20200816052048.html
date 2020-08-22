@@ -412,6 +412,72 @@ sudo apt update
 <pre>
 sudo apt install -y history
 </pre>
+<h4>コンパイラ・リンカ</h4>
+<p>
+  コンパイラ・リンカのインストールです。<a href="/blog/20200514084132.html">makeのインストール</a>、<a href="/blog/20200504174004.html">gccのインストール</a>、<a href="/blog/20200503174004.html">g++のインストール</a>を行いましょう。Perlのモジュールのコンパイルに必要です。
+</p>
+<pre>
+sudo apt install -y make
+sudo apt install -y gcc
+sudo apt install -y g++
+</pre>
+<h4>SSL通信</h4>
+<p>
+  SSL通信のために<a href="/blog/20200412174004.html">libssl-devのインストール</a>を行いましょう。
+</p>
+<pre>
+sudo apt install -y libssl-dev
+</pre>
+<h4>画像処理</h4>
+<p>
+  画像処理のために<a href="/blog/20200501174004.html">libpng-devのインストール</a>、<a href="/blog/20200502174004.html">libgif-devのインストール</a>、<a href="/blog/20200426174004.html">libjpeg-devのインストール</a>を行いましょう。
+</p>
+<pre>
+sudo apt install -y libpng-dev
+sudo apt install -y libgif-dev
+sudo apt install -y libjpeg-dev
+</pre>
+<h4>圧縮・解凍</h4>
+<p>
+  圧縮・解凍のために<a href="/blog/20200323174004.html">zipのインストール</a>を行いましょう。
+</p>
+<pre>
+sudo apt install -y zip
+</pre>
+<h4>ネットワーク</h4>
+<p>
+  ifconfigが使えるように<a href="/blog/20200324174004.html">net-toolsのインストール</a>を行いましょう。ipコマンドがLinuxでは推奨されていますが、使いたいサーバー管理者も多そうなので。
+</p>
+<pre>
+sudo apt install -y net-tools
+</pre>
+<h4>リポジトリ管理</h4>
+<p>
+  リポジトリ管理のために<a href="/blog/20200607082859.html">gitのインストール</a>を行いましょう。
+</p>
+<pre>
+sudo apt install -y git
+</pre>
+<h4>Perl</h4>
+<p>
+  システムPerlのためのしばしば使うであろうツールとモジュールをインストールしましょう。<a href="/blog/20200516081846.html">perl-docパッケージのインストール</a>、<a href="/blog/20200515081846.html">libio-socket-ssl-perlのインストール</a>、<a href="/blog/20200606082859.html">libreadline-devのインストール</a>、<a href="/blog/20200227174004.html">libterm-readline-gnu-perlのインストール</a>を行います。
+</p>
+<pre>
+sudo apt install -y perl-doc
+sudo apt install -y libio-socket-ssl-perl
+sudo apt install -y libreadline-dev
+sudo apt install -y libterm-readline-gnu-perl
+</pre>
+<h4>SSL証明書</h4>
+<p>
+  SSL証明書の自動発行のために<a href="/blog/20200319174004.html">certbotのインストール</a>を行います。
+</p>
+<pre>
+sudo apt install -y certbot
+</pre>
+<p>
+  ここまで完成
+</p>
 
   </div>
   <div class="bottom">
