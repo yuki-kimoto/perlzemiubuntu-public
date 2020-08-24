@@ -83,11 +83,11 @@
   ユーザーを追加するには<b>useradd</b>コマンドを使用します。ユーザーディレクトリを作りたい場合は「-m」オプションを使用します。
 </p>
 <p>
-  最初にWebアプリケーション実行用のユーザーも「myapp」という名前で作成しておきます。これは、本番環境で、Webアプリケーションを実行し、バッチプログラムを実行するユーザーを想定しています。
+  最初にWebアプリケーション実行用のユーザーも「myapp」という名前で作成しておきます。これは、本番環境で、Webアプリケーションを実行し、バッチプログラムを実行するユーザーを想定しています。「-m」オプションでホームディレクトリの作成、「-s」オプションでシェルを指定します。Ubuntuでは何も指定しなかった場合は「/bin/sh」になるので「/bin/bash」にしておきます。
 </p>
 <pre>
-# ユーザーの追加(ホームディレクトリあり)
-sudo useradd -m myapp
+# ユーザーの追加(ホームディレクトリあり。bashシェルを使う)
+sudo useradd -m myapp -s /bin/bash
 
 # ユーザーの追加(ホームディレクトリなし)
 sudo useradd myapp
@@ -96,8 +96,8 @@ sudo useradd myapp
   開発者ユーザーがいる場合は、そのユーザーも作成しておくとよいです。パスワードの設定などの手順は、myappユーザーと同じです。
 </p>
 <pre>
-# ユーザーの追加(ホームディレクトリあり)
-sudo useradd -m kimoto
+# ユーザーの追加(ホームディレクトリあり。bashシェルを使う)
+sudo useradd -m kimoto -s /bin/bash
 </pre>
 <h4>パスワードの設定</h4>
 <p>
@@ -149,6 +149,22 @@ ps -ef
 <ul>
   <li><a href="/blog/20200401174004.html">ユーザーの一覧を表示する 「/etc/passwd」ファイル</a></li>
 </ul>
+<h3>useraddのオプションを間違った場合の対処</h3>
+<h4>ホームディレクトリのオプション「-m」つけ忘れた場合</h4>
+<p>
+  userdelでユーザーをいったん削除して、再度useraddでユーザーを作成します。
+</p>
+<pre>
+sudo userdel myapp
+sudo useradd -m myapp -s /bin/bash
+</pre>
+<h4>デフォルトのシェルのオプション「-s」をつけ忘れた場合</h4>
+<p>
+  usermodで修正できます。
+</p>
+<pre>
+sudo usermod -s /bin/bash myapp
+</pre>
 
   </div>
   <div class="bottom">
