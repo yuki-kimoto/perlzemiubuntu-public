@@ -405,13 +405,6 @@ timedatectl
 <pre>
 sudo apt update
 </pre>
-<h4>コマンド履歴</h4>
-<p>
-  さくらVPSのUbuntu 18には、historyコマンドがデフォルトインストールされていないので、<a href="/blog/20200820162441.html">historyパッケージをインストール</a>しましょう。
-</p>
-<pre>
-sudo apt install -y history
-</pre>
 <h4>コンパイラ・リンカ</h4>
 <p>
   コンパイラ・リンカのインストールです。<a href="/blog/20200514084132.html">makeのインストール</a>、<a href="/blog/20200504174004.html">gccのインストール</a>、<a href="/blog/20200503174004.html">g++のインストール</a>を行いましょう。Perlのモジュールのコンパイルに必要です。
@@ -475,6 +468,35 @@ sudo apt install -y libterm-readline-gnu-perl
 <pre>
 sudo apt install -y certbot
 </pre>
+<h3>データ用ディレクトリの作成</h3>
+<p>
+  Webアプリケーションがデータを保存するためのデータ用のディレクトリを作成しましょう。「myapp」ユーザーだけではなく、他の開発ユーザーも書き込めるように設定しておきます。
+</p>
+<p>
+  「/datadrive」を<a href="https://linux.perlzemi.com/blog/20191211133524.html">mkdir</a>コマンドでデータ用ディレクトリを作成します。
+</p>
+<pre>
+sudo mkdir /datadrive
+</pre>
+<p>
+  次に、このデータ用ディレクトリに、Webアプリケーションユーザー「myapp」と他の開発ユーザーが書き込めるようにします。以下の手順の「myapp」ユーザーに関する部分だけを実行してください。
+</p>
+<ul>
+  <li><a href="/blog/20200327174004.html">データディレクトリに複数のユーザーが読み書きする方法 - Webアプリのファイルアップロードディレクトリ</a></li>
+</ul>
+<pre>
+sudo groupadd myapp-group
+sudo gpasswd -a myapp myapp-group
+sudo chgrp -R myapp-group /datadrive
+sudo chmod 775 /datadrive
+sudo chmod g+s /datadrive
+
+# 確認
+ls -l / | grep datadrive
+</pre>
+<p>
+  これで、データ用ディレクトリが完成しました。
+</p>
 <p>
   ここまで完成
 </p>

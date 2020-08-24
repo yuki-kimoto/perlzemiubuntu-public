@@ -82,8 +82,8 @@ sudo groupadd myapp-group
   myapp-groupグループに<a href="/blog/20200330174004.html">gpasswd</a>コマンドで、開発ユーザーを追加します。
 </p>
 <pre>
-sudo gpasswd -d kimoto myapp-group
-sudo gpasswd -d yamada myapp-group
+sudo gpasswd -a myapp myapp-group
+sudo gpasswd -a yamada myapp-group
 </pre>
 <h4>データディレクトリ以下にあるファイルの所有者グループを再帰的にmyapp-groupに変更</h4>
 <p>
@@ -110,13 +110,13 @@ sudo chmod g+s /datadrive
   lsコマンドで確認するとsが設定されています。
 </p>
 <pre>
-ls -l /datadrive
+ls -l / | grep datadrive
 </pre>
 <p>
   出力結果の一部です。
 </p>
 <pre>
-drwxr-sr-x   7 kimoto myapp-group  115 Jun  3 10:36 /datadrive
+drwxr-sr-x   7 myapp myapp-group  115 Jun  3 10:36 /datadrive
 </pre>
 <p>
   これで、複数の開発者が起動するWebアプリケーションによって、アップロードされるファイルのためのデータディレクトリの準備ができました。
