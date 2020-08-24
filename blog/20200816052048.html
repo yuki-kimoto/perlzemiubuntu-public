@@ -500,6 +500,68 @@ ls -l / | grep datadrive
 <p>
   これで、データ用ディレクトリが完成しました。
 </p>
+<h3>cron</h3>
+<p>
+  定期プログラム実行の常駐アプリケーションである<a href="/blog/20200520084454.html">cronの起動確認</a>を行います。
+</p>
+<pre>
+sudo systemctl status cron
+</pre>
+<h3>Redisサーバー</h3>
+<p>
+  揮発性の情報の保存サーバーである<a href="/blog/20200525135533.html">Redisサーバーのインストール</a>と<a href="/blog/20200417174004.html">Redisサーバーの起動確認</a>を行います。
+</p>
+<p>
+  Redisは、主にユーザー認証とセッション管理に利用します。
+</p>
+<p>
+  RedisのPub/Sub機能を利用してpush通知、リアルタイム更新、リアルタイムチャットなどのリアルタイムWebに対応することもできます。
+</p>
+<h4>Redisサーバーのインストール</h4>
+<p>
+  Redsiサーバーをインストールします。
+</p>
+<pre>
+sudo apt install -y redis-server
+</pre>
+<h4>Redisサーバーの起動確認</h4>
+<p>
+  Redsiサーバーの起動確認を行います。
+</p>
+<pre>
+sudo systemctl status redis-server
+</pre>
+<p>
+  しかし、ここで、起動が失敗してしまいます。Redisサーバーのデフォルト設定では、IPv6が有効化されていない場合は、起動に失敗するようです。さくらのVPSのUbuntu 18では、IPv6が、デフォルトで設定されていません。
+</p>
+<h4>Redis設定ファイルの編集</h4>
+<p>
+  Redis設定ファイルを編集します。間違った場合のためにバックアップもとっておきます。
+</p>
+<pre>
+sudo cp /etc/redis/redis.conf /etc/redis/redis.conf.bak
+sudo vi /etc/redis/redis.conf
+</pre>
+<p>
+  以下を
+</p>
+<pre>
+bind 127.0.0.1 ::1
+</pre>
+<p>
+  以下に変更
+</p>
+<pre>
+bind 127.0.0.1
+</pre>
+<h4>Redisの起動と確認</h4>
+<p>
+  Redisの起動と確認を行います。
+</p>
+<pre>
+sudo systemctl start redis-server
+sudo systemctl status redis-server
+</pre>
 <p>
   ここまで完成
 </p>
