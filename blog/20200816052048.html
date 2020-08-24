@@ -479,11 +479,14 @@ sudo apt install -y certbot
 sudo mkdir /datadrive
 </pre>
 <p>
-  次に、このデータ用ディレクトリに、Webアプリケーションユーザー「myapp」と他の開発ユーザーが書き込めるようにします。以下の手順の「myapp」ユーザーに関する部分だけを実行してください。
+  次に、このデータ用ディレクトリに、Webアプリケーションユーザー「myapp」と他の開発ユーザーが書き込めるようにします。
 </p>
 <ul>
   <li><a href="/blog/20200327174004.html">データディレクトリに複数のユーザーが読み書きする方法 - Webアプリのファイルアップロードディレクトリ</a></li>
 </ul>
+<p>
+  上記の手順の「myapp」ユーザーに関する部分だけを抜き出しました。
+</p>
 <pre>
 sudo groupadd myapp-group
 sudo gpasswd -a myapp myapp-group
