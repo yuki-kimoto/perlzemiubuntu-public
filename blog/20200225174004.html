@@ -74,7 +74,7 @@ sudo systemctl status redis-server
    Active: active (running) since Tue 2020-06-16 10:12:56 JST; 3h 57min ago
      Docs: http://redis.io/documentation,
            man:redis-server(1)
- Main PID: 108380 (redis-server)
+ Main PID: 108380 (r.edis-server)
     Tasks: 4 (limit: 9479)
    CGroup: /system.slice/redis-server.service
            mq108380 /usr/bin/redis-server 127.0.0.1:6379
@@ -155,6 +155,43 @@ Jul 22 13:13:47 shinshina-development-app-00000001 systemd[1]: Stopping Advanced
 </p>
 <pre>
 cat /lib/systemd/system/redis-server.service
+</pre>
+<h3>Redisトラブルシューティング</h3>
+<p>
+  以下のようなエラーでRedisサーバーが起動できない場合があります。
+</p>
+<pre>
+redis-server.service: Can't open PID file /var/run/redis/redis-server.pid (yet?) after start: No such file or directory
+</pre>
+<p>
+  これは、サーバーのネットワーク設定でIPv6が有効になっておらず、Redisサーバーの設定ファイルで、IPv6が有効になっている場合に出るエラーです。
+</p>
+<p>
+  Redis設定ファイルを編集して修正しましょう。間違った場合のためにバックアップもとっておきます。
+</p>
+<pre>
+sudo cp /etc/redis/redis.conf /etc/redis/redis.conf.bak
+sudo vi /etc/redis/redis.conf
+</pre>
+<p>
+  以下を
+</p>
+<pre>
+bind 127.0.0.1 ::1
+</pre>
+<p>
+  以下に変更
+</p>
+<pre>
+bind 127.0.0.1
+</pre>
+<h4>Redisの起動と確認</h4>
+<p>
+  Redisの起動と確認を行います。
+</p>
+<pre>
+sudo systemctl start redis-server
+sudo systemctl status redis-server
 </pre>
 
   </div>
