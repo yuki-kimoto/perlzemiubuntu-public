@@ -414,6 +414,13 @@ sudo apt install -y make
 sudo apt install -y gcc
 sudo apt install -y g++
 </pre>
+<h3>テキストエディタ</h3>
+<p>
+  Ubuntuのデフォルトのviは機能が限定されているので、より便利な<a href="/blog/20200825150919.html">vimのインストール</a>を行いましょう。
+</p>
+<pre>
+sudo apt install -y vim
+</pre>
 <h4>SSL通信</h4>
 <p>
   SSL通信のために<a href="/blog/20200412174004.html">libssl-devのインストール</a>を行いましょう。
@@ -500,13 +507,6 @@ ls -l / | grep datadrive
 <p>
   これで、データ用ディレクトリが完成しました。
 </p>
-<h3>cron</h3>
-<p>
-  定期プログラム実行の常駐アプリケーションである<a href="/blog/20200520084454.html">cronの起動確認</a>を行います。
-</p>
-<pre>
-sudo systemctl status cron
-</pre>
 <h3>Redisサーバー</h3>
 <p>
   揮発性の情報の保存サーバーである<a href="/blog/20200525135533.html">Redisサーバーのインストール</a>と<a href="/blog/20200225174004.html">Redisサーバーの起動確認</a>を行います。
@@ -648,8 +648,144 @@ grant insert,update,delete,select on myappdb.* to 'myapp'@'%' identified by 'eif
 # rootユーザーで接続
 mysql -umyapp -p
 </pre>
+<h3>Perl Web開発環境の構築</h3>
 <p>
-  ここまで完成
+  Perl Web開発環境の構築としてユーザー環境に<a href="https://tutorial.perlzemi.com/">Perl</a>をインストールし、<a href="https://mojolicious.perlzemi.com/">Mojolicious</a>の小さなWebアプリケーションを立ち上げます。
+</p>
+<h4>Perlのインストール</h4>
+<p>
+  ここでは、Perlのトラブルがなるべく少ない「perl-5.20.3」をインストールします。
+</p>
+<p>
+  公式なセキュリティフィックスのサポートが存在するバージョンが良い場合は、最新版のPerlかその前のバージョンのPerlをインストールしましょう。
+</p>
+<p>
+  以下の手順からperlbrewでユーザー環境にPerlをインストールするための必要な部分を抜き出します。plenvで行いたい場合は、以下の手順の中にあるので参考にしてください。
+</p>
+<ul>
+  <li><a href="/blog/20200413174004.html">ユーザーPerlとcpanmのインストール</a></li>
+</ul>
+<pre>
+# perlbrewのインストール
+wget -O - http://install.perlbrew.pl | bash
+
+# perlbrewの設定を~/.bashrcに書き込み
+echo "source ~/perl5/perlbrew/etc/bashrc" &gt;&gt; ~/.bashrc
+
+# ~/.bashrcを再読み込み
+source  ~/.bashrc
+
+# Perlのインストール
+perlbrew install perl-5.20.3
+
+# インストールしたPerlへの切り替え
+perlbrew switch perl-5.20.3
+
+# Perlのバージョン確認
+perl -v
+
+# cpanmのインストール
+perlbrew install-cpanm
+</pre>
+<h4>Webアプリケーションの立ち上げ</h4>
+<p>
+  次にMojoliciousのインストールとWebアプリケーションの起動を行います。
+</p>
+<p>
+  以下の記事の内容を実行してください。最後のApacheの設定ファイルの部分以外の手順を実行しましょう。
+</p>
+<ul>
+  <li><a href="/blog/20200729134756.html">MojoliciousによるWebアプリケーションのデプロイ</a></li>
+</ul>
+<!--
+<h3>メール送信サーバー</h3>
+<p>
+  メール送信サーバーのインストールと初期設定です。
+</p>
+<h4>postfixのインストール</h4>
+<p>
+  メール送信サーバー<a href="/blog/20200423174004.html">postfixのインストール</a>を行いましょう。メール送信サーバーとして機能するpostfixをインストールするとメールを送信するためのsendmailコマンドが使える用になります。
+</p>
+<pre>
+sudo apt install -y postfix
+</pre>
+<p>
+  インストールコマンドを実行すると、GUIのような画面が立ち上がります。
+</p>
+<p>
+  キーボードの右を押すと、Okが光ります。Enterを押します。
+</p>
+<p>
+  上下キーで「No configuration」を選択します。右キーを押すとOkに勧めるので、Enterを押します。
+</p>
+<p>
+  postfixのインストールが始まります。
+</p>
+<h4>postfixの設定ファイル</h4>
+<p>
+  メール送信のためだけに利用する最小限の設定を行います。
+</p>
+<p>
+  以下のワンライナーをコピー＆ペーストして貼り付けてください。postfixの設定ファイルである「/etc/postfix/main.cf」に最小限の設定が書き込まれます。
+</p>
+<pre>
+MYHOSTNAME=`hostname`
+echo '
+myhostname = ' "$MYHOSTNAME" '
+myorigin = $mydomain
+relayhost = $mydomain
+inet_interfaces = loopback-only
+mydestination =
+' | sudo sh -c 'cat &gt; /etc/postfix/main.cf'
+
+</pre>
+<p>
+  設定ファイルの確認。
+</p>
+<pre>
+sudo cat /etc/postfix/main.cf
+</pre>
+<h4>postfixの起動と確認</h4>
+<p>
+  postfixを起動しましょう。
+</p>
+<pre>
+sudo systemctl start postfix
+</pre>
+<p>
+  状態を確認。
+</p>
+<pre>
+sudo systemctl status postfix
+</pre>
+<h4>sendmailコマンドでメール送信</h4>
+<p>
+  sendmailコマンドでメールを送信してみましょう。[メール]のところを自分のメールにしてください。
+</p>
+<pre>
+echo Hello | sendmail -f メール送信元 メール送信先
+</pre>
+<p>
+  sendmailでは、標準入力が、本文になります。
+</p>
+<p>
+  -fはfromでメール送信元を指定します。メール送信元がない場合は、メールがはじかれるという経験が多いので、指定しています。
+</p>
+<p>
+  その後ろに、メールの送信先を指定します。試験するときは、送信先、送信元どちらも同じで大丈夫です。
+</p>
+<h3>cron</h3>
+<p>
+  定期プログラム実行の常駐アプリケーションである<a href="/blog/20200520084454.html">cronの起動確認</a>を行います。
+</p>
+<pre>
+sudo systemctl status cron
+</pre>
+<p>
+  -->
+</p>
+<p>
+  ここまで完成。
 </p>
 
   </div>

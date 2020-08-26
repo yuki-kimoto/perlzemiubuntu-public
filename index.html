@@ -225,6 +225,10 @@
   <li><a href="/blog/20200504174004.html">gccのインストール</a></li>
   <li><a href="/blog/20200503174004.html">g++のインストール</a></li>
 </ul>
+<h3>テキストエディタ</h3>
+<ul>
+  <li><a href="/blog/20200825150919.html">vimのインストール</a></li>
+</ul>
 <h4>SSL通信</h4>
 <ul>
   <li><a href="/blog/20200412174004.html">libssl-devのインストール - OpenSSLのヘッダファイルとライブラリ</a></li>
@@ -285,16 +289,6 @@ sudo mkdir /datadrive
 <p>
   これで、データ用ディレクトリが完成しました。
 </p>
-<h3>cron</h3>
-<p>
-  定期プログラム実行の常駐アプリケーションであるcronの起動確認を行います。
-</p>
-<p>
-  以下の記事の「sudo systemctl status cron」を実行してApacheが起動していることを確認してください。
-</p>
-<ul>
-  <li><a href="/blog/20200520084454.html">cronの起動・停止・再起動・状態確認, cronの実行ログ</a></li>
-</ul>
 <h3>Redisサーバー</h3>
 <p>
   揮発性の情報の保存サーバーであるRedisサーバーのインストールと起動確認を行います。
@@ -331,19 +325,6 @@ sudo mkdir /datadrive
 <ul>
   <li><a href="/blog/20200224174004.html">MariaDBの初期設定とユーザーの作成</a></li>
 </ul>
-<h3>メール送信サーバー</h3>
-<p>
-  メール送信サーバーのインストールは、少し難しいので、つまった場合は、会員登録などで、メール送信が必要な時になって、設定しても大丈夫です。
-</p>
-<ul>
-  <li><a href="/blog/20200423174004.html">postfixのインストール - メール送信 sendmailコマンド</a></li>
-</ul>
-<p>
-  もしサーバーが、パブリッククラウドサーバーで、ポート25番からの送信を制限されている場合は、SendGridにリレーすることによって、メール送信ができます。
-</p>
-<ul>
-  <li><a href="/blog/20200521085509.html">クラウドメール配信SendGridとPostfixとの連携</a></li>
-</ul>
 <h3>Perl Web開発環境の構築</h3>
 <p>
   安定性を求める場合は、CPANモジュールのインストールや警告表示などで不具合のない「perl-5.20.3」をインストール。
@@ -359,6 +340,13 @@ sudo mkdir /datadrive
 </p>
 <ul>
   <li><a href="/blog/20200729134756.html">MojoliciousによるWebアプリケーションのデプロイ</a></li>
+</ul>
+<h3>DNS - ドメインネームシステム</h3>
+<p>
+  ドメインを取得して、ドメイン名とサーバーIPアドレスを紐づけましょう。インターネット上でWebサイトを公開するためと、メール送信サーバーのポータビリティのある設定のために必要です。
+</p>
+<ul>
+  <li><a href="/blog/20200807062918.html">DNSサーバーの設定 - ドメイン名とIPアドレスを対応させる</a></li>
 </ul>
 <h3>Apache</h3>
 <p>
@@ -386,6 +374,7 @@ sudo mkdir /datadrive
   <li><a href="/blog/20200317174004.html">Apacheの設定ファイルの場所</a></li>
   <li><a href="/blog/20200609132409.html">Apacheの設定ファイルが正しいかテストする</a></li>
   <li><a href="/blog/20200610082714.html">Apache設定ファイルを有効・無効にする - 基本設定・モジュール設定・サイト設定</a></ul>
+</ul>
 <h4>Apacheモジュール</h4>
 <p>
   リバースプロキシの設定とSSLの設定に必要なApacheモジュールを有効にします。
@@ -413,12 +402,28 @@ sudo mkdir /datadrive
   <li><a href="/blog/20200618081050.html">HTTPS対応 - Let's EncryptのSSL証明書の取得・更新・更新の自動化</a></li>
   <li><a href="/blog/20200611082716.html">SSL証明書の設定をApacheの設定ファイルに記述する</a></li>
 </ul>
-<h3>DNS - ドメインネームシステム</h3>
+<h3>メール送信サーバー</h3>
 <p>
-  ドメインを取得して、ドメイン名とサーバーIPアドレスを紐づけましょう。インターネット上でWebサイトを公開できます。
+  メール送信サーバーをインストールします。
 </p>
 <ul>
-  <li><a href="/blog/20200807062918.html">DNSサーバーの設定 - ドメイン名とIPアドレスを対応させる</a></li>
+  <li><a href="/blog/20200423174004.html">postfixのインストール - メール送信 sendmailコマンド</a></li>
+</ul>
+<p>
+  もしサーバーが、パブリッククラウドサーバーで、ポート25番からの送信を制限されている場合は、SendGridにリレーすることによって、メール送信ができます。
+</p>
+<ul>
+  <li><a href="/blog/20200521085509.html">クラウドメール配信SendGridとPostfixとの連携</a></li>
+</ul>
+<h3>cron</h3>
+<p>
+  定期プログラム実行の常駐アプリケーションであるcronの起動確認を行います。
+</p>
+<p>
+  以下の記事の「sudo systemctl status cron」を実行してApacheが起動していることを確認してください。
+</p>
+<ul>
+  <li><a href="/blog/20200520084454.html">cronの起動・停止・再起動・状態確認, cronの実行ログ</a></li>
 </ul>
 <h3>ホスティングサービスでのUbuntu+Perl Webシステム開発 環境構築</h3>
 <p>

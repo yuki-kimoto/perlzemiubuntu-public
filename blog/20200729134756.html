@@ -69,7 +69,7 @@ cpanm Mojolicious
   <a href="https://mojolicious.org/">Mojolicious公式サイト</a>にあるMojoliciousのサンプルを作成します。
 </p>
 <p>
-  ファイル名は「webapp.pl」とします。
+  ファイル名は「webapp.pl」とします。ホームディレクトリに配置しましょう。
 </p>
 <pre>
 use Mojolicious::Lite;
@@ -101,10 +101,13 @@ Web application available at http://127.0.0.1:3000
 http://132.165.23.8:3000
 </pre>
 <p>
-  アクセスできない場合は、ファイアーウォールで3000番ポートが許可されているか確認しましょう。
+  アクセスできない場合は、ネットワークのファイアーウォール設定で3000番ポートが許可されているか確認しましょう。
 </p>
 <p>
   成功すると画面に「I ♥ Mojolicious!」と表示されます。
+</p>
+<p>
+  「Ctrl + C」で終了できます。
 </p>
 <h3>Mojoliciousの本番サーバーを起動</h3>
 <p>
@@ -123,22 +126,29 @@ Web application available at http://127.0.0.1:8080
 curl http://127.0.0.1:8080
 </pre>
 <p>
+  停止する場合は「--stop」オプションを使用します。
+</p>
+<pre>
+hypnotoad webapp.pl --stop
+</pre>
+<p>
   ポート番号を変更したい場合は、設定ファイルのlistenオプションで変更できます。設定ファイル名は「webapp.conf」とします。
 </p>
+<h3>リバースプロキシに接続のためにMojolicious設定ファイルに必要な項目</h3>
 <p>
-  リバースプロキシに接続するために少なくとも設定しておかなければならない項目は、以下です。
+  リバースプロキシに接続する場合に、<a href="https://mojodoc.perlzemi.com/Mojo::Server::Hypnotoad.html">Mojoliciousの設定ファイル</a>に少なくとも必要な項目は、以下です。
 </p>
 <pre>
 # webapp.conf
 {hypnotoad =&gt; {proxy =&gt; 1}};
 </pre>
 <p>
-  設定ファイルの記述については、以下が詳しいです。
+  上記の設定で起動できるか確認しておきましょう。
 </p>
-<ul>
-  <li><a href="https://mojodoc.perlzemi.com/Mojo::Server::Hypnotoad.html">Mojo::Server::Hypnotoad - プロダクション環境のWebサーバー</a></li>
-</ul>
-<h3>リバースプキシによる接続</h3>
+<pre>
+hypnotoad webapp.pl
+</pre>
+<h3>ApacheからのリバースプキシによるWebアプリケーションへの接続</h3>
 <p>
   <a href="/blog/20200526151435.html">Apache</a>からリバースプロキシから接続して、インターネット上にWebアプリケーションを公開する方法については以下を参考にしてください。
 </p>
