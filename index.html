@@ -158,9 +158,19 @@
   <tr><td>HTTPS</td><td>443</td>
   <tr><td>SSH</td><td><a href="/blog/20200715102902.html">SSHで利用するポート</a>(デフォルトの22番ポートは危険)</td>
   <tr><td>開発Webアプリ</td><td>3000</td>
+  <tr><td>本番Webアプリ</td><td>8080</td>
 </table>
 <p>
-  開発Webアプリの3000番ポートは、<a href="https://mojolicious.perlzemi.com/">Mojolicious</a>の開発サーバーのデフォルトのポートです。他のWebフレームワークの開発サーバーのデフォルトポートが異なる場合は、異なる値にします。
+  3000番ポートは、<a href="https://mojolicious.perlzemi.com/">Mojolicious</a>の開発サーバーのデフォルトのポートです。
+</p>
+<p>
+  開発者が複数いる場合は、必要に応じて、パケットフィルタから別のポートを開放しましょう(3001番、3002番など)。
+</p>
+<p>
+  8080番ポートは、Mojoliciousの本番サーバーのデフォルトのポート番号です。
+</p>
+<p>
+  複数のWebアプリケーションを動かす場合は、必要に応じて、パケットフィルタから別のポートを開放しましょう(8081番、8082番など)。
 </p>
 <h3>SSHクライアントの利用</h3>
 <p>
@@ -389,7 +399,7 @@ sudo mkdir /datadrive
   <li><a href="/blog/20200309174004.html">Apacheでmod_headersモジュールを有効にする</a></li>
   <li><a href="/blog/20200310174004.html">Apacheでmod_proxyモジュールを有効にする</a></li>
   <li><a href="/blog/20200220174004.html">Apacheでmod_proxy_httpモジュールを有効にする</a></li>
-  <li><a href="/blog/20200718090758.html">ApacheでWebSocketリバースプロキシのproxy_wstunnelモジュールを有効にする</a></li
+  <li><a href="/blog/20200718090758.html">ApacheでWebSocketリバースプロキシのproxy_wstunnelモジュールを有効にする</a></li>
 </ul>
 <h4>リバースプロキシの設定</h4>
 <p>
