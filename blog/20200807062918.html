@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/ubuntu-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>DNSサーバーの設定 - ドメイン名とIPアドレスを対応させる - Ubuntu+PerlでWebシステム開発 環境構築</title>
-<meta name="description" content="DNSサーバーの設定について解説します。ドメイン名とIPアドレスを対応させることによって、Webサイトをインターネットで公開できます。">
+<title>ドメイン名の取得とDNSサーバーの設定 - Ubuntu+PerlでWebシステム開発 環境構築</title>
+<meta name="description" content="ドメイン名の取得とDNSサーバーの設定について解説します。ドメイン名とIPアドレスを対応させることによって、Webサイトをインターネットで公開できます。">
   </head>
   <body>
     <div class="container">
@@ -53,9 +53,9 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200807062918.html">DNSサーバーの設定 - ドメイン名とIPアドレスを対応させる</a></h2>
+    <h2><a href="/blog/20200807062918.html">ドメイン名の取得とDNSサーバーの設定</a></h2>
 <p>
-  DNSサーバーの設定について解説します。ドメイン名とIPアドレスを対応させることによって、Webサイトをインターネットで公開できます。
+  ドメイン名の取得とDNSサーバーの設定について解説します。ドメイン名とIPアドレスを対応させることによって、Webサイトをインターネットで公開できます。
 </p>
 <p>
   DNSについての基本的な考え方と設定方法について書きます。
@@ -114,39 +114,6 @@
 <p>
   パブリッククラウドでないのであればipコマンドやifconfigコマンドを使うと、サーバーのIPアドレスを見ることができます。
 </p>
-<h3>メールアドレスの設定</h3>
-<p>
-  メールを利用する場合は、メールアドレスに関する設定も行う必要があります。メール用のサブドメインのAレコードとMXレコードを設定する必要があります。
-</p>
-<h4>メール用のサブドメインのAレコードの設定</h4>
-<p>
-  メール用のドメイン名のAレコードを設定します。
-</p>
-<p>
-  メール用のドメイン(例: mail.kimoto-system.co.jp)とIPアドレス(59.106.185.188)
-</p>
-<p>
-  メールアドレスの管理は、メールアドレスを作成できる共有レンタルサーバーを使うのが簡単です。
-</p>
-<p>
-  <b>メールアドレスを作成できる共有レンタルサーバー</b>
-</p>
-<ul>
-  <li><a href="https://px.a8.net/svt/ejp?a8mat=3BK6BY+4EDBOY+50+5SIFHE" rel="nofollow">ConoHa WING(コノハウィング)</a>
-<p>
-  <img border="0" width="1" height="1" src="https://www10.a8.net/0.gif?a8mat=3BK6BY+4EDBOY+50+5SIFHE" alt=""></li>
-</p>
-</ul>
-<p>
-  共有レンタルサーバーを使う場合は、Aレコードには、共有レンタルサーバーのIPアドレスを指定します。
-</p>
-<h4>MXレコードの設定</h4>
-<p>
-  メールアドレスの形式(ユーザー名@kimoto-system.co.jp)が認識されるようにMXレコードを設定します。
-</p>
-<ul>
-  <li><a href="https://help.onamae.com/answer/7889">【ドメイン】MXレコードの設定方法は？</a></li>
-</ul>
 <h3>CNAMEレコードの利用</h3>
 <p>
   CNAMEレコードを使うと、ドメイン名の別名を設定することができます。
@@ -187,6 +154,13 @@
 <p>
   DNSレコードの問い合わせは<a href="https://linux.perlzemi.com/blog/20200622141433.html">dig</a>コマンドを使うのが簡単です。Aレコード、CNAMEレコード、MXレコードの設定の確認ができます。
 </p>
+<h3>メールアドレスの設定</h3>
+<p>
+  メールを利用する場合は、メールアドレスに関する設定も行う必要があります。メールアドレスの作成とDNSサーバーの設定については以下の記事を参考にしてください。
+</p>
+<ul>
+  <li><a href="/blog/20200828123127.html">メールアドレスの作成とDNSサーバーの設定</a></li>
+</ul>
 
   </div>
   <div class="bottom">
