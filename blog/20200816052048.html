@@ -813,6 +813,85 @@ sudo systemctl restart apache2
 <pre>
 sudo systemctl status apache2
 </pre>
+<h4>バーチャルホストとリバースプロキシの設定</h4>
+<p>
+  バーチャルホストとリバースプロキシを設定してApacheへのHTTP接続をMojoliciousアプリケーションに転送します。以下の手順から、必要な部分を抜粋します。
+</p>
+<ul>
+  <li><a href="/blog/20200306174004.html">WebサイトをバーチャルホストとリバースプロキシでApacheから接続する</a></li>
+</ul>
+<p>
+  設定ファイルを以下のディレクトリに配置します。
+</p>
+<pre>
+/etc/apache2/sites-available
+</pre>
+<p>
+  この設定ファイルのディレクトリについては、以下のページで詳しく解説しています。
+</p>
+<p>
+  サイトのドメイン名(ここではbuild-sakuravps-ubuntu18.kimoto-system.co.jp)に「.conf」を付けた名前で、<a href="https://linux.perlzemi.com/blog/20190401171737.html">vi</a>コマンドで、設定ファイルを作成しましょう。
+</p>
+<pre>
+cd /etc/apache2/sites-available
+sudo vi build-sakuravps-ubuntu18.kimoto-system.co.jp.conf
+</pre>
+<p>
+  バーチャルホストとリバースプロキシの設定ファイルの内容です。WebSocketとHTTPSに対応したリバースプロキシの設定です。SSL証明書は、デフォルトで準備されている自己SSL証明書を指定しています。これは、後で、正式なSSL証明書に差し替えます。
+</p>
+<pre>
+&lt;VirtualHost *:80&gt;
+  ServerName build-sakuravps-ubuntu18.kimoto-system.co.jp
+
+  RewriteEngine on
+  RewriteRule (.*)?$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+&lt;/VirtualHost&gt;
+
+&lt;VirtualHost *:443&gt;
+  ServerName build-sakuravps-ubuntu18.kimoto-system.co.jp
+
+  &lt;Proxy *&gt;
+    Require all granted
+  &lt;/Proxy&gt;
+
+  ProxyRequests Off
+  ProxyPreserveHost On
+  ProxyPass /websocket ws://localhost:8080/websocket
+  ProxyPass / http://localhost:8080/ keepalive=On
+  ProxyPassReverse / http://localhost:8080/
+  RequestHeader set X-Forwarded-Proto "https"
+
+  SSLEngine on
+  SSLCertificateFile      /etc/ssl/certs/ssl-cert-snakeoil.pem
+  SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+&lt;/VirtualHost&gt;
+</pre>
+<h4>設定ファイルの有効化</h4>
+<p>
+  設定が終わったら、設定ファイルを有効にします。
+</p>
+<pre>
+sudo a2ensite build-sakuravps-ubuntu18.kimoto-system.co.jp.conf
+</pre>
+<h4>設定ファイルの再読み込み</h4>
+<p>
+  Apacheの設定ファイルを再読み込みします。再読み込みの前に、<a href="/blog/20200609132409.html">Apacheの設定ファイルのテスト</a>をしましょう。
+</p>
+<pre>
+sudo apachectl -t
+</pre>
+<p>
+  Apacheを再起動します。
+</p>
+<pre>
+sudo systemctl reload apache2
+</pre>
+<p>
+  以下のドメインででWebサイトが表示できれば成功です。SSLの警告がでるのは、この後、正式なSSL証明書の設定をすることで、修正されます。
+</p>
+<pre>
+https://build-sakuravps-ubuntu18.kimoto-system.co.jp
+</pre>
 <!--
 <h3>メール送信サーバー</h3>
 <p>
