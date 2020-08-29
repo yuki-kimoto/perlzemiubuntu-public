@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/ubuntu-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>groupdelコマンド - グループを削除する - Ubuntu+PerlでWebシステム開発 環境構築</title>
-<meta name="description" content="groupdelコマンドでグループを削除できます。sudoでroot権限で実行します。">
+<title>cron - 定期ジョブの自動実行 - Ubuntu+PerlでWebシステム開発 環境構築</title>
+<meta name="description" content="cronは、定期ジョブの自動実行を行う常駐アプリケーションです。">
   </head>
   <body>
     <div class="container">
@@ -61,42 +61,18 @@
       </a>
       <meta itemprop="position" content="1" />
     </li>
-    <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-      <a itemprop="item" href="/blog/20200723101434.html">
-        <span itemprop="name">ユーザー管理</span>
-      </a>
-      <meta itemprop="position" content="2" />
-    </li>
     <li>
       here
     </li>
   </ul>
 </div>
-<h2><a href="/blog/20200404174004.html">groupdelコマンド - グループを削除する</a></h2>
+<h2><a href="/blog/20200830052743.html">cron - 定期ジョブの自動実行</a></h3>
 <p>
-  <b>groupdelコマンド</b>でグループを削除できます。<a href="/blog/20200118092236.html">sudo</a>でroot権限で実行します。
-</p>
-<pre>
-sudo groupdel グループ名
-</pre>
-<p>
-  以下は、アプリケーション用のグループ「myapp-group」を削除するサンプルです。
-</p>
-<pre>
-sudo groupdel myapp-group
-</pre>
-<h3>グループに対するその他の操作</h3>
-<p>
-  グループの一覧を表示する方法は以下の記事で解説しています。
+  cronは、定期ジョブの自動実行を行う常駐アプリケーションです。
 </p>
 <ul>
-  <li><a href="/blog/20200403174004.html">グループの一覧を表示する 「/etc/group」ファイル</a></li>
-</ul>
-<p>
-  グループを追加する方法は、以下の記事で解説しています。
-</p>
-<ul>
-  <li><a href="/blog/20200405174004.html">groupaddコマンド - グループを追加する</a></li>
+  <li><a href="/blog/20200520084454.html">cronの起動・停止・再起動・状態確認, cronの実行ログ</a></li>
+  <li><a href="/blog/20200604085516.html">crontab - cronで定期実行するプログラムを記述する</a></li>
 </ul>
 
   </div>
