@@ -892,7 +892,6 @@ sudo systemctl reload apache2
 <pre>
 https://build-sakuravps-ubuntu18.kimoto-system.co.jp
 </pre>
-<!--
 <h4>SSL証明書の取得</h4>
 <p>
   HTTPSでリクエストを受けるために、<a href="/blog/20200618081050.html">Let's Encryptを使ってSSL証明書の発行</a>を行います。
@@ -905,10 +904,10 @@ https://build-sakuravps-ubuntu18.kimoto-system.co.jp
 hypnotoad webapp.pl
 </pre>
 <p>
-  ドメイン名は「build-sakuravps-ubuntu18.kimoto-system.co.jp」という名前で取得しており、DNSサーバーにおける、ドメイン名とIPアドレスの対応の記述は済んでいることを前提とします。
+  ドメイン名は「build-sakuravps-ubuntu18.kimoto-system.co.jp」という名前で取得しており、DNSサーバーにおける、ドメイン名とIPアドレスの対応の記述は済んでいることを、この記事では前提とします。適宜対応する部分を書き換えてください。
 </p>
 <p>
-  メールアドレスの作成の作業が終了しており「kimoto_test@kimoto-system.co.jp」というメールアドレスで送受信できることを前提とします。
+  メールアドレスの作成の作業が終了しており「kimoto_test@kimoto-system.co.jp」というメールアドレスで送受信できることをこの記事では前提とします。適宜対応する部分を書き換えてください。
 </p>
 <p>
   SSL証明書をLet's Encryptで取得するには、certbotコマンドを実行してください。
@@ -917,8 +916,11 @@ hypnotoad webapp.pl
 sudo certbot certonly --agree-tos --non-interactive -d build-sakuravps-ubuntu18.kimoto-system.co.jp --webroot -w /home/myapp/webapp/public --email kimoto_test@kimoto-system.co.jp
 </pre>
 <p>
-  もしApacheに自動設定するか聞かれた場合は、Noを選んでください。
+  以下のメッセージが含まれていれば成功です。
 </p>
+<pre>
+Congratulations! Your certificate and chain have been saved at:
+</pre>
 <p>
   SSL証明書が以下のディレクトリに作成されます。上から、SSLの証明書ファイル、SSL証明書の秘密鍵ファイル、中間証明書ファイルです。
 </p>
@@ -928,18 +930,28 @@ sudo certbot certonly --agree-tos --non-interactive -d build-sakuravps-ubuntu18.
 /etc/letsencrypt/live/build-sakuravps-ubuntu18.kimoto-system.co.jp/chain.pem
 </pre>
 <p>
-  以下の手順で、Apacheの設定ファイルにSSL証明書を追加してください。
+  lsコマンドで実際に見てみましょう。
 </p>
-<ul>
-  <li><a href="/blog/20200611082716.html">SSL証明書の設定をApacheの設定ファイルに記述する</a></li>
-</ul>
-<h3>Let's EncryptでのSSL証明書の更新</h3>
+<pre>
+sudo ls -l /etc/letsencrypt/live/build-sakuravps-ubuntu18.kimoto-system.co.jp
+</pre>
 <p>
-  Let's EncryptでのSSL証明書の更新には「certbot renew」コマンドを使用します。取得したすべてのSSL証明書に対して更新が必要かどうかの確認が行われ、更新期限が1ヵ月以内であれば証明書が更新されます。
+  Let's EncryptでのSSL証明書の更新する場合「certbot renew」コマンドを使用します。取得したすべてのSSL証明書に対して更新が必要かどうかの確認が行われ、更新期限が1ヵ月以内であれば証明書が更新されます。
 </p>
 <pre>
 sudo certbot renew -q --no-self-upgrade --post-hook "systemctl reload apache2"
 </pre>
+<p>
+  このコマンドはcronの自動更新に設定しておくと、自動で更新されます。cronの設定については、後程解説します。
+</p>
+<!--
+<h4>Apacheの設定ファイルにSSL証明書を追加</h4>
+<p>
+  <a href="/blog/20200611082716.html">Apacheの設定ファイルにSSL証明書を追加</a>してください。
+</p>
+<ul>
+  <li><a href="/blog/20200611082716.html">SSL証明書の設定をApacheの設定ファイルに記述する</a></li>
+</ul>
 <p>
   SSL証明書の更新後、SSL証明書を再読み込みするために、<a href="/blog/20200605104005.html">systemctl</a>コマンドでApacheの再起動をしますので、注意してください。設定ファイルが間違っていた場合は、Apacheが止まります。
 </p>
