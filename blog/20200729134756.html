@@ -64,26 +64,29 @@
 <pre>
 cpanm Mojolicious
 </pre>
-<h3>小さなWebアプリケーションの作成</h3>
+<h3>Mojoliciousアプリケーションの作成</h3>
 <p>
-  <a href="https://mojolicious.org/">Mojolicious公式サイト</a>にあるMojoliciousのサンプルを作成します。
+  <a href="https://mojolicious.org/">Mojolicious</a>アプリケーションを作成しましょう。
 </p>
 <p>
-  ファイル名は「webapp.pl」とします。ホームディレクトリに配置しましょう。
+  アプリケーション名は「Webapp」とします。
+</p>
+<p>
+  「mojo generate app」コマンドを実行してMojoliciousアプリケーションを作成します。
 </p>
 <pre>
-use Mojolicious::Lite;
-
-get '/' =&gt; {text =&gt; 'I ♥ Mojolicious!'};
-
-app-&gt;start;
+mojo generate app Webapp
 </pre>
+<p>
+  webappというディレクトリが作成され、その中にMojoliciousアプリケーションが配置されます。
+</p>
 <h3>Mojoliciousの開発サーバーを起動</h3>
 <p>
   <a href="https://mojolicious.perlzemi.com/blog/20120406133367.html">morbo</a>コマンドでMojoliciousの開発サーバーを起動します。
 </p>
 <pre>
-morbo webapp.pl
+cd ~/webapp
+morbo script/webapp
 </pre>
 <p>
   ポート番号が3000番で、Webアプリケーションが起動します。
@@ -104,7 +107,7 @@ http://132.165.23.8:3000
   アクセスできない場合は、ネットワークのファイアーウォール設定で3000番ポートが許可されているか確認しましょう。
 </p>
 <p>
-  成功すると画面に「I ♥ Mojolicious!」と表示されます。
+  成功すると画面に「Welcome to the Mojolicious real-time web framework!」と表示されます。
 </p>
 <p>
   「Ctrl + C」で終了できます。
@@ -114,7 +117,8 @@ http://132.165.23.8:3000
   <a href="https://mojolicious.perlzemi.com/blog/20110122130016.html">hypnotoad</a>コマンドでMojoliciousの本番サーバーを起動しましょう。hypnotoadは、Mojoliciousの本番用サーバーで、プリフォーク+非同期I/Oの実装を持ち、パフォーマンスで最適化されています。
 </p>
 <pre>
-hypnotoad webapp.pl
+cd ~/webapp
+hypnotoad script/webapp
 </pre>
 <pre>
 Web application available at http://127.0.0.1:8080
@@ -129,7 +133,7 @@ curl http://127.0.0.1:8080
   停止する場合は「--stop」オプションを使用します。
 </p>
 <pre>
-hypnotoad webapp.pl --stop
+hypnotoad script/webapp --stop
 </pre>
 <p>
   ポート番号を変更したい場合は、設定ファイルのlistenオプションで変更できます。設定ファイル名は「webapp.conf」とします。
@@ -138,15 +142,29 @@ hypnotoad webapp.pl --stop
 <p>
   リバースプロキシに接続する場合に、<a href="https://mojodoc.perlzemi.com/Mojo::Server::Hypnotoad.html">Mojoliciousの設定ファイル</a>に少なくとも必要な項目は、以下です。
 </p>
+<h4>設定ファイルがwebapp.confの場合</h4>
+<p>
+  設定ファイル名が、webapp.confの場合は、以下の設定を追記してください。
+</p>
 <pre>
 # webapp.conf
-{hypnotoad =&gt; {proxy =&gt; 1}};
+{
+  hypnotoad =&gt; {proxy =&gt; 1}
+};
+</pre>
+<h4>設定ファイルがwebapp.ymlの場合</h4>
+<p>
+  設定ファイルがwebapp.ymlの場合は、以下の設定を追記してください。(Mojolicious 8.58以降)
+</p>
+<pre>
+hypnotoad :
+  proxy : 1
 </pre>
 <p>
   上記の設定で起動できるか確認しておきましょう。
 </p>
 <pre>
-hypnotoad webapp.pl
+hypnotoad script/webapp
 </pre>
 <h3>ApacheからのリバースプキシによるWebアプリケーションへの接続</h3>
 <p>

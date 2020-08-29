@@ -893,6 +893,86 @@ sudo systemctl reload apache2
 https://build-sakuravps-ubuntu18.kimoto-system.co.jp
 </pre>
 <!--
+<h4>SSL証明書の取得</h4>
+<p>
+  HTTPSでリクエストを受けるために、<a href="/blog/20200618081050.html">Let's Encryptを使ってSSL証明書の発行</a>を行います。
+</p>
+<p>
+  Let's Encryptは、HTTPリクエストによってSSL証明書の認証を行うので、Webアプリケーションを起動します。
+</p>
+<pre>
+# Webアプリケーションの起動
+hypnotoad webapp.pl
+</pre>
+<p>
+  ドメイン名は「build-sakuravps-ubuntu18.kimoto-system.co.jp」という名前で取得しており、DNSサーバーにおける、ドメイン名とIPアドレスの対応の記述は済んでいることを前提とします。
+</p>
+<p>
+  メールアドレスの作成の作業が終了しており「kimoto_test@kimoto-system.co.jp」というメールアドレスで送受信できることを前提とします。
+</p>
+<p>
+  SSL証明書をLet's Encryptで取得するには、certbotコマンドを実行してください。
+</p>
+<pre>
+sudo certbot certonly --agree-tos --non-interactive -d build-sakuravps-ubuntu18.kimoto-system.co.jp --webroot -w /home/myapp/webapp/public --email kimoto_test@kimoto-system.co.jp
+</pre>
+<p>
+  もしApacheに自動設定するか聞かれた場合は、Noを選んでください。
+</p>
+<p>
+  SSL証明書が以下のディレクトリに作成されます。上から、SSLの証明書ファイル、SSL証明書の秘密鍵ファイル、中間証明書ファイルです。
+</p>
+<pre>
+/etc/letsencrypt/live/build-sakuravps-ubuntu18.kimoto-system.co.jp/cert.pem
+/etc/letsencrypt/live/build-sakuravps-ubuntu18.kimoto-system.co.jp/privkey.pem
+/etc/letsencrypt/live/build-sakuravps-ubuntu18.kimoto-system.co.jp/chain.pem
+</pre>
+<p>
+  以下の手順で、Apacheの設定ファイルにSSL証明書を追加してください。
+</p>
+<ul>
+  <li><a href="/blog/20200611082716.html">SSL証明書の設定をApacheの設定ファイルに記述する</a></li>
+</ul>
+<h3>Let's EncryptでのSSL証明書の更新</h3>
+<p>
+  Let's EncryptでのSSL証明書の更新には「certbot renew」コマンドを使用します。取得したすべてのSSL証明書に対して更新が必要かどうかの確認が行われ、更新期限が1ヵ月以内であれば証明書が更新されます。
+</p>
+<pre>
+sudo certbot renew -q --no-self-upgrade --post-hook "systemctl reload apache2"
+</pre>
+<p>
+  SSL証明書の更新後、SSL証明書を再読み込みするために、<a href="/blog/20200605104005.html">systemctl</a>コマンドでApacheの再起動をしますので、注意してください。設定ファイルが間違っていた場合は、Apacheが止まります。
+</p>
+<h3>Let's EncryptでのSSL証明書の更新の自動化</h3>
+<p>
+  Let's EncryptでのSSL証明書の更新を手動で行うのは、手間がかかります。一週間に一回、自動的に更新するように設定しておきましょう。
+</p>
+<p>
+  一日一回の場合は、もしcertbotが間違っていた場合に、大量にSSL証明書を発行してしまって、しばらくSSL証明書が取得できないという事態になる可能性があるので、やめておきた方がリスクは避けられます。
+</p>
+<p>
+  1ヵ月に一回だと、もう少し頻度を上げた方が、間違っている場合の確認がしやすいかなと感じます。
+</p>
+<p>
+  というわけで、ここでは、1週間に1回、月曜日の9時に更新するという記述にしておきます。
+</p>
+<h4>rootのcrontabを設定</h4>
+<p>
+  rootのcrontabを設定しましょう。
+</p>
+<pre>
+sudo crontab
+</pre>
+<p>
+  crontabが起動したら、以下の内容を記述しましょう。<a href="https://linux.perlzemi.com/blog/20190401171737.html">vi</a>の使い方はこちら。
+</p>
+<pre>
+0 9 * * 1 certbot renew -q --no-self-upgrade --post-hook "systemctl reload apache2"
+</pre>
+<p>
+  -->
+</p>
+<!--
 <h3>メール送信サーバー</h3>
 <p>
   メール送信サーバーのインストールと初期設定です。
