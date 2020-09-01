@@ -7,7 +7,7 @@
 <link rel="icon" type="image/x-icon" href="/images/ubuntu-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>Mojoliciousアプリケーションのsystemdへの登録 - Ubuntu+PerlでWebシステム開発 環境構築</title>
+<title>Mojoliciousアプリケーションをsystemdへ登録 - Ubuntu+PerlでWebシステム開発 環境構築</title>
 <meta name="description" content="Mojoliciousアプリケーションをsystemdへ登録しましょう。systemd管理にすると、systemctlコマンドを使って、起動・停止・再起動ができます。また、OSを再起動したときに、Mojoliciousアプリケーションを自動的に再起動させることができます。">
   </head>
   <body>
@@ -53,9 +53,9 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200901150837.html">Mojoliciousアプリケーションのsystemdへの登録</a></h2>
+    <h2><a href="/blog/20200901150837.html">Mojoliciousアプリケーションをsystemdへ登録</a></h2>
 <p>
-  Mojoliciousアプリケーションをsystemdへ登録しましょう。systemd管理にすると、systemctlコマンドを使って、起動・停止・再起動ができます。また、OSを再起動したときに、Mojoliciousアプリケーションを自動的に再起動させることができます。
+  Mojoliciousアプリケーションを<a href="/blog/20200823150919.html">systemd</a>へ登録しましょう。systemd管理にすると、systemctlコマンドを使って、起動・停止・再起動ができます。また、OSを再起動したときに、Mojoliciousアプリケーションを自動的に再起動させることができます。
 </p>
 <h3>systemd設定ファイルで必要な情報</h3>
 <p>
@@ -117,10 +117,15 @@ export MY_SERVER_ENV=my_dev
 <p>
   この環境変数をsystemdの設定ファイルの中で記述する必要があります。
 </p>
-<h4>アプリケーション名</h4>
 <h3>systemdの設定ファイル</h3>
 <p>
-  systemdの設定ファイルです。
+  systemdの設定ファイルです。以下の名前にします。
+</p>
+<pre>
+sudo vi /lib/systemd/system/webapp.service
+</pre>
+<p>
+  <a href="https://linux.perlzemi.com/blog/20190401171737.html">vi</a>コマンド開いて以下の内容を書き込んでください。
 </p>
 <pre>
 [Unit]
@@ -141,6 +146,47 @@ Environment=MY_SERVER_ENV=my_dev
 [Install]
 WantedBy=multi-user.target
 </pre>
+<h3>サービスの有効化</h3>
+<p>
+  サービスを有効化しましょう。
+</p>
+<pre>
+sudo systemctl enable webapp
+</pre>
+<p>
+  もしMojoliciousアプリケーションがすでに起動している場合は、停止します。
+</p>
+<pre>
+/home/myapp/perl5/perlbrew/perls/perl-5.20.3/bin/hypnotoad /home/myapp/webapp/script/webapp --stop
+</pre>
+<p>
+  Mojoliciousアプリケーションをsystemdの管理下でスタートしましょう。
+</p>
+<pre>
+sudo systemctl start webapp
+</pre>
+<p>
+  Mojoliciousアプリケーションが起動しているかどうか確認しましょう。
+</p>
+<pre>
+sudo systemctl status webapp
+</pre>
+<p>
+  Mojoliciousアプリケーションが再起動できるか確認しましょう。
+</p>
+<pre>
+sudo systemctl reload webapp
+</pre>
+<p>
+  Mojoliciousアプリケーションが停止できるか確認しましょう。
+</p>
+<pre>
+sudo systemctl stop webapp
+</pre>
+<h3>OSの再起動</h3>
+<p>
+  OSの再起動を行ってMojoliciousアプリケーションが自動再起動されるか確認しましょう。
+</p>
 
   </div>
   <div class="bottom">
