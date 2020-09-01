@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/ubuntu-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>ロケールの確認と変更 - localectlコマンド - Ubuntu+PerlでWebシステム開発 環境構築</title>
-<meta name="description" content="ロケールの確認と変更は、localectlコマンドで行えます。ロケールは、ロケール対応のソフトウェアがあった場合に、どの国の言語で画面に出力するか、どの文字コードで出力するかを指定するものです。">
+<title>Mojoliciousアプリケーションのsystemdへの登録 - Ubuntu+PerlでWebシステム開発 環境構築</title>
+<meta name="description" content="Mojoliciousアプリケーションをsystemdへ登録しましょう。systemd管理にすると、systemctlコマンドを使って、起動・停止・再起動ができます。また、OSを再起動したときに、Mojoliciousアプリケーションを自動的に再起動させることができます。">
   </head>
   <body>
     <div class="container">
@@ -53,75 +53,93 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200513083020.html">ロケールの確認と変更 - localectlコマンド</a></h2>
+    <h2><a href="/blog/20200901150837.html">Mojoliciousアプリケーションのsystemdへの登録</a></h2>
 <p>
-  ロケールの確認と変更は、<b>localectlコマンド</b>で行えます。ロケールは、ロケール対応のソフトウェアがあった場合に、どの国の言語で画面に出力するか、どの文字コードで出力するかを指定するものです。
+  Mojoliciousアプリケーションをsystemdへ登録しましょう。systemd管理にすると、systemctlコマンドを使って、起動・停止・再起動ができます。また、OSを再起動したときに、Mojoliciousアプリケーションを自動的に再起動させることができます。
 </p>
+<h3>systemd設定ファイルで必要な情報</h3>
 <p>
-  PerlでWebシステム開発環境を構築する場合は、ロケールの設定は、デフォルトの設定でよく、必要がないと感じます。
+  hypnotoadのパスや、ユーザー読み込んでいる環境変数を、systemdの設定ファイルの中でも指定する必要があるので、その部分だけは注意してください。
 </p>
+<h4>hypnotoadのパス</h4>
 <p>
-  その理由は、<a href="https://tutorial.perlzemi.com/">Perlプログラミング言語</a>は、文字コードに関して、OSフラット、ロケールフラットだからです。
-</p>
-<p>
-  (本当に大丈夫かどうかは、2020年5月13日時点では未確認。)
-</p>
-<h3>ロケールの確認</h3>
-<p>
-  localectlコマンドで、現在のロケールを確認できます。
+  hypnotoadのパスを調べます。
 </p>
 <pre>
-localectl
+which hypnotoad
 </pre>
 <p>
-  以下のように現在設定されているロケールが表示されます。デフォルトでは「C.UTF-8」です。初期インストールの状態で、シェルでは、UTF-8で入力・出力が行えます。
+  以下のように表示されました。
 </p>
 <pre>
-   System Locale: LANG=C.UTF-8
-       VC Keymap: n/a
-      X11 Layout: us
-       X11 Model: pc105
-</pre>
-<h3>利用可能なロケールの一覧</h3>
-<p>
-  利用可能なロケールの一覧を表示するには「localectl list-locales」コマンドを使用します。
-</p>
-<pre>
-localectl list-locales
-</pre>
-<pre>
-C.UTF-8
-en_US.utf8
+~/perl5/perlbrew/perls/perl-5.20.3/bin/hypnotoad
 </pre>
 <p>
-  どうやら日本語で利用可能なロケールは、ないようです。
-</p>
-<h3>ロケールのインストール</h3>
-<p>
-  ロケールをインストールしてみましょう。aptコマンドで、日本語パッケージをダウンロードします。sodoを使って管理者権限で実行します。
+  「~」の部分を、ホームディレクトリに変更するので、ホームディレクトリ名を調べます。
 </p>
 <pre>
-sudo apt install language-pack-ja
+# ホームディレクトリ名
+env | grep -P '^HOME'
 </pre>
 <p>
-  もう一度利用可能なロケールを確認。
+  以下のように表示されました。
 </p>
 <pre>
-localectl list-locales&lt;/pre&gt;
+HOME=/home/myapp
+</pre>
+<p>
+  hypnotoadのパスは以下のようになります。
+</p>
+<pre>
+/home/myapp/perl5/perlbrew/perls/perl-5.20.3/bin/hypnotoad
+</pre>
+<h4>Webアプリケーションのパス</h4>
+<p>
+  Webアプリケーションのプログラムのパスです。Mojoliciousのひな型を使って作った場合は、以下の場所になります。「Webapp」という名前で作成したと仮定しています。
+</p>
+<pre>
+/home/myapp/webapp/script/webapp
+</pre>
+<h4>WebアプリケーションのプロセスIDファイル</h4>
+<p>
+  WebアプリケーションのプロセスIDファイルのパスです。
+</p>
+<pre>
+/home/myapp/webapp/script/hypnotoad.pid
+</pre>
+<h4>環境変数</h4>
+<p>
+  今回は「~/.bashrc」の中に以下の環境変数が設定されているとして記事にします。
+</p>
+<pre>
+export MY_SERVER_ENV=my_dev
+</pre>
+<p>
+  この環境変数をsystemdの設定ファイルの中で記述する必要があります。
+</p>
+<h4>アプリケーション名</h4>
+<h3>systemdの設定ファイル</h3>
+<p>
+  systemdの設定ファイルです。
+</p>
+<pre>
+[Unit]
+Description=My Mojolicious application
+After=network.target
 
-「ja_JP.utf8」が追加されています。
+[Service]
+Type=forking
+PIDFile=/home/myapp/webapp/script/hypnotoad.pid
+ExecStart=/home/myapp/perl5/perlbrew/perls/perl-5.20.3/bin/hypnotoad /home/myapp/webapp/script/webapp
+ExecReload=/home/myapp/perl5/perlbrew/perls/perl-5.20.3/bin/hypnotoad /home/myapp/webapp/script/webapp
+ExecStop=/home/myapp/perl5/perlbrew/perls/perl-5.20.3/bin/hypnotoad /home/myapp/webapp/script/webapp --stop
+KillMode=process
+User=myapp
+Group=myapp-group
+Environment=MY_SERVER_ENV=my_dev
 
-&lt;pre&gt;
-C.UTF-8
-en_US.utf8
-ja_JP.utf8
-</pre>
-<h3>ロケールの変更</h3>
-<p>
-  ロケールを変更しましょう。ロケールを変更するには「localectl set-locale」コマンドを使用します。sudoコマンドで管理者権限で実行します。
-</p>
-<pre>
-sudo localectl set-locale LANG=ja_JP.UTF-8
+[Install]
+WantedBy=multi-user.target
 </pre>
 
   </div>
