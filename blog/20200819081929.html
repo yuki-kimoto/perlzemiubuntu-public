@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/ubuntu-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>UbuntuのMariaDBサーバーの設定ファイルの場所 - Ubuntu+PerlでWebシステム開発 環境構築</title>
-<meta name="description" content="UbuntuのMariaDBの設定ファイルの場所は、以下のディレクトリです。">
+<title>ディスク管理 - Ubuntu+PerlでWebシステム開発 環境構築</title>
+<meta name="description" content="ディスクへの接続、ファイルシステムへのマウントなどディスク管理について解説します。">
   </head>
   <body>
     <div class="container">
@@ -53,38 +53,15 @@
 
   </div>
   <div class="middle">
-    <div class="bread">
-  <ul itemscope itemtype="http://schema.org/BreadcrumbList">
-    <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-      <a itemprop="item" href="/">
-        <span itemprop="name">Ubuntu</span>
-      </a>
-      <meta itemprop="position" content="1" />
-    </li>
-    <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-      <a itemprop="item" href="/blog/20200829052743.html">
-        <span itemprop="name">MariaDB</span>
-      </a>
-      <meta itemprop="position" content="2" />
-    </li>
-    <li>
-      here
-    </li>
-  </ul>
-</div>
-<h2><a href="/blog/20200223174004.html">UbuntuのMariaDBサーバーの設定ファイルの場所</a></h2>
+    <h2><a href="/blog/20200819081929.html">ディスク管理</a></h2>
 <p>
-  UbuntuのMariaDBの設定ファイルの場所は、以下のディレクトリです。
+  ディスクへの接続、ファイルシステムへのマウントなどディスク管理について解説します。
 </p>
-<pre>
-/etc/mysql/mariadb.conf.d
-</pre>
-<p>
-  この中に、四つの設定ファイルがあります。MariaDBのサーバーの設定ファイルは「50-server.cnf」です。
-</p>
-<pre>
-50-client.cnf  50-mysql-clients.cnf  50-mysqld_safe.cnf  50-server.cnf
-</pre>
+<ul>
+  <li><a href="/blog/20200601085516.html">物理的に接続されているディスクを確認する</a></li>
+  <li><a href="/blog/20200528085516.html">新しい物理ディスクの初期フォーマットとファイルシステムへのマウント</a></li>
+  <li><a href="/blog/20200326174004.html">ディスク容量とディレクトリ容量を確認する</a></li>
+</ul>
 
   </div>
   <div class="bottom">
