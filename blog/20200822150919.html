@@ -7,8 +7,8 @@
 <link rel="icon" type="image/x-icon" href="/images/ubuntu-logo.png">
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 
-<title>Let's EncryptのアクセスURLだけをApacheのベーシック認証から除外する - Ubuntu+PerlでWebシステム開発 環境構築</title>
-<meta name="description" content="Let's EncryptがSSL証明書を発行するときには、Let's Encryptのクライアントはそのサイトにアクセスできることを調べます。ひとつ注意しないといけないのは、ベーシック認証をサイト全体にかけている場合に、Let's Encryptのクライアントがアクセスできなくなってしまうということです。">
+<title>メール設定 - Ubuntu+PerlでWebシステム開発 環境構築</title>
+<meta name="description" content="メールアドレスの作成方法、メールに関するDNS設定、メール送信を行うためのメールサーバーの設定の解説です。">
   </head>
   <body>
     <div class="container">
@@ -53,40 +53,20 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/blog/20200701124838.html">Let's EncryptのアクセスURLだけをApacheのベーシック認証から除外する</a></h2>
+    <h2><a href="/blog/20200822150919.html">メール設定</a></h2>
 <p>
-  Let's EncryptがSSL証明書を発行するときには、Let's Encryptのクライアントはそのサイトにアクセスできることを調べます。ひとつ注意しないといけないのは、ベーシック認証をサイト全体にかけている場合に、Let's Encryptのクライアントがアクセスできなくなってしまうということです。
+  メールアドレスの作成方法、メールに関するDNS設定、メール送信を行うためのメールサーバーの設定の解説です。
 </p>
-<p>
-  ここでは、Let's EncryptのアクセスURLだけを、ベーシック認証から除外する方法を解説します。
-</p>
-<p>
-  Apacheの設定ファイルで以下のように設定してください。
-</p>
-<pre>
-&lt;Location / &gt;
-  AuthType Basic
-  AuthName "Secret Zone"
-  AuthUserFile /var/www/.htpasswd
-  Require user foo
-&lt;/Location&gt;
-
-&lt;Location /.well-known/acme-challenge &gt;
-  Require all granted
-&lt;/Location&gt;
-</pre>
-<p>
-  Let's Encryptが使うパスだけは、接続をすべて許可してください。
-</p>
-<pre>
-/.well-known/acme-challenge
-</pre>
-<p>
-  がLet's Encryptが使うパスです。
-</p>
-<p>
-  「/」がベーシック認証のパスになっていますが、その後ろの設定で「/.well-known/acme-challenge」のパスに対しては、すべての接続が許可されます。
-</p>
+<h3>メールアドレスの作成とDNSサーバーの設定</h3>
+<ul>
+  <li><a href="/blog/20200828123127.html">メールアドレスの作成とDNSサーバーの設定</a></li>
+</ul>
+<h3>メールサーバー - postfix</h3>
+<ul>
+  <li><a href="/blog/20200423174004.html">postfixのインストール - メール送信 sendmailコマンド</a></li>
+  <li><a href="/blog/20200824150919.html">Postfixのバージョンの確認方法</a></li>
+  <li><a href="/blog/20200521085509.html">クラウドメール配信SendGridとPostfixとの連携</a></li>
+</ul>
 
   </div>
   <div class="bottom">
