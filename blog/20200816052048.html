@@ -1031,6 +1031,9 @@ sudo systemctl reload apache2
 </p>
 <h3>Webアプリケーションのsystemdによる管理</h3>
 <p>
+  OPを再起動したときにMojoliciousアプリケーションも自動起動するように<a href="/blog/20200901150837.html">Mojoliciousアプリケーションをsystemdへ登録</a>しましょう。
+</p>
+<p>
   ここでは、perlbrewを使って、Perl 5.20.3をインストールしていることを前提とします。Mojoliciousアプリケーションも上記手順で「Webapp」という名前で作成したことを前提としています。
 </p>
 <h4>systemdの設定ファイル</h4>
@@ -1138,18 +1141,26 @@ sudo apt install -y postfix
   メール送信のためだけに利用する最小限の設定を行います。
 </p>
 <p>
+  myhostnameに設定するホスト名は「サーバー名.ドメイン名」という名前で構成され、ドメイン名は、DNSサーバーで解決できる必要があります。
+</p>
+<p>
+  ここでは、ドメイン名は「build-sakuravps-ubuntu18.kimoto-system.co.jp」とします。サーバー名は「hostname」コマンドで自動的に取得します。
+</p>
+<p>
   以下のワンライナーをコピー＆ペーストして貼り付けてください。postfixの設定ファイルである「/etc/postfix/main.cf」に最小限の設定が書き込まれます。
 </p>
 <pre>
-MYHOSTNAME=`hostname`
+MYHOSTNAME=`hostname`.kimoto-system.co.jp
 echo '
 myhostname = ' "$MYHOSTNAME" '
 myorigin = $mydomain
 relayhost = $mydomain
 inet_interfaces = loopback-only
 mydestination =
+smtpd_sasl_auth_enable = yes
+broken_sasl_auth_clients = yes
+smtpd_recipient_restrictions = permit_sasl_authenticated, reject_unauth_destination
 ' | sudo sh -c 'cat &gt; /etc/postfix/main.cf'
-
 </pre>
 <p>
   設定ファイルの確認。
@@ -1162,7 +1173,11 @@ sudo cat /etc/postfix/main.cf
   postfixを起動しましょう。
 </p>
 <pre>
+# 起動
 sudo systemctl start postfix
+
+# 再起動する場合
+sudo systemctl restart postfix
 </pre>
 <p>
   状態を確認。
@@ -1172,10 +1187,10 @@ sudo systemctl status postfix
 </pre>
 <h4>sendmailコマンドでメール送信</h4>
 <p>
-  sendmailコマンドでメールを送信してみましょう。[メール]のところを自分のメールにしてください。
+  sendmailコマンドでメールを送信してみましょう。[メール送信元] [メール送信先]のところを送信可能なのメールアドレスにしてください。
 </p>
 <pre>
-echo Hello | sendmail -f メール送信元 メール送信先
+echo Hello | sendmail -f [メール送信元] [メール送信先]
 </pre>
 <p>
   sendmailでは、標準入力が、本文になります。
@@ -1186,6 +1201,10 @@ echo Hello | sendmail -f メール送信元 メール送信先
 <p>
   その後ろに、メールの送信先を指定します。試験するときは、送信先、送信元どちらも同じで大丈夫です。
 </p>
+<pre>
+# 送信例
+echo Hello | sendmail -f kimoto.yuki@gmail.com kimoto.yuki@gmail.com
+</pre>
 <h3>cron</h3>
 <p>
   定期プログラム実行の常駐アプリケーションである<a href="/blog/20200520084454.html">cronの起動確認</a>を行います。
@@ -1254,6 +1273,7 @@ sudo crontab
     <li><a href="/blog/20200827123127.html">Perl</a></li>
     <li><a href="/blog/20200830052743.html">cron</a></li>
     <li><a href="/blog/20200823150919.html">systemd</a></li>
+    <li><a href="/blog/20200902120232.html">ドメイン管理</a></li>
     <li><a href="/all.html">すべての記事</a></li>
     <li><a href="/list.html">新着情報</a></li>
     <li><a href="/">トップページ</a></li>
