@@ -738,6 +738,22 @@ perlbrew install-cpanm
 <ul>
   <li><a href="/blog/20200729134756.html">MojoliciousによるWebアプリケーションのデプロイ</a></li>
 </ul>
+<h4>バッチプログラムがライブラリのパスを発見できるようにする</h4>
+<p>
+  バッチプログラムがWebアプリケーションのライブラリのパスを発見できるようにしておきましょう。Webアプリケーションに加えて、バッチプログラムを作成する場合の準備をしておきます。
+</p>
+<p>
+  「~/.bashrc」に追加しましょう。
+</p>
+<pre>
+vi ~/.bashrc
+</pre>
+<p>
+  以下の内容を追記します。
+</p>
+<pre>
+export PERL5LIB=/home/myapp/webapp/lib
+</pre>
 <h3>ドメイン名の取得とDNSサーバーの設定</h3>
 <p>
   ドメインを取得して、ドメイン名とサーバーIPアドレスを紐づけましょう。ドメイン名は、インターネット上でWebサイトを公開するためと、メール送信サーバーの設定のために必要です。
@@ -753,6 +769,67 @@ perlbrew install-cpanm
 </ul>
 <p>
   この記事のここからの例では、ドメイン名として「build-sakuravps-ubuntu18.kimoto-system.co.jp」を使用します。
+</p>
+<h3>メールアドレスの作成とDNSサーバーの設定</h3>
+<p>
+  メールアドレスの作成とDNSサーバーの設定を行いましょう。
+</p>
+<ul>
+  <li><a href="/blog/20200828123127.html">メールアドレスの作成とDNSサーバーの設定</a></li>
+</ul>
+<h3>cron</h3>
+<p>
+  定期プログラム実行の常駐アプリケーションであるcronの起動確認を行います。
+</p>
+<h4>cronの起動確認</h4>
+<p>
+  以下の記事の「sudo systemctl status cron」を実行してApacheが起動していることを確認してください。
+</p>
+<ul>
+  <li><a href="/blog/20200520084454.html">cronの起動・停止・再起動・状態確認, cronの実行ログ</a></li>
+</ul>
+<h4>crontabの設定</h4>
+<p>
+  <a href="/blog/20200604085516.html">crontabの初期設定</a>をしておきましょう。
+</p>
+<p>
+  cronの設定はcrontabに書きます。crontabは、ユーザーごとに持つことができます。myappというユーザーでcrontabを編集すると、それはmyappのcrontabになります。
+</p>
+<p>
+  crontabを編集するには「-e」オプションを使用します。
+</p>
+<pre>
+crontab -e
+</pre>
+<p>
+  エディタが起動します。
+</p>
+<p>
+  cronの落とし穴として、ユーザー環境にインストールしたPerlが使われないというものがあります。これを解決するためにPATH環境変数を設定します。
+</p>
+<pre>
+env | grep -P '^PATH'
+</pre>
+<p>
+  表示された値を以下のように設定します。
+</p>
+<pre>
+PATH=/home/myapp/perl5/perlbrew/bin:/home/myapp/perl5/perlbrew/perls/perl-5.16.2/bin:/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:/home/myapp/bin
+</pre>
+<p>
+  cronの自動実行でエラーが発生した場合にメールが来るように設定しておきましょう。
+</p>
+<pre>
+MAILTO=kimoto_test@kimoto-system.co.jp
+</pre>
+<p>
+  バッチプログラムがWebアプリケーションのライブラリのパスを読み込んでくれるように設定しておきましょう。
+</p>
+<pre>
+PERL5LIB=/home/myapp/webapp/lib
+</pre>
+<p>
+  保存して終了しましょう。
 </p>
 <h3>Apache</h3>
 <p>
@@ -1029,6 +1106,33 @@ sudo systemctl reload apache2
 <p>
   WebサイトにアクセスしてSSL証明書が有効になっていればOKです。
 </p>
+<h4>Let's EncryptでのSSL証明書の更新の自動化</h4>
+<p>
+  Let's EncryptでのSSL証明書の更新を手動で行うのは、手間がかかります。一週間に一回、自動的に更新するように設定しておきましょう。
+</p>
+<p>
+  一日一回の場合は、もしcertbotが間違っていた場合に、大量にSSL証明書を発行してしまって、しばらくSSL証明書が取得できないという事態になる可能性があるので、やめておいた方がリスクは避けられます。
+</p>
+<p>
+  1ヵ月に一回だと、もう少し頻度を上げた方が、間違っている場合の確認がしやすいかなと感じます。
+</p>
+<p>
+  というわけで、ここでは、1週間に1回、月曜日の9時に更新するという記述にしておきます。
+</p>
+<p>
+  rootのcrontabを修正するには「sudo」をつけてcrontabを起動します。
+</p>
+<pre>
+sudo crontab -e
+</pre>
+<p>
+  以下のようにcrontabの内容を設定します。メールアドレスは、自分が受信できるメールアドレスを指定してください。
+</p>
+<pre>
+MAILTO=kimoto_test@kimoto-system.co.jp
+
+0 9 * * 1 certbot renew -q --no-self-upgrade --post-hook "systemctl reload apache2"
+</pre>
 <h3>Webアプリケーションのsystemdによる管理</h3>
 <p>
   OPを再起動したときにMojoliciousアプリケーションも自動起動するように<a href="/blog/20200901150837.html">Mojoliciousアプリケーションをsystemdへ登録</a>しましょう。
@@ -1112,6 +1216,9 @@ sudo systemctl start webapp
 <p>
   <a href="/blog/20200903120232.html">OSを再起動</a>を行ってMojoliciousアプリケーションが自動再起動されるか確認しましょう。
 </p>
+<pre>
+sudo reboot
+</pre>
 <!--
 <h3>メール送信サーバー</h3>
 <p>
@@ -1204,39 +1311,6 @@ echo Hello | sendmail -f [メール送信元] [メール送信先]
 <pre>
 # 送信例
 echo Hello | sendmail -f kimoto.yuki@gmail.com kimoto.yuki@gmail.com
-</pre>
-<h3>cron</h3>
-<p>
-  定期プログラム実行の常駐アプリケーションである<a href="/blog/20200520084454.html">cronの起動確認</a>を行います。
-</p>
-<pre>
-sudo systemctl status cron
-</pre>
-<h4>rootのcrontabを設定</h4>
-<p>
-  rootのcrontabを設定しましょう。
-</p>
-<pre>
-sudo crontab
-</pre>
-<p>
-  crontabが起動したら、以下の内容を記述しましょう。<a href="https://linux.perlzemi.com/blog/20190401171737.html">vi</a>の使い方はこちら。
-</p>
-<h3>Let's EncryptでのSSL証明書の更新の自動化</h3>
-<p>
-  Let's EncryptでのSSL証明書の更新を手動で行うのは、手間がかかります。一週間に一回、自動的に更新するように設定しておきましょう。
-</p>
-<p>
-  一日一回の場合は、もしcertbotが間違っていた場合に、大量にSSL証明書を発行してしまって、しばらくSSL証明書が取得できないという事態になる可能性があるので、やめておいた方がリスクは避けられます。
-</p>
-<p>
-  1ヵ月に一回だと、もう少し頻度を上げた方が、間違っている場合の確認がしやすいかなと感じます。
-</p>
-<p>
-  というわけで、ここでは、1週間に1回、月曜日の9時に更新するという記述にしておきます。
-</p>
-<pre>
-0 9 * * 1 certbot renew -q --no-self-upgrade --post-hook "systemctl reload apache2"
 </pre>
 <p>
   -->

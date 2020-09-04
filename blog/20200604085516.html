@@ -77,7 +77,7 @@
   cronはプログラムを定期実行するためのアプリケーションですが、その設定ファイルはcrontabというコマンドを使って編集します。
 </p>
 <p>
-  crontabは、ユーザーごとに持つことができます。kimotoというユーザーでcrontabを編集すると、それはkimotoのcrontabになります。
+  crontabは、ユーザーごとに持つことができます。myappというユーザーでcrontabを編集すると、それはmyappのcrontabになります。
 </p>
 <h3>crontabを編集する</h3>
 <p>
@@ -149,13 +149,13 @@ crontab -e
   まずperlbrewをインストールしたユーザーで、PATH環境変数の値を表示します。
 </p>
 <pre>
-env | grep PATH
+env | grep -P '^PATH'
 </pre>
 <p>
-  PATHを含んだ環境変数がいくつか表示されるので、PATHというものを探します。(ユーザー名がadminsの場合の例です。)
+  PATHを含んだ環境変数がいくつか表示されるので、PATHというものを探します。(ユーザー名がmyappの場合の例です。)
 </p>
 <pre>
-PATH=/home/admins/perl5/perlbrew/bin:/home/admins/perl5/perlbrew/perls/perl-5.16.2/bin:/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:/home/admins/bin
+PATH=/home/myapp/perl5/perlbrew/bin:/home/myapp/perl5/perlbrew/perls/perl-5.20.3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
 </pre>
 <p>
   以下のコマンドでcrontabを編集します。
@@ -167,7 +167,7 @@ crontab -e
   そして上記のPATHの値をcrontabの一番上に書き込みます。
 </p>
 <pre>
-PATH=/home/admins/perl5/perlbrew/bin:/home/admins/perl5/perlbrew/perls/perl-5.16.2/bin:/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:/home/admins/bin
+PATH=/home/myapp/perl5/perlbrew/bin:/home/myapp/perl5/perlbrew/perls/perl-5.16.2/bin:/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:/home/myapp/bin
 
 # crontabの設定が続く...
 </pre>
@@ -176,10 +176,10 @@ PATH=/home/admins/perl5/perlbrew/bin:/home/admins/perl5/perlbrew/perls/perl-5.16
 </p>
 <h3>Perlのライブラリのパスを追加する</h3>
 <p>
-  Webアプリケーションで読み込んでいるライブラリのパスがあれば以下のように「PERL5LIB」を設定しましょう。
+  ライブラリのパスがあれば以下のように「PERL5LIB」を設定しましょう。Mojoliciousで作成したアプリケーションをバッチファイルから読み込む場合に必要な記述です。
 </p>
 <pre>
-PERL5LIB=/home/admins/webapp/fudousancms/lib
+PERL5LIB=/home/myapp/webapp/lib
 </pre>
 <h3>cronのエラーが発生した場合のメールの送信先を変更する MAILTO</h3>
 <p>
@@ -192,13 +192,13 @@ PERL5LIB=/home/admins/webapp/fudousancms/lib
   設定しない場合は、cronを実行したユーザーのローカルのメールボックスに入ります。
 </p>
 <pre>
-MAILTO=kimoto@somehost.com
+MAILTO=kimoto_test@kimoto-system.co.jp
 </pre>
 <p>
   複数のメールアドレスを設定する場合はカンマで区切ります。
 </p>
 <pre>
-MAILTO=kimoto@somehost.com,taro@somehost.com
+MAILTO=kimoto_test@kimoto-system.co.jp,taro@somehost.com
 </pre>
 <p>
   メールアドレスを設定しておくと、cronで実行しているバッチ処理のエラーを知ることができるので便利です。
