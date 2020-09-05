@@ -1219,10 +1219,9 @@ sudo systemctl start webapp
 <pre>
 sudo reboot
 </pre>
-<!--
-<h3>メール送信サーバー</h3>
+<h3>メール送信</h3>
 <p>
-  メール送信サーバーのインストールと初期設定です。
+  メール送信に利用するメール送信サーバーとして利用するpostfixのインストールと初期設定です。
 </p>
 <h4>postfixのインストール</h4>
 <p>
@@ -1241,53 +1240,74 @@ sudo apt install -y postfix
   上下キーで「No configuration」を選択します。右キーを押すとOkに勧めるので、Enterを押します。
 </p>
 <p>
-  postfixのインストールが始まります。
+  postfixがインストールされます。
 </p>
-<h4>postfixの設定ファイル</h4>
+<h4>SendGridへの申し込み</h4>
 <p>
-  メール送信のためだけに利用する最小限の設定を行います。
-</p>
-<p>
-  myhostnameに設定するホスト名は「サーバー名.ドメイン名」という名前で構成され、ドメイン名は、DNSサーバーで解決できる必要があります。
+  SendGridトップページから、メールアドレスを入力して申し込みます。
 </p>
 <p>
-  ここでは、ドメイン名は「build-sakuravps-ubuntu18.kimoto-system.co.jp」とします。サーバー名は「hostname」コマンドで自動的に取得します。
+  <a href="https://sendgrid.kke.co.jp">SendGrid申し込み</a>
 </p>
 <p>
-  以下のワンライナーをコピー＆ペーストして貼り付けてください。postfixの設定ファイルである「/etc/postfix/main.cf」に最小限の設定が書き込まれます。
+  翌営業日までには、アカウントが発行されます。
 </p>
-<pre>
-MYHOSTNAME=`hostname`.kimoto-system.co.jp
-echo '
-myhostname = ' "$MYHOSTNAME" '
-myorigin = $mydomain
-relayhost = $mydomain
-inet_interfaces = loopback-only
-mydestination =
-smtpd_sasl_auth_enable = yes
-broken_sasl_auth_clients = yes
-smtpd_recipient_restrictions = permit_sasl_authenticated, reject_unauth_destination
-' | sudo sh -c 'cat &gt; /etc/postfix/main.cf'
-</pre>
 <p>
-  設定ファイルの確認。
+  SendGridとposfixの連携の詳細については以下を参考にしてください。
+</p>
+<ul>
+  <li><a href="https://ubuntu.perlzemi.com/blog/20200521085509.html">クラウドメール配信SendGridとPostfixとの連携</a></li>
+</ul>
+<h4>postfixの設定ファイルの編集</h4>
+<p>
+  postfixの設定ファイルを<a href="https://linux.perlzemi.com/blog/20190401171737.html">vi</a>コマンドで編集します。
 </p>
 <pre>
-sudo cat /etc/postfix/main.cf
+sudo vi /etc/postfix/main.cf
 </pre>
-<h4>postfixの起動と確認</h4>
 <p>
-  postfixを起動しましょう。
+  以下の内容を記述します。その他の設定はいらず、これだけOKです。
+</p>
+<pre>
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_sasl_security_options = noanonymous
+smtp_sasl_tls_security_options = noanonymous
+smtp_tls_security_level = encrypt
+header_size_limit = 4096000
+relayhost = [smtp.sendgrid.net]:587
+</pre>
+<p>
+  ここで上で設定に記述したパスワードファイルを作成します。
+</p>
+<pre>
+sudo vi /etc/postfix/sasl_passwd
+</pre>
+<p>
+  SendGridのユーザー名とパスワードを指定します。
+</p>
+<pre>
+[smtp.sendgrid.net]:587 sg1idy2t@kke.com:aitoseigi1A
+</pre>
+<p>
+  次に、このファイルがrootアカウントでのみ読み書きができるよう制限されていることを確認して、postmap コマンドを使用してPostfixがこの新しいファイルを使用するようハッシュテーブルを更新します:
+</p>
+<pre>
+sudo chmod 600 /etc/postfix/sasl_passwd
+sudo postmap /etc/postfix/sasl_passwd
+</pre>
+<p>
+  最後にPostfixを<a href="/blog/20200605104005.html">systemctl</a>で、起動してください。
 </p>
 <pre>
 # 起動
 sudo systemctl start postfix
 
-# 再起動する場合
+# 再起動したい場合は以下で
 sudo systemctl restart postfix
 </pre>
 <p>
-  状態を確認。
+  Postfixの状態を確認します。
 </p>
 <pre>
 sudo systemctl status postfix
@@ -1310,13 +1330,14 @@ echo Hello | sendmail -f [メール送信元] [メール送信先]
 </p>
 <pre>
 # 送信例
-echo Hello | sendmail -f kimoto.yuki@gmail.com kimoto.yuki@gmail.com
+echo Hello | sendmail -f kimoto_test@kimoto-system.co.jp kimoto_test@kimoto-system.co.jp
 </pre>
 <p>
-  -->
+  メール送信ができればOKです。
 </p>
+<h3>完成!!!</h3>
 <p>
-  ここまで完成。
+  さくらVPS+Ubuntu 18+PerlでWebシステム開発 環境構築の完成です。お疲れさまでした。
 </p>
 
   </div>

@@ -170,7 +170,7 @@ sudo vi /etc/postfix/main.cf
   上記の公式ドキュメントから引用して、手順をここに書き出してみます。(以下引用、2020年6月2日現在)
 </p>
 <p>
-  Postfixの設定ファイルを開いてください。通常、 /etc/postfix/main.cf です。そして、以下を追加してください:
+  Postfixの設定ファイルを開いてください。通常、 /etc/postfix/main.cf です。そして、以下に書き換えてください。他の内容は削除して大丈夫です。
 </p>
 <pre>
 smtp_sasl_auth_enable = yes
@@ -182,26 +182,29 @@ header_size_limit = 4096000
 relayhost = [smtp.sendgrid.net]:587
 </pre>
 <p>
-  (relayhostをすでに設定している場合は、元のrelayhostをコメントアウト)
-</p>
-<p>
-  ここで上で設定した別のファイル /etc/postfix/sasl_passwd （新たに作成が必要）にて認証情報を指定します（ユーザ名としてapikeyを、パスワードとしてAPIキーを指定できます）:
+  ここで上で設定に記述したパスワードファイルを作成します。
 </p>
 <pre>
-[smtp.sendgrid.net]:587 yourSendGridUsername:yourSendGridPassword
+sudo vi /etc/postfix/sasl_passwd
+</pre>
+<p>
+  SendGridのユーザー名とパスワードを指定します。
+</p>
+<pre>
+[smtp.sendgrid.net]:587 sg1idy2t@kke.com:aitoseigi1A
 </pre>
 <p>
   次に、このファイルがrootアカウントでのみ読み書きができるよう制限されていることを確認して、postmap コマンドを使用してPostfixがこの新しいファイルを使用するようハッシュテーブルを更新します:
 </p>
 <pre>
-$ sudo chmod 600 /etc/postfix/sasl_passwd
-$ sudo postmap /etc/postfix/sasl_passwd
+sudo chmod 600 /etc/postfix/sasl_passwd
+sudo postmap /etc/postfix/sasl_passwd
 </pre>
 <p>
   最後にPostfixを<a href="/blog/20200605104005.html">systemctl</a>で、再起動してください:
 </p>
 <pre>
-$ sudo systemctl restart postfix
+sudo systemctl restart postfix
 </pre>
 <h3>sendmailコマンドでメール送信</h3>
 <p>
