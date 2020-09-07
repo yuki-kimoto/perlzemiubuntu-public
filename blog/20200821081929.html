@@ -95,6 +95,89 @@ wkhtmltopdf
 <p>
   生成されるPDFは、書籍の品質には届かないですが、専門学校のテキストや、同人誌などの製作に利用可能だと思います。
 </p>
+<h3>wkhtmltopdfが実行できないバグの修正</h3>
+<p>
+  wkhtmltopdfのPDF生成には、X ServerあるいはQtが必要なようですが、古いQtにパッチが当たっていない場合に、実行できないバグが存在します。
+</p>
+<p>
+  <a href="https://github.com/wkhtmltopdf/wkhtmltopdf/issues/2037">QXcbConnection: Could not connect to display</a>
+</p>
+<p>
+  これを解決する一つの手段は、パッチの当たったQtを使って、インストールすることのようです。これは、正式な手段ではないかもしれない。
+</p>
+<pre>
+cd ~
+wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.3/wkhtmltox-0.12.3_linux-generic-amd64.tar.xz
+tar vxf wkhtmltox-0.12.3_linux-generic-amd64.tar.xz 
+
+mkdir -p /usr/local/bin
+sudo cp wkhtmltox/bin/wk* /usr/local/bin/
+</pre>
+<pre>
+$ /usr/local/bin/wkhtmltopdf --version
+</pre>
+<pre>
+wkhtmltopdf 0.12.3 (with patched qt)
+</pre>
+<!--
+<p>
+  これを解決するために、最新版のwkhtmltopdfを、Ubuntu 18にインストールする手順が公開されているので、ここに書いておきます。
+</p>
+<h4>Ubuntu 18へのwkhtmltopdf 0.12.6のインストール。</h4>
+<p>
+  Ubuntu 18への0.12.6のインストール。
+</p>
+<p>
+  その後、0.12.6にアップグレードし、0.12.4および0.12.5で見つかった問題を修正しました。
+</p>
+<p>
+  更新されたインストール手順は次のとおりです。
+</p>
+<p>
+  現在使用しているバージョンがある場合は、それを確認します。
+</p>
+<pre>
+$ wkhtmltopdf --version
+</pre>
+<pre>
+wkhtmltopdf 0.12.3 (with patched qt)
+</pre>
+<p>
+  「wkhtml」ですべてのファイルを見つけて削除することにより、既存のバージョンを削除します。
+</p>
+<pre>
+sudo find / -name *wkhtml*
+</pre>
+<p>
+  「wkhtmltopdf」および「wkhtmltox」関連ファイルを削除します。
+</p>
+<p>
+  バージョン0.12.6の.debパッケージをダウンロードします。
+</p>
+<pre>
+wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.bionic_amd64.deb
+</pre>
+<p>
+  .debパッケージをインストールします。
+</p>
+<pre>
+sudo dpkg -i wkhtmltox_0.12.6-1.bionic_amd64.deb
+</pre>
+<p>
+  依存関係が欠落しているエラーが発生した場合は「sudo apt install -f」を使用して依存関係をインストールします。
+</p>
+<p>
+  正しいバージョンがインストールされ、アクセスできることを確認します。
+</p>
+<pre>
+$ wkhtmltopdf --version
+</pre>
+<pre>
+wkhtmltopdf 0.12.6 (with patched qt)
+</pre>
+<p>
+  -->
+</p>
 
   </div>
   <div class="bottom">
