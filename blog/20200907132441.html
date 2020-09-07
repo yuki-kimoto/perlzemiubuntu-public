@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/ubuntu-logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<title>ファイアウォールの設定 - ufwコマンド - Ubuntu+PerlでWebシステム開発 環境構築</title>
+<meta name="description" content="Ubuntuにおけるufwコマンドをを使った、ファイアーウォールの設定方法の解説です。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="header-main">
+  <!-- header -->
+  <h1>
+    <a href="/">Ubuntu+PerlでWebシステム開発 環境構築</a>
+  </h1>
+  <style>
+  .ubuntu-version {
+    padding-left:28px;
+  }
+  .ubuntu-version ul {
+    
+  }
+  .ubuntu-version li {
+    display:inline-block;
+    padding:2px 2px 3px 2px;
+    margin:0;
+    color:#555;
+  }
+</style>
+
+<div class="ubuntu-version">
+  <ul>
+    <li>Ubuntu20</li>
+    <li>Ubuntu18</li>
+    <li>Ubuntu16</li>
+  </ul>
+</div>
+
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20200907132441.html">ファイアウォールの設定 - ufwコマンド</a></h2>
+<p>
+  Ubuntuにおけるufwコマンドをを使った、ファイアーウォールの設定方法の解説です。
+</p>
+<p>
+  サーバーの外側から入ってくる通信に対して、ポート番号ごとにブロックできる設定ができるようになることを目標にします。
+</p>
+<p>
+  VPSやクラウドサービスが、ファイアーウォールの機能を提供している場合は、それを使うのが便利でしょう。オンプレミスであったり、コマンドで制御したいという要望がある場合は、ufwコマンドを使えます。
+</p>
+<h3>ファイアーウォールの状態確認</h3>
+<p>
+  ファイアーウォールの状態確認は「ufw status」コマンドで行います。
+</p>
+<pre>
+sudo ufw status
+</pre>
+<h3>ファイアーウォールの有効化</h3>
+<p>
+  ファイアーウォールを有効にするには「ufw enable」コマンドで行います。
+</p>
+<pre>
+sudo ufw enable
+</pre>
+<p>
+  ファイアーウォールを有効にした場合は、ファイアーウォールの確認が終わるまで、その端末を落とさないように気をつけてください。接続中のSSL接続は影響を受けません。
+</p>
+<p>
+  SSHの接続ポートがブロックされてしまうと、通信が行えず、VPSやクラウドサーバーの場合はWebコンソールで、オンプレミスの場合で、Webコンソールが準備されていない場合は、現地でのマシンのコンソールから操作する必要がでてきます。注意して作業を行ってください。
+</p>
+<h3>ファイアーウォールの無効化</h3>
+<p>
+  ファイアーウォールを無効にするには「ufw disable」コマンドで行います。
+</p>
+<pre>
+sudo ufw disable
+</pre>
+<h3>ポートの解放</h3>
+<p>
+  ポートを開放してみましょう。
+</p>
+<pre>
+# HTTPポート
+sudo ufw allow 80
+
+# HTTPSポート
+sudo ufw allow 443
+
+# デフォルトのSSHポート
+sudo ufw allow 22
+
+# 任意に設定したSSHポート
+sudo ufw allow 51234
+</pre>
+<h3>解放したポートを閉じる</h3>
+<p>
+  解放したポートを閉じるには「ufw delete」を使用します。ルール名は「allow 22」のようになります。
+</p>
+<pre>
+sudo ufw delete allow 22
+</pre>
+
+  </div>
+  <div class="bottom">
+    <!-- bottom -->
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <!-- side -->
+<div class="side-list">
+  <div class="side-list-title">
+    お勧め
+  </div>
+  <ul>
+    <li><a href="/blog/20200816052048.html">さくらVPS+Ubuntu 18+PerlでWebシステム開発 環境構築</a></li>
+  </ul>
+  <div class="side-list-title">
+    記事一覧
+  </div>
+  <ul>
+    <li><a href="/blog/20200723101434.html">ユーザー管理</a></li>
+    <li><a href="/blog/20200529085516.html">パッケージ管理</a></li>
+    <li><a href="/blog/20200526151435.html">Apache</a></li>
+    <li><a href="/blog/20200829052743.html">MariaDB</a></li>
+    <li><a href="/blog/20200827123127.html">Perl</a></li>
+    <li><a href="/blog/20200830052743.html">cron</a></li>
+    <li><a href="/blog/20200823150919.html">systemd</a></li>
+    <li><a href="/blog/20200820081929.html">Redis</a></li>
+    <li><a href="/blog/20200819081929.html">ディスク管理</a></li>
+    <li><a href="/blog/20200902120232.html">ドメイン管理</a></li>
+    <li><a href="/blog/20200822150919.html">メール設定</a></li>
+    <li><a href="/all.html">すべての記事</a></li>
+    <li><a href="/list.html">新着情報</a></li>
+    <li><a href="/">トップページ</a></li>
+  </ul>
+  <div class="side-list-title" style="margin-top:30px">
+    関連講座
+  </div>
+  <ul>
+    <li><a href="https://web.perlzemi.com/">Webプログラミング入門</a></li>
+    <li><a href="https://tutorial.perlzemi.com/">Perlプログラミング入門</a></li>
+    <li><a href="https://webdesign.perlzemi.com/">Webデザイン入門</a></li>
+    <li><a href="https://linux.perlzemi.com/">Linux入門</a></li>
+    <li><a href="https://mariadb.perlzemi.com/">MariaDB入門</a></li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="footer-main">
+  <div class="kimoto_system_link">
+    <a href="https://kimoto-system.co.jp">
+      <img src="https://kimoto-system.co.jp/images/kimoto-system-logo.png" alt="Perl Webシステム開発">
+      
+      Linux・Perl・Gitなどのオープンソースを中心とした<br>
+      
+      リアルタイムWebとクラウドサーバー対応の<br>
+      
+      Webシステム開発なら木本システム株式会社<br>
+    </a>
+  </div>
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>
