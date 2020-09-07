@@ -103,7 +103,7 @@ wkhtmltopdf
   <a href="https://github.com/wkhtmltopdf/wkhtmltopdf/issues/2037">QXcbConnection: Could not connect to display</a>
 </p>
 <p>
-  これを解決する一つの手段は、パッチの当たったQtを使って、インストールすることのようです。これは、正式な手段ではないかもしれない。
+  これを解決する一つの手段は、パッチの当たったQtを利用するwkhtmltopdfをインストールすることのようです。これは、正式な手段ではないかもしれない。
 </p>
 <pre>
 cd ~
@@ -119,6 +119,13 @@ $ /usr/local/bin/wkhtmltopdf --version
 <pre>
 wkhtmltopdf 0.12.3 (with patched qt)
 </pre>
+<h3>日本語が表示できない場合</h3>
+<p>
+  日本語が表示できない場合「□□□」のようになる場合は、日本語フォントをインストールしてください。
+</p>
+<ul>
+  <li><a href="/blog/20200906132441.html">日本語フォント IPAフォントのインストール</a></li>
+</ul>
 <!--
 <p>
   これを解決するために、最新版のwkhtmltopdfを、Ubuntu 18にインストールする手順が公開されているので、ここに書いておきます。
