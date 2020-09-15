@@ -119,9 +119,25 @@ $ /usr/local/bin/wkhtmltopdf --version
 <pre>
 wkhtmltopdf 0.12.3 (with patched qt)
 </pre>
-<h3>日本語が表示できない場合</h3>
+<h3>wkhtmltopdfでSSLエラーが表示される場合の解決策 Ubuntu 18で確認</h3>
 <p>
-  日本語が表示できない場合「□□□」のようになる場合は、日本語フォントをインストールしてください。
+  wkhtmltopdfでSSLエラーが表示される場合の解決策。
+</p>
+<pre>
+Exit with code 1 due to network error: UnknownNetworkError
+QSslSocket: cannot call unresolved function CRYPTO_num_locks
+QSslSocket: cannot call unresolved function CRYPTO_set_id_callback
+QSslSocket: cannot call unresolved function CRYPTO_set_locking_callback
+</pre>
+<p>
+  以下のパッケージをインストールすると解決しました。
+</p>
+<pre>
+sudo apt install libssl1.0-dev
+</pre>
+<h3>wkhtmltopdfで日本語が表示できない場合</h3>
+<p>
+  wkhtmltopdfで日本語が表示できない場合「□□□」のようになる場合は、日本語フォントをインストールしてください。
 </p>
 <ul>
   <li><a href="/blog/20200906132441.html">日本語フォント IPAフォントのインストール</a></li>
