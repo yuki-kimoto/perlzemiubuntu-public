@@ -84,6 +84,18 @@ sudo gpasswd -a ユーザー名 グループ名
 <pre>
 sudo gpasswd -a kimoto myapp-group
 </pre>
+<p>
+  グループに追加されたユーザーは<a href="/blog/20200403174004.html">/etc/group</a>ファイルで確認できます。
+</p>
+<pre>
+sudo cat /etc/group
+</pre>
+<p>
+  出力例です。
+</p>
+<pre>
+myapp-group:x:1009:kimoto,ken
+</pre>
 
   </div>
   <div class="bottom">
