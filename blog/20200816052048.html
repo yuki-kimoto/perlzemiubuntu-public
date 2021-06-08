@@ -445,6 +445,9 @@ sudo apt update
 <p>
   コンパイラ・リンカのインストールです。<a href="/blog/20200514084132.html">makeのインストール</a>、<a href="/blog/20200504174004.html">gccのインストール</a>、<a href="/blog/20200503174004.html">g++のインストール</a>を行いましょう。Perlのモジュールのコンパイルに必要です。
 </p>
+<p>
+  aptでインストールする手順は一行ずつ実行していくことをお勧めします。手順がとばされたり、インストールされていることを確認せずに、進んでいくという経験が多いという理由で。
+</p>
 <pre>
 sudo apt install -y make
 sudo apt install -y gcc
@@ -461,9 +464,9 @@ sudo apt install -y vim
 <p>
   手順でよく利用されるHTTPクライアントである<a href="/blog/20200826170338.html">curlのインストール</a>をしておきます。
 </p>
-<ul>
-  <li><a href="/blog/20200514084132.html">curlのインストール</a></li>
-</ul>
+<pre>
+sudo apt install -y curl
+</pre>
 <h4>SSL通信</h4>
 <p>
   SSL通信のために<a href="/blog/20200412174004.html">libssl-devのインストール</a>を行いましょう。
@@ -567,6 +570,9 @@ ls -l / | grep datadrive
 <pre>
 sudo apt install -y redis-server
 </pre>
+<p>
+  Redisのインストールはすぐ終わっているはずですが、Redisサーバーの起動に内部で失敗するために、処理に時間がかかります。リトライなどをしているのでしょうか。しばらく待ちましょう。
+</p>
 <h4>Redisサーバーの起動確認</h4>
 <p>
   Redsiサーバーの起動確認を行います。
@@ -575,7 +581,7 @@ sudo apt install -y redis-server
 sudo systemctl status redis-server
 </pre>
 <p>
-  しかし、ここで、起動が失敗してしまいます。Redisサーバーのデフォルト設定では、IPv6が有効化されていない場合は、起動に失敗するようです。さくらのVPSのUbuntu 18では、IPv6が、デフォルトで設定されていません。
+  Redisサーバーのデフォルト設定では、IPv6が有効化されていない場合は、起動に失敗するようです。さくらのVPSのUbuntu 18では、IPv6が、デフォルトで設定されていません。
 </p>
 <h4>Redis設定ファイルの編集</h4>
 <p>
@@ -642,15 +648,6 @@ sudo mysql -uroot
 <pre>
 quit
 </pre>
-<p>
-  以下の手順では、rootユーザーでMariaDBに接続する手順を最初に実行してください。
-</p>
-<p>
-  詳しい解説は、以下にあります。
-</p>
-<ul>
-  <li><a href="/blog/20200224174004.html">MariaDBの初期設定とユーザーの作成</a></li>
-</ul>
 <h4>データベースの作成</h4>
 <p>
   ここでは、Webアプリケーション用の<a href="https://mariadb.perlzemi.com/blog/20200521082643.html">データベースを作成</a>します。データベース名は、myappdbにしておきます。データベース名の変更には、少し工夫はいりますが、後でデータベース名の変更は可能です。
@@ -691,6 +688,9 @@ grant insert,update,delete,select on myappdb.* to 'myapp'@'%' identified by 'eif
 # rootユーザーで接続
 mysql -umyapp -p
 </pre>
+<p>
+  MaridDBの初期設定の詳しい解説は<a href="/blog/20200224174004.html">MariaDBの初期設定とユーザーの作成</a>が参考になります。
+</p>
 <h3>Perl Web開発環境の構築</h3>
 <p>
   Perl Web開発環境の構築としてユーザー環境に<a href="https://tutorial.perlzemi.com/">Perl</a>をインストールし、<a href="https://mojolicious.perlzemi.com/">Mojolicious</a>の小さなWebアプリケーションを立ち上げます。
@@ -708,6 +708,9 @@ mysql -umyapp -p
 <ul>
   <li><a href="/blog/20200413174004.html">ユーザーPerlとcpanmのインストール</a></li>
 </ul>
+<p>
+  Perlのインストールは、ソースコードからビルドされ、さらに試験が実行されるので、非常に時間がかかります。10分～20分くらいかかる気がするので、お茶でも飲みましょう。
+</p>
 <pre>
 # perlbrewのインストール
 wget -O - http://install.perlbrew.pl | bash
@@ -735,7 +738,7 @@ perlbrew install-cpanm
   次にMojoliciousのインストールとWebアプリケーションの起動を行います。
 </p>
 <p>
-  以下の記事の内容を実行してください。最後のApacheの設定ファイルの部分以外の手順を実行しましょう。
+  以下の記事の内容を実行してください。最後の「ApacheからのリバースプキシによるWebアプリケーションへの接続」の部分以外の手順を実行しましょう。
 </p>
 <ul>
   <li><a href="/blog/20200729134756.html">MojoliciousによるWebアプリケーションのデプロイ</a></li>
