@@ -158,6 +158,13 @@ create user myapp;
 grant insert,update,delete,select on myappdb.* to 'myapp'@'%' identified by 'eifjutab&amp;';
 </pre>
 <p>
+  PerlのMariaDBに接続する場合に、testデータベースへの接続権限必要になるので、設定しておきます。
+</p>
+<pre>
+create database test;
+grant all privileges on test.* to 'myapp'@'localhost' identified by 's3kr1t';
+</pre>
+<p>
   接続を抜けて、新しく作成した「myapp」ユーザーで、MariaDBに接続できることを確認します。
 </p>
 <pre>
