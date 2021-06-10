@@ -154,11 +154,14 @@ create user myapp;
 <p>
   次に、<a href="https://mariadb.perlzemi.com/blog/20200522082643.html">データベースへのアクセス権限の設定とパスワードを設定</a>します。
 </p>
+<p>
+  以下の、localhostの部分は、データベースサーバーが、同じサーバーにある場合の設定です。クラウドサーバーの場合ですと、接続元のIPアドレス、または、ドメイン名を指定してください。
+</p>
 <pre>
-grant insert,update,delete,select on myappdb.* to 'myapp'@'%' identified by 'eifjutab&amp;';
+grant insert,update,delete,select on myappdb.* to 'myapp'@'localhost' identified by 'eifjutab&amp;';
 </pre>
 <p>
-  PerlのMariaDBに接続する場合に、testデータベースへの接続権限必要になるので、設定しておきます。
+  PerlでDBD::mysqlをインストールするときに、testデータベースへの接続権限必要になるので、設定しておきます。
 </p>
 <pre>
 create database test;
