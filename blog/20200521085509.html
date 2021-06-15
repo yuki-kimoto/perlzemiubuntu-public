@@ -140,10 +140,23 @@
 </p>
 <h3>Web APIやリレーメールを送るために必要なSendGridの情報</h3>
 <p>
-  Web APIやリレーメールを送るために必要なSendGridの情報は、ユーザー名とパスワードです。
+  Web APIやリレーメールを送るために必要なSendGridの情報は、APIキーです。(2021年以前は、ユーザー名とパスワードが、必要な情報でしたが、迷惑メール防止の観点から、APIキーが必須になったようです。)
+</p>
+<h3>APIキーを取得する</h3>
+<p>
+  APIキーを取得しましょう。SendGridの管理画面にログインします。左のサイドバーの「Settings」をクリック。「API keys」をクリック。
 </p>
 <p>
-  ユーザー名は、登録メールアドレスとは異なるので注意しましょう。
+  右上の「Create API Key」をクリック。
+</p>
+<p>
+  「API Key name」に任意の名前を入力。(例)perlgenki。
+</p>
+<p>
+  「API Key Permissions」を「Full Access」に。
+</p>
+<p>
+  作成されたAPIキーが表示されます。一度しか表示されないので、コピペして、どこかに保存してください。もし画面を消してしまった場合は、削除して、作成しなおしましょう。
 </p>
 <h3>SendGridとPostfixを連携する</h3>
 <p>
@@ -206,10 +219,10 @@ relayhost = [smtp.sendgrid.net]:587
 sudo vi /etc/postfix/sasl_passwd
 </pre>
 <p>
-  SendGridのユーザー名とパスワードを指定します。
+  SendGridで取得したAPIキーを指定します。APIキーの部分を、取得したAPIキーに書き換えてください。
 </p>
 <pre>
-[smtp.sendgrid.net]:587 sg1idy2t@kke.com:aitoseigi1A
+[smtp.sendgrid.net]:587 apikey:APIキー
 </pre>
 <p>
   次に、このファイルがrootアカウントでのみ読み書きができるよう制限されていることを確認して、postmap コマンドを使用してPostfixがこの新しいファイルを使用するようハッシュテーブルを更新します:

@@ -1268,11 +1268,24 @@ sudo apt install -y postfix
   翌営業日までには、アカウントが発行されます。
 </p>
 <p>
-  SendGridとposfixの連携の詳細については以下を参考にしてください。
+  SendGridとposfixの連携については、<a href="/blog/20200521085509.html">クラウドメール配信SendGridとPostfixとの連携</a>で解説しているものを、必要な部分だけ、以下に書き出します。
 </p>
-<ul>
-  <li><a href="https://ubuntu.perlzemi.com/blog/20200521085509.html">クラウドメール配信SendGridとPostfixとの連携</a></li>
-</ul>
+<h4>APIキーを取得する</h4>
+<p>
+  APIキーを取得しましょう。SendGridの管理画面にログインします。左のサイドバーの「Settings」をクリック。「API keys」をクリック。
+</p>
+<p>
+  右上の「Create API Key」をクリック。
+</p>
+<p>
+  「API Key name」に任意の名前を入力。(例)perlgenki。
+</p>
+<p>
+  「API Key Permissions」を「Full Access」に。
+</p>
+<p>
+  作成されたAPIキーが表示されます。一度しか表示されないので、コピペして、どこかに保存してください。もし画面を消してしまった場合は、削除して、作成しなおしましょう。
+</p>
 <h4>postfixの設定ファイルの編集</h4>
 <p>
   postfixの設定ファイルを<a href="https://linux.perlzemi.com/blog/20190401171737.html">vi</a>コマンドで編集します。
@@ -1299,10 +1312,10 @@ relayhost = [smtp.sendgrid.net]:587
 sudo vi /etc/postfix/sasl_passwd
 </pre>
 <p>
-  SendGridのユーザー名とパスワードを指定します。
+  SendGridで取得したAPIキーを指定します。APIキーの部分を、取得したAPIキーに書き換えてください。
 </p>
 <pre>
-[smtp.sendgrid.net]:587 sg1idy2t@kke.com:aitoseigi1A
+[smtp.sendgrid.net]:587 apikey:APIキー
 </pre>
 <p>
   次に、このファイルがrootアカウントでのみ読み書きができるよう制限されていることを確認して、postmap コマンドを使用してPostfixがこの新しいファイルを使用するようハッシュテーブルを更新します:
