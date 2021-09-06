@@ -21,11 +21,27 @@
     padding:10px 0 10px 0;
   }
   .header_main {
-    max-width:1080px;
     width:100%;
+    max-width:1030px;
     margin:0 auto;
     display:flex;
     flex-wrap:wrap;
+  }
+  
+  /* tags */
+  h1 {
+    font-size:26px;
+    background-size:43px;
+    height:100%;
+    width:70%;
+  }
+  h1 a, h1 a:visited {
+    color:white;
+    text-decoration:none;
+    color:#333;
+  }
+  .header_right {
+    width:30%;
   }
   
   .footer {
@@ -129,7 +145,6 @@
     float:left;
     width:calc(100% - 320px - 20px);
     padding-top:5px;
-    padding-left:30px;
   }
   
   /* entry */
@@ -147,27 +162,8 @@
     float:right;
     width:320px;
     padding-top:12px;
-    padding-right:30px;
   }
   
-  /* tags */
-  h1 {
-    font-size:26px;
-    padding:9px 10px 0 78px;
-    background:url(/images/ubuntu-logo.png) no-repeat 30px 3px;
-    background-size:43px;
-    height:100%;
-    width:50%;
-  }
-  h1 a, h1 a:visited {
-    color:white;
-    text-decoration:none;
-    color:#333;
-    width:50%;
-  }
-  .header_description {
-    width:50%;
-  }
   h2 {
     font-size:28px;
     margin:7px 0 12px 0;
@@ -370,8 +366,30 @@
   }
   .bread li a:hover {color: #d31;}
 
+  .perlclub_register {
+    width:calc(100% - 30%);
+    max-width:500px;
+    margin:50px auto;
+  }
+  .perlclub_register a {
+    line-height:1.9;
+    text-align:center;
+    font-weight:bold;
+    font-size:19px;
+    display:block;
+    padding:33px 30px;
+    background:#FF4DA0;
+    text-decoration:none;
+    border-radius:5px;
+    color:white;
+  }
+  .perlclub_register a:hover {
+    opacity:0.8;
+  }
+  
+
 /* Tablet and Smart phone */
-@media only screen and (max-width:960px) {
+@media only screen and (max-width:1030px) {
   .content {
     margin:0;
     padding:0;
@@ -380,6 +398,7 @@
     overflow:visible;
   }
   .side {
+    display:none;
     margin:0;
     padding:0;
     width:100%;
@@ -389,7 +408,7 @@
   .hide-smartphone {
     display:none;
   }
-  h2,h4, h5, p, pre {
+  .header_main, h2,h4,h5, p, pre {
     width:calc(100% - 20px);
     margin-left:auto;
     margin-right:auto;
@@ -401,21 +420,4 @@
   .side_list li:last-child {
     border-bottom:none;
   }
-  /* tags */
-  h1 {
-    padding-left:60px;
-    background-position:10px 5px;
-    background-size:41px;
-    height:100%;
-  }
-
-  h1 {
-    width:100%;
-  }
-  .header_description {
-    width:100%;
-    text-align:center;
-  }
-
-
 }
