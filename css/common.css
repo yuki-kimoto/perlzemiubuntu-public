@@ -461,4 +461,17 @@
   .side_list li:last-child {
     border-bottom:none;
   }
+
+  h2 {
+    padding-left:10px;
+    padding-right:10px;
+  }
+  p {
+    padding-left:10px;
+    padding-right:10px;
+  }
+  pre {
+    margin-left:10px;
+    margin-right:10px;
+  }
 }
