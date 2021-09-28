@@ -18,7 +18,7 @@
     <a href="/"><img src="/images/logo.png">Ubuntu開発環境構築</a>
   </h1>
   <div class="header_right">
-    <a rel="nofollow" href="https://perlri.com/account/create">会員登録</a>
+    <a rel="nofollow" href="https://perlclub.net/account/create">会員登録</a>
   </div>
 </div>
 
@@ -33,7 +33,7 @@
   <div class="middle">
     <h2><a href="/blog/20200623095744.html">ssh-keygenでSSH公開鍵認証のための秘密鍵と公開鍵のペアを作成する</a></h2>
 <p>
-  <b>ssh-keygen</b>コマンドを使うと、<a href="https://linux.perlzemi.com/blog/20200621103220.html">SSH</a>公開鍵認証ための秘密鍵と公開鍵のペアを作成することができます。
+  <b>ssh-keygen</b>コマンドを使うと、<a href="https://linux.perlclub.net/blog/20200621103220.html">SSH</a>公開鍵認証ための秘密鍵と公開鍵のペアを作成することができます。
 </p>
 <div style="width:calc(100% - 30px);margin:0 auto;">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4525414114581084"
@@ -58,7 +58,7 @@
 cd ~/.ssh
 </pre>
 <p>
-  もし「~/.ssh」ディレクトリが存在しないという場合は、<a href="https://linux.perlzemi.com/blog/20191211133524.html">mkdir</a>コマンドで、作成します。不適切なパーミッションだとトラブルの元なので、パーミッション 700 を指定するのが推奨です。<a href="https://linux.perlzemi.com/blog/20200519082545.html">chmod</a>コマンドで、パーミッションを設定しています。
+  もし「~/.ssh」ディレクトリが存在しないという場合は、<a href="https://linux.perlclub.net/blog/20191211133524.html">mkdir</a>コマンドで、作成します。不適切なパーミッションだとトラブルの元なので、パーミッション 700 を指定するのが推奨です。<a href="https://linux.perlclub.net/blog/20200519082545.html">chmod</a>コマンドで、パーミッションを設定しています。
 </p>
 <pre>
 mkdir -p ~/.ssh
@@ -85,7 +85,7 @@ ssh-keygen -t rsa
 <h3>秘密鍵</h3>
 <h4>秘密鍵の内容</h4>
 <p>
-  <a href="https://linux.perlzemi.com/blog/20200113083613.html">cat</a>コマンドで「id_rsa_example」の中身を表示してみましょう。
+  <a href="https://linux.perlclub.net/blog/20200113083613.html">cat</a>コマンドで「id_rsa_example」の中身を表示してみましょう。
 </p>
 <pre>
 cat id_rsa_example
@@ -124,7 +124,7 @@ BxFxFujQ1PG44DZBGRWoUGht+Bu/ZBtf9faiS8yR6U5p9AKARGE2
 </pre>
 <h4>秘密鍵のパーミッションは600</h4>
 <p>
-  秘密鍵のパーミッションは600である必要があります。ssh-keygenを使って作成した場合は、パーミッションは600に設定されますが、他のサーバーから秘密鍵の内容をコピーしてきた場合は、<a href="https://linux.perlzemi.com/blog/20200519082545.html">chmod</a>コマンドを使って、パーミッションを600にしましょう。
+  秘密鍵のパーミッションは600である必要があります。ssh-keygenを使って作成した場合は、パーミッションは600に設定されますが、他のサーバーから秘密鍵の内容をコピーしてきた場合は、<a href="https://linux.perlclub.net/blog/20200519082545.html">chmod</a>コマンドを使って、パーミッションを600にしましょう。
 </p>
 <pre>
 chmod 600 id_rsa_example
@@ -142,7 +142,7 @@ chmod 600 id_rsa_example
 <h3>公開鍵</h3>
 <h4>公開鍵の内容</h4>
 <p>
-  <a href="https://linux.perlzemi.com/blog/20200113083613.html">cat</a>コマンドで「id_rsa_example.pub」の中身を表示してみましょう。
+  <a href="https://linux.perlclub.net/blog/20200113083613.html">cat</a>コマンドで「id_rsa_example.pub」の中身を表示してみましょう。
 </p>
 <pre>
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjSsucYA958wTIKUcPRXC2iZxb84FXkzm41/jzpfnUeBFsypS8xfTXpfDaSIYeMDyr9pIUfDuWWPykoofL4WZaJYDy5pQclFwby/KttDRAnm0XZQ2ZDUtnrUUdva55mxOcTJP0c1VWXpwrhBA+JSFLOGB8wxCV8UFh9XWXI4c5QKQ/Hyl8//nXT6suQf199VNf4Ru31rs+49FDW9FyvoX1GGEEBJCT2ROVD6qi1xY766PuhM/4OMQeIxZmZg8ysML307viqkKh/2mecwkdV1mxGQt8GbO3gvTOX5h9p7tGEwa3zSHhxudux1Kf6Pfcg4FwKuld8r77DKMXEszpRI11 myapp@myhost
@@ -152,7 +152,7 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjSsucYA958wTIKUcPRXC2iZxb84FXkzm41/jzpfnU
 </p>
 <h4>サーバー側における公開鍵の登録</h4>
 <p>
-  クライアント側で生成された公開鍵を、サーバー側で設定するには「~/.ssh/authorized_keys」に登録します。ssh-keygenで作成した公開鍵ファイルをそのまま設置するわけではないので、注意してください。<a href="https://linux.perlzemi.com/blog/20190401171737.html">vi</a>コマンドで「~/.ssh/authorized_keys」を開いて、公開鍵を登録します。
+  クライアント側で生成された公開鍵を、サーバー側で設定するには「~/.ssh/authorized_keys」に登録します。ssh-keygenで作成した公開鍵ファイルをそのまま設置するわけではないので、注意してください。<a href="https://linux.perlclub.net/blog/20190401171737.html">vi</a>コマンドで「~/.ssh/authorized_keys」を開いて、公開鍵を登録します。
 </p>
 <pre>
 vi ~/.ssh/authorized_keys
@@ -196,7 +196,7 @@ chmod 600 ~/.ssh/authorized_keys
   </div>
   <div class="bottom">
     <div class="perlclub_register">
-  <a rel="nofollow" href="https://perlri.com/account/create">Perlクラブへの<br>無料の会員登録で<br>書籍サンプルプレゼント</a>
+  <a rel="nofollow" href="https://perlclub.net/account/create">Perlクラブへの<br>無料の会員登録で<br>書籍サンプルプレゼント</a>
 </div>
 
   </div>
@@ -212,7 +212,7 @@ chmod 600 ~/.ssh/authorized_keys
     <ul>
       <li>
         <div class="side_list_image">
-          <a rel="nofollow" href="https://perlri.com/book/perl_text_essense"><img src="https://perlri.com/images/book/perl_text_essence/perl_text_essence.jpg"></a>
+          <a rel="nofollow" href="https://www.amazon.co.jp/Perl%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%E5%87%A6%E7%90%86%E3%81%AE%E3%82%A8%E3%83%83%E3%82%BB%E3%83%B3%E3%82%B9-Perl%E7%B7%8F%E5%90%88%E7%A0%94%E7%A9%B6%E6%89%80-ebook/dp/B097T6CBR6/ref=tmm_kin_swatch_0?_encoding=UTF8&qid=1629243986&sr=8-1"><img src="https://perlclub.net/images/book/perl_text_essence/perl_text_essence.jpg"></a>
         </div>
         <div class="side_list_description">
           <div >初級者向け・テキスト処理と正規表現の基本をマスター</div>
@@ -230,7 +230,7 @@ chmod 600 ~/.ssh/authorized_keys
     <ul>
       <li>
         <div class="side_list_image">
-          <a  rel="nofollow" href="https://perlri.com/book/perl_gyoumu"><img src="https://perlri.com/images/book/perl_gyoumu/perl_gyoumu.jpg"></a>
+          <a  rel="nofollow" href="https://perlclub.net/book/perl_gyoumu"><img src="https://perlclub.net/images/book/perl_gyoumu/perl_gyoumu.jpg"></a>
         </div>
         <div class="side_list_description">
           実務者向け・ログ解析など日本語を含むテキスト処理の実践!
@@ -248,7 +248,7 @@ chmod 600 ~/.ssh/authorized_keys
     <ul>
       <li>
         <div class="side_list_image">
-          <a rel="nofollow" href="http://perlri.com/"><img style="width:130px" src="https://perlri.com/images/perl_club_logo.png"></a>
+          <a rel="nofollow" href="https://perlclub.net/"><img style="width:130px" src="https://perlclub.net/images/perl_club_logo.png"></a>
         </div>
         <div class="side_list_description">
           仲間と出会い<br>ゆとりあるエンジニアライフを送る
@@ -262,7 +262,7 @@ chmod 600 ~/.ssh/authorized_keys
       </div>
       <div class="footer">
         <div class="perlri_link">
-  <a rel="nofollow" href="http://perlri.com">
+  <a rel="nofollow" href="https://perlclub.net">
     仲間と出会い<br>ゆとりあるエンジニアライフを送る<br>Perlクラブ
   </a>
 </div>

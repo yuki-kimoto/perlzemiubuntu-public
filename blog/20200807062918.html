@@ -18,7 +18,7 @@
     <a href="/"><img src="/images/logo.png">Ubuntu開発環境構築</a>
   </h1>
   <div class="header_right">
-    <a rel="nofollow" href="https://perlri.com/account/create">会員登録</a>
+    <a rel="nofollow" href="https://perlclub.net/account/create">会員登録</a>
   </div>
 </div>
 
@@ -75,7 +75,7 @@
 </p>
 <h3>DNSとは</h3>
 <p>
-  DNSとは、ドメインネームシステムのことで、ドメイン名(例: kimoto-system.co.jp)とIPアドレス(59.106.185.188)を対応させる仕組みのことです。
+  DNSとは、ドメインネームシステムのことで、ドメイン名(例: perlclub.net)とIPアドレス(59.106.185.188)を対応させる仕組みのことです。
 </p>
 <p>
   お名前.comなどの、ドメイン名取得サービスで取得することができます。
@@ -84,7 +84,7 @@
   <li><a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3513971&pid=886673689" rel="nofollow"><img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3513971&pid=886673689" height="1" width="1" border="0">お名前.com</a></a>
 </ul>
 <p>
-  価格は、.comなどの一般的なドメイン「(例)kimoto-system.com」で、年間で1000円程度。会社用のco.jpドメイン「(例)kimoto-system.co.jp」で、年間2000円程度を見積もっておくとよいでしょう。
+  価格は、.comなどの一般的なドメイン「(例)perlclub.net」で、年間で1000円程度。会社用のco.jpドメイン「(例)perlclub.net」で、年間2000円程度を見積もっておくとよいでしょう。
 </p>
 <h3>Aレコードの設定</h3>
 <p>
@@ -97,22 +97,22 @@
   DNSサーバーによって、設定方法に若干の違いがありますが、基本は、AレコードにIPアドレスを設定して、それに対応するドメイン名を設定します。ドメイン名は、サブドメインでも、ドメイン名そのものでもかまいません。
 </p>
 <p>
-  サブドメインとは「www.kimoto-system.co.jp」というようなドメイン名の前に「文字列.」が付いたものです。
+  サブドメインとは「perlclub.net」というようなドメイン名の前に「文字列.」が付いたものです。
 </p>
 <p>
   サブドメインの作成はAレコードか、後で解説するCNAMEレコードを使って行います。
 </p>
 <p>
-  「kimoto-system.co.jp」というドメイン名で「59.106.185.191」というIPアドレスをもつWebサーバーにアクセスさせたい場合は、以下の設定を行います。
+  「perlclub.net」というドメイン名で「59.106.185.191」というIPアドレスをもつWebサーバーにアクセスさせたい場合は、以下の設定を行います。
 </p>
 <table>
-  <tr><th>kimoto-system.co.jp</th><td>Aレコード</td><td>59.106.185.191</td></tr>
+  <tr><th>perlclub.net</th><td>Aレコード</td><td>59.106.185.191</td></tr>
 </table>
 <p>
-  「www.kimoto-system.co.jp」というドメイン名で「59.106.185.191」というIPアドレスをもつWebサーバーにアクセスさせたい場合は、以下の設定を行います。
+  「perlclub.net」というドメイン名で「59.106.185.191」というIPアドレスをもつWebサーバーにアクセスさせたい場合は、以下の設定を行います。
 </p>
 <table>
-  <tr><th>www.kimoto-system.co.jp</th><td>Aレコード</td><td>59.106.185.191</td></tr>
+  <tr><th>perlclub.net</th><td>Aレコード</td><td>59.106.185.191</td></tr>
 </table>
 <h3>サーバーのIPアドレスの調べ方</h3>
 <p>
@@ -132,7 +132,7 @@
   CNAMEレコードを使うと、ドメイン名の別名を設定することができます。
 </p>
 <p>
-  CNAMEレコードを設定できるのは、サブドメイン(www.kimoto-system.co.jpやacount.kimoto-system.co.jp)だけです。ネイキッドドメイン(kimoto-system.co.jp)に設定できないので注意してください。
+  CNAMEレコードを設定できるのは、サブドメイン(perlclub.netやacount.perlclub.net)だけです。ネイキッドドメイン(perlclub.net)に設定できないので注意してください。
 </p>
 <h4>CNAMEレコードの設定の例</h4>
 <p>
@@ -145,27 +145,27 @@
   このサーバーを識別するサブドメイン名をAレコードを使って、まず作成します。
 </p>
 <table>
-  <tr><th>prod001.kimoto-system.co.jp</th><td>Aレコード</td><td>59.106.185.179</td></tr>
+  <tr><th>prod001.perlclub.net</th><td>Aレコード</td><td>59.106.185.179</td></tr>
 </table>
 <p>
   次にCNAMEレコードを使って、上記のドメイン名に対する別名を作成します。
 </p>
 <table>
-  <tr><th>foo.kimoto-system.co.jp</th><td>CNAMEレコード</td><td>prod001.kimoto-system.co.jp</td></tr>
-  <tr><th>bar.kimoto-system.co.jp</th><td>CNAMEレコード</td><td>prod001.kimoto-system.co.jp</td></tr>
+  <tr><th>foo.perlclub.net</th><td>CNAMEレコード</td><td>prod001.perlclub.net</td></tr>
+  <tr><th>bar.perlclub.net</th><td>CNAMEレコード</td><td>prod001.perlclub.net</td></tr>
 </table>
 <p>
-  「foo.kimoto-system.co.jp」は「prod001.kimoto-system.co.jp」の別名になりました。
+  「foo.perlclub.net」は「prod001.perlclub.net」の別名になりました。
 </p>
 <p>
-  「bar.kimoto-system.co.jp」は「prod001.kimoto-system.co.jp」の別名になりました。
+  「bar.perlclub.net」は「prod001.perlclub.net」の別名になりました。
 </p>
 <p>
-  DNSサーバーへの問い合わせでは「foo.kimoto-system.co.jp」も「bar.kimoto-system.co.jp」も「prod001.kimoto-system.co.jp」のAレコードに設定した「59.106.185.179」を返します。
+  DNSサーバーへの問い合わせでは「foo.perlclub.net」も「bar.perlclub.net」も「prod001.perlclub.net」のAレコードに設定した「59.106.185.179」を返します。
 </p>
 <h3>DNSレコードの問い合わせ</h3>
 <p>
-  DNSレコードの問い合わせは<a href="https://linux.perlzemi.com/blog/20200622141433.html">dig</a>コマンドを使うのが簡単です。Aレコード、CNAMEレコード、MXレコードの設定の確認ができます。
+  DNSレコードの問い合わせは<a href="https://linux.perlclub.net/blog/20200622141433.html">dig</a>コマンドを使うのが簡単です。Aレコード、CNAMEレコード、MXレコードの設定の確認ができます。
 </p>
 <h3>メールアドレスの設定</h3>
 <p>
@@ -178,7 +178,7 @@
   </div>
   <div class="bottom">
     <div class="perlclub_register">
-  <a rel="nofollow" href="https://perlri.com/account/create">Perlクラブへの<br>無料の会員登録で<br>書籍サンプルプレゼント</a>
+  <a rel="nofollow" href="https://perlclub.net/account/create">Perlクラブへの<br>無料の会員登録で<br>書籍サンプルプレゼント</a>
 </div>
 
   </div>
@@ -194,7 +194,7 @@
     <ul>
       <li>
         <div class="side_list_image">
-          <a rel="nofollow" href="https://perlri.com/book/perl_text_essense"><img src="https://perlri.com/images/book/perl_text_essence/perl_text_essence.jpg"></a>
+          <a rel="nofollow" href="https://www.amazon.co.jp/Perl%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%E5%87%A6%E7%90%86%E3%81%AE%E3%82%A8%E3%83%83%E3%82%BB%E3%83%B3%E3%82%B9-Perl%E7%B7%8F%E5%90%88%E7%A0%94%E7%A9%B6%E6%89%80-ebook/dp/B097T6CBR6/ref=tmm_kin_swatch_0?_encoding=UTF8&qid=1629243986&sr=8-1"><img src="https://perlclub.net/images/book/perl_text_essence/perl_text_essence.jpg"></a>
         </div>
         <div class="side_list_description">
           <div >初級者向け・テキスト処理と正規表現の基本をマスター</div>
@@ -212,7 +212,7 @@
     <ul>
       <li>
         <div class="side_list_image">
-          <a  rel="nofollow" href="https://perlri.com/book/perl_gyoumu"><img src="https://perlri.com/images/book/perl_gyoumu/perl_gyoumu.jpg"></a>
+          <a  rel="nofollow" href="https://perlclub.net/book/perl_gyoumu"><img src="https://perlclub.net/images/book/perl_gyoumu/perl_gyoumu.jpg"></a>
         </div>
         <div class="side_list_description">
           実務者向け・ログ解析など日本語を含むテキスト処理の実践!
@@ -230,7 +230,7 @@
     <ul>
       <li>
         <div class="side_list_image">
-          <a rel="nofollow" href="http://perlri.com/"><img style="width:130px" src="https://perlri.com/images/perl_club_logo.png"></a>
+          <a rel="nofollow" href="https://perlclub.net/"><img style="width:130px" src="https://perlclub.net/images/perl_club_logo.png"></a>
         </div>
         <div class="side_list_description">
           仲間と出会い<br>ゆとりあるエンジニアライフを送る
@@ -244,7 +244,7 @@
       </div>
       <div class="footer">
         <div class="perlri_link">
-  <a rel="nofollow" href="http://perlri.com">
+  <a rel="nofollow" href="https://perlclub.net">
     仲間と出会い<br>ゆとりあるエンジニアライフを送る<br>Perlクラブ
   </a>
 </div>

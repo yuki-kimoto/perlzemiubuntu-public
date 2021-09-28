@@ -18,7 +18,7 @@
     <a href="/"><img src="/images/logo.png">Ubuntu開発環境構築</a>
   </h1>
   <div class="header_right">
-    <a rel="nofollow" href="https://perlri.com/account/create">会員登録</a>
+    <a rel="nofollow" href="https://perlclub.net/account/create">会員登録</a>
   </div>
 </div>
 
@@ -333,7 +333,7 @@ Password:
 ubuntu@tk2-250-35845:~$
 </pre>
 <p>
-  この状態になれば、<a href="https://linux.perlzemi.com/blog/20200211081227.html">Linuxのコマンド</a>が実行できます。
+  この状態になれば、<a href="https://linux.perlclub.net/blog/20200211081227.html">Linuxのコマンド</a>が実行できます。
 </p>
 <h3>Webアプリケーション用のユーザーの追加</h3>
 <p>
@@ -382,7 +382,7 @@ sudo gpasswd -a myapp sudo
   SSHクライアントでSSHサーバーに接続してコマンド実行するツールに、Windowsの場合はTeraTermがあります。
 </p>
 <ul>
-  <li><a href="https://linux.perlzemi.com/blog/20200525082545.html">Linuxサーバーにコマンドを送る - TeraTermのインストールと使い方</a></li>
+  <li><a href="https://linux.perlclub.net/blog/20200525082545.html">Linuxサーバーにコマンドを送る - TeraTermのインストールと使い方</a></li>
 </ul>
 <p>
   <a href="https://www.atmarkit.co.jp/ait/articles/1006/25/news095.html">PuTTY</a>などの他のWindowsで動くSSHクライアントもありますので、お好みで。
@@ -398,7 +398,7 @@ sudo gpasswd -a myapp sudo
   SCPクライアントとして、Windowsの場合はWinSCPがあります。
 </p>
 <ul>
-  <li><a href="https://linux.perlzemi.com/blog/20200520082545.html">Linuxサーバー上のファイルを編集 - WinSCPのインストールと使い方</a></li>
+  <li><a href="https://linux.perlclub.net/blog/20200520082545.html">Linuxサーバー上のファイルを編集 - WinSCPのインストールと使い方</a></li>
 </ul>
 <p>
   MacにもWindowsのWinSCPの代わりになるようなソフトウェアがあるので、インストールしましょう。
@@ -524,7 +524,7 @@ sudo apt install -y certbot
   Webアプリケーションがデータを保存するためのデータ用のディレクトリを作成しましょう。「myapp」ユーザーだけではなく、他の開発ユーザーも書き込めるように設定しておきます。
 </p>
 <p>
-  「/datadrive」を<a href="https://linux.perlzemi.com/blog/20191211133524.html">mkdir</a>コマンドでデータ用ディレクトリを作成します。
+  「/datadrive」を<a href="https://linux.perlclub.net/blog/20191211133524.html">mkdir</a>コマンドでデータ用ディレクトリを作成します。
 </p>
 <pre>
 sudo mkdir /datadrive
@@ -583,7 +583,7 @@ sudo systemctl status redis-server
 </p>
 <h4>Redis設定ファイルの編集</h4>
 <p>
-  Redis設定ファイルを<a href="https://linux.perlzemi.com/blog/20190401171737.html">viエディタ</a>で編集します。間違った場合のためにバックアップもとっておきます。
+  Redis設定ファイルを<a href="https://linux.perlclub.net/blog/20190401171737.html">viエディタ</a>で編集します。間違った場合のためにバックアップもとっておきます。
 </p>
 <pre>
 sudo cp /etc/redis/redis.conf /etc/redis/redis.conf.bak
@@ -648,13 +648,13 @@ quit
 </pre>
 <h4>データベースの作成</h4>
 <p>
-  ここでは、Webアプリケーション用の<a href="https://mariadb.perlzemi.com/blog/20200521082643.html">データベースを作成</a>します。データベース名は、myappdbにしておきます。データベース名の変更には、少し工夫はいりますが、後でデータベース名の変更は可能です。
+  ここでは、Webアプリケーション用の<a href="https://mariadb.perlclub.net/blog/20200521082643.html">データベースを作成</a>します。データベース名は、myappdbにしておきます。データベース名の変更には、少し工夫はいりますが、後でデータベース名の変更は可能です。
 </p>
 <pre>
 create database myappdb;
 </pre>
 <p>
-  作成したデータベースを確認するために、<a href="https://mariadb.perlzemi.com/blog/20200518082643.html">データベースの一覧</a>を表示します。
+  作成したデータベースを確認するために、<a href="https://mariadb.perlclub.net/blog/20200518082643.html">データベースの一覧</a>を表示します。
 </p>
 <pre>
 show databases;
@@ -698,7 +698,7 @@ mysql -umyapp -p
 </p>
 <h3>Perl Web開発環境の構築</h3>
 <p>
-  Perl Web開発環境の構築としてユーザー環境に<a href="https://tutorial.perlzemi.com/">Perl</a>をインストールし、<a href="https://mojolicious.perlzemi.com/">Mojolicious</a>の小さなWebアプリケーションを立ち上げます。
+  Perl Web開発環境の構築としてユーザー環境に<a href="https://perlzemi.com/">Perl</a>をインストールし、<a href="https://mojolicious.perlzemi.com/">Mojolicious</a>の小さなWebアプリケーションを立ち上げます。
 </p>
 <h4>Perlのインストール</h4>
 <p>
@@ -778,7 +778,7 @@ export PERL5LIB=/home/myapp/webapp/lib
   <li><a href="/blog/20200807062918.html">DNSサーバーの設定 - ドメイン名とIPアドレスを対応させる</a></li>
 </ul>
 <p>
-  この記事のここからの例では、ドメイン名として「build-sakuravps-ubuntu18.kimoto-system.co.jp」を使用します。
+  この記事のここからの例では、ドメイン名として「build-sakuravps-ubuntu18.perlclub.net」を使用します。
 </p>
 <h3>メールアドレスの作成とDNSサーバーの設定</h3>
 <p>
@@ -830,7 +830,7 @@ PATH=/home/myapp/perl5/perlbrew/bin:/home/myapp/perl5/perlbrew/perls/perl-5.16.2
   cronの自動実行でエラーが発生した場合にメールが来るように設定しておきましょう。
 </p>
 <pre>
-MAILTO=kimoto_test@kimoto-system.co.jp
+MAILTO=kimoto_test@perlclub.net
 </pre>
 <p>
   バッチプログラムがWebアプリケーションのライブラリのパスを読み込んでくれるように設定しておきましょう。
@@ -917,25 +917,25 @@ sudo systemctl status apache2
   この設定ファイルのディレクトリについては、以下のページで詳しく解説しています。
 </p>
 <p>
-  サイトのドメイン名(ここではbuild-sakuravps-ubuntu18.kimoto-system.co.jp)に「.conf」を付けた名前で、<a href="https://linux.perlzemi.com/blog/20190401171737.html">vi</a>コマンドで、設定ファイルを作成しましょう。
+  サイトのドメイン名(ここではbuild-sakuravps-ubuntu18.perlclub.net)に「.conf」を付けた名前で、<a href="https://linux.perlclub.net/blog/20190401171737.html">vi</a>コマンドで、設定ファイルを作成しましょう。
 </p>
 <pre>
 cd /etc/apache2/sites-available
-sudo vi build-sakuravps-ubuntu18.kimoto-system.co.jp.conf
+sudo vi build-sakuravps-ubuntu18.perlclub.net.conf
 </pre>
 <p>
   バーチャルホストとリバースプロキシの設定ファイルの内容です。WebSocketとHTTPSに対応したリバースプロキシの設定です。SSL証明書は、デフォルトで準備されている自己SSL証明書を指定しています。これは、後で、正式なSSL証明書に差し替えます。
 </p>
 <pre>
 &lt;VirtualHost *:80&gt;
-  ServerName build-sakuravps-ubuntu18.kimoto-system.co.jp
+  ServerName build-sakuravps-ubuntu18.perlclub.net
 
   RewriteEngine on
   RewriteRule (.*)?$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 &lt;/VirtualHost&gt;
 
 &lt;VirtualHost *:443&gt;
-  ServerName build-sakuravps-ubuntu18.kimoto-system.co.jp
+  ServerName build-sakuravps-ubuntu18.perlclub.net
 
   &lt;Proxy *&gt;
     Require all granted
@@ -958,7 +958,7 @@ sudo vi build-sakuravps-ubuntu18.kimoto-system.co.jp.conf
   設定が終わったら、設定ファイルを有効にします。
 </p>
 <pre>
-sudo a2ensite build-sakuravps-ubuntu18.kimoto-system.co.jp.conf
+sudo a2ensite build-sakuravps-ubuntu18.perlclub.net.conf
 </pre>
 <h4>設定ファイルの再読み込み</h4>
 <p>
@@ -977,7 +977,7 @@ sudo systemctl reload apache2
   以下のドメインででWebサイトが表示できれば成功です。SSLの警告がでるのは、この後、正式なSSL証明書の設定をすることで、修正されます。
 </p>
 <pre>
-https://build-sakuravps-ubuntu18.kimoto-system.co.jp
+https://build-sakuravps-ubuntu18.perlclub.net
 </pre>
 <h4>SSL証明書の取得</h4>
 <p>
@@ -991,16 +991,16 @@ https://build-sakuravps-ubuntu18.kimoto-system.co.jp
 hypnotoad webapp.pl
 </pre>
 <p>
-  ドメイン名は「build-sakuravps-ubuntu18.kimoto-system.co.jp」という名前で取得しており、DNSサーバーにおける、ドメイン名とIPアドレスの対応の記述は済んでいることを、この記事では前提とします。適宜対応する部分を書き換えてください。
+  ドメイン名は「build-sakuravps-ubuntu18.perlclub.net」という名前で取得しており、DNSサーバーにおける、ドメイン名とIPアドレスの対応の記述は済んでいることを、この記事では前提とします。適宜対応する部分を書き換えてください。
 </p>
 <p>
-  メールアドレスの作成の作業が終了しており「kimoto_test@kimoto-system.co.jp」というメールアドレスで送受信できることをこの記事では前提とします。適宜対応する部分を書き換えてください。
+  メールアドレスの作成の作業が終了しており「kimoto_test@perlclub.net」というメールアドレスで送受信できることをこの記事では前提とします。適宜対応する部分を書き換えてください。
 </p>
 <p>
   SSL証明書をLet's Encryptで取得するには、certbotコマンドを実行してください。
 </p>
 <pre>
-sudo certbot certonly --agree-tos --non-interactive -d build-sakuravps-ubuntu18.kimoto-system.co.jp --webroot -w /home/myapp/webapp/public --email kimoto_test@kimoto-system.co.jp
+sudo certbot certonly --agree-tos --non-interactive -d build-sakuravps-ubuntu18.perlclub.net --webroot -w /home/myapp/webapp/public --email kimoto_test@perlclub.net
 </pre>
 <p>
   以下のメッセージが含まれていれば成功です。
@@ -1012,15 +1012,15 @@ Congratulations! Your certificate and chain have been saved at:
   SSL証明書が以下のディレクトリに作成されます。上から、SSLの証明書ファイル、SSL証明書の秘密鍵ファイル、中間証明書ファイルです。
 </p>
 <pre>
-/etc/letsencrypt/live/build-sakuravps-ubuntu18.kimoto-system.co.jp/cert.pem
-/etc/letsencrypt/live/build-sakuravps-ubuntu18.kimoto-system.co.jp/privkey.pem
-/etc/letsencrypt/live/build-sakuravps-ubuntu18.kimoto-system.co.jp/chain.pem
+/etc/letsencrypt/live/build-sakuravps-ubuntu18.perlclub.net/cert.pem
+/etc/letsencrypt/live/build-sakuravps-ubuntu18.perlclub.net/privkey.pem
+/etc/letsencrypt/live/build-sakuravps-ubuntu18.perlclub.net/chain.pem
 </pre>
 <p>
   lsコマンドで実際に見てみましょう。
 </p>
 <pre>
-sudo ls -l /etc/letsencrypt/live/build-sakuravps-ubuntu18.kimoto-system.co.jp
+sudo ls -l /etc/letsencrypt/live/build-sakuravps-ubuntu18.perlclub.net
 </pre>
 <p>
   Let's EncryptでのSSL証明書の更新する場合「certbot renew」コマンドを使用します。取得したすべてのSSL証明書に対して更新が必要かどうかの確認が行われ、更新期限が1ヵ月以内であれば証明書が更新されます。
@@ -1039,7 +1039,7 @@ sudo certbot renew -q --no-self-upgrade --post-hook "systemctl reload apache2"
   まずSSLの基本設定ファイルを作成します。これは、後でWebアプリケーションが増えた場合に共通して使うことを想定しています。
 </p>
 <p>
-  「conf-available/ssl-basic.conf」というファイル名で<a href="https://linux.perlzemi.com/blog/20190401171737.html">viエディタ</a>で作成します。
+  「conf-available/ssl-basic.conf」というファイル名で<a href="https://linux.perlclub.net/blog/20190401171737.html">viエディタ</a>で作成します。
 </p>
 <pre>
 cd /etc/apache2
@@ -1059,7 +1059,7 @@ SSLHonorCipherOrder     on
 </p>
 <pre>
 cd /etc/apache2/sites-available
-sudo vi build-sakuravps-ubuntu18.kimoto-system.co.jp.conf
+sudo vi build-sakuravps-ubuntu18.perlclub.net.conf
 </pre>
 <p>
   元のSSL証明書の設定部分です。
@@ -1074,14 +1074,14 @@ sudo vi build-sakuravps-ubuntu18.kimoto-system.co.jp.conf
 </p>
 <pre>
 &lt;VirtualHost *:80&gt;
-  ServerName build-sakuravps-ubuntu18.kimoto-system.co.jp
+  ServerName build-sakuravps-ubuntu18.perlclub.net
 
   RewriteEngine on
   RewriteRule (.*)?$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 &lt;/VirtualHost&gt;
 
 &lt;VirtualHost *:443&gt;
-  ServerName build-sakuravps-ubuntu18.kimoto-system.co.jp
+  ServerName build-sakuravps-ubuntu18.perlclub.net
 
   &lt;Proxy *&gt;
     Require all granted
@@ -1096,9 +1096,9 @@ sudo vi build-sakuravps-ubuntu18.kimoto-system.co.jp.conf
   
   # SSL証明書
   Include conf-available/ssl-basic.conf
-  SSLCertificateFile /etc/letsencrypt/live/build-sakuravps-ubuntu18.kimoto-system.co.jp/cert.pem
-  SSLCertificateKeyFile /etc/letsencrypt/live/build-sakuravps-ubuntu18.kimoto-system.co.jp/privkey.pem
-  SSLCertificateChainFile /etc/letsencrypt/live/build-sakuravps-ubuntu18.kimoto-system.co.jp/chain.pem
+  SSLCertificateFile /etc/letsencrypt/live/build-sakuravps-ubuntu18.perlclub.net/cert.pem
+  SSLCertificateKeyFile /etc/letsencrypt/live/build-sakuravps-ubuntu18.perlclub.net/privkey.pem
+  SSLCertificateChainFile /etc/letsencrypt/live/build-sakuravps-ubuntu18.perlclub.net/chain.pem
 &lt;/VirtualHost&gt;
 </pre>
 <p>
@@ -1139,7 +1139,7 @@ sudo crontab -e
   以下のようにcrontabの内容を設定します。メールアドレスは、自分が受信できるメールアドレスを指定してください。
 </p>
 <pre>
-MAILTO=kimoto_test@kimoto-system.co.jp
+MAILTO=kimoto_test@perlclub.net
 
 0 9 * * 1 certbot renew -q --no-self-upgrade --post-hook "systemctl reload apache2"
 </pre>
@@ -1158,7 +1158,7 @@ MAILTO=kimoto_test@kimoto-system.co.jp
 sudo vi /lib/systemd/system/webapp.service
 </pre>
 <p>
-  <a href="https://linux.perlzemi.com/blog/20190401171737.html">vi</a>コマンド開いて以下の内容を書き込んでください。
+  <a href="https://linux.perlclub.net/blog/20190401171737.html">vi</a>コマンド開いて以下の内容を書き込んでください。
 </p>
 <pre>
 [Unit]
@@ -1283,7 +1283,7 @@ sudo apt install -y postfix
 </p>
 <h4>postfixの設定ファイルの編集</h4>
 <p>
-  postfixの設定ファイルを<a href="https://linux.perlzemi.com/blog/20190401171737.html">vi</a>コマンドで編集します。
+  postfixの設定ファイルを<a href="https://linux.perlclub.net/blog/20190401171737.html">vi</a>コマンドで編集します。
 </p>
 <pre>
 sudo vi /etc/postfix/main.cf
@@ -1353,7 +1353,7 @@ echo Hello | sendmail -f [メール送信元] [メール送信先]
 </p>
 <pre>
 # 送信例
-echo Hello | sendmail -f kimoto_test@kimoto-system.co.jp kimoto_test@kimoto-system.co.jp
+echo Hello | sendmail -f kimoto_test@perlclub.net kimoto_test@perlclub.net
 </pre>
 <p>
   メール送信ができればOKです。
@@ -1366,7 +1366,7 @@ echo Hello | sendmail -f kimoto_test@kimoto-system.co.jp kimoto_test@kimoto-syst
   </div>
   <div class="bottom">
     <div class="perlclub_register">
-  <a rel="nofollow" href="https://perlri.com/account/create">Perlクラブへの<br>無料の会員登録で<br>書籍サンプルプレゼント</a>
+  <a rel="nofollow" href="https://perlclub.net/account/create">Perlクラブへの<br>無料の会員登録で<br>書籍サンプルプレゼント</a>
 </div>
 
   </div>
@@ -1382,7 +1382,7 @@ echo Hello | sendmail -f kimoto_test@kimoto-system.co.jp kimoto_test@kimoto-syst
     <ul>
       <li>
         <div class="side_list_image">
-          <a rel="nofollow" href="https://perlri.com/book/perl_text_essense"><img src="https://perlri.com/images/book/perl_text_essence/perl_text_essence.jpg"></a>
+          <a rel="nofollow" href="https://www.amazon.co.jp/Perl%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%E5%87%A6%E7%90%86%E3%81%AE%E3%82%A8%E3%83%83%E3%82%BB%E3%83%B3%E3%82%B9-Perl%E7%B7%8F%E5%90%88%E7%A0%94%E7%A9%B6%E6%89%80-ebook/dp/B097T6CBR6/ref=tmm_kin_swatch_0?_encoding=UTF8&qid=1629243986&sr=8-1"><img src="https://perlclub.net/images/book/perl_text_essence/perl_text_essence.jpg"></a>
         </div>
         <div class="side_list_description">
           <div >初級者向け・テキスト処理と正規表現の基本をマスター</div>
@@ -1400,7 +1400,7 @@ echo Hello | sendmail -f kimoto_test@kimoto-system.co.jp kimoto_test@kimoto-syst
     <ul>
       <li>
         <div class="side_list_image">
-          <a  rel="nofollow" href="https://perlri.com/book/perl_gyoumu"><img src="https://perlri.com/images/book/perl_gyoumu/perl_gyoumu.jpg"></a>
+          <a  rel="nofollow" href="https://perlclub.net/book/perl_gyoumu"><img src="https://perlclub.net/images/book/perl_gyoumu/perl_gyoumu.jpg"></a>
         </div>
         <div class="side_list_description">
           実務者向け・ログ解析など日本語を含むテキスト処理の実践!
@@ -1418,7 +1418,7 @@ echo Hello | sendmail -f kimoto_test@kimoto-system.co.jp kimoto_test@kimoto-syst
     <ul>
       <li>
         <div class="side_list_image">
-          <a rel="nofollow" href="http://perlri.com/"><img style="width:130px" src="https://perlri.com/images/perl_club_logo.png"></a>
+          <a rel="nofollow" href="https://perlclub.net/"><img style="width:130px" src="https://perlclub.net/images/perl_club_logo.png"></a>
         </div>
         <div class="side_list_description">
           仲間と出会い<br>ゆとりあるエンジニアライフを送る
@@ -1432,7 +1432,7 @@ echo Hello | sendmail -f kimoto_test@kimoto-system.co.jp kimoto_test@kimoto-syst
       </div>
       <div class="footer">
         <div class="perlri_link">
-  <a rel="nofollow" href="http://perlri.com">
+  <a rel="nofollow" href="https://perlclub.net">
     仲間と出会い<br>ゆとりあるエンジニアライフを送る<br>Perlクラブ
   </a>
 </div>
