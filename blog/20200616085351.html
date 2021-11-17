@@ -37,7 +37,7 @@
   gtag('config', 'G-313KMDYSPS');
 </script>
 
-<title>UbuntuへのPerlのインストール - Ubuntu開発環境構築 - Perl Web開発環境構築</title>
+<title>UbuntuへのPerlのインストール - Ubuntuサーバー構築入門 - Ubuntuサーバーでゼロから環境構築</title>
 <meta name="description" content="UbuntuへのPerlのインストール方法です。aptコマンドを使ってPerlをインストールします。">
   </head>
   <body>
@@ -45,7 +45,7 @@
       <div class="header">
         <div class="header_main">
   <h1>
-    <a href="/"><img src="/images/logo.png">Ubuntu開発環境構築</a>
+    <a href="/"><img src="/images/logo.png">Ubuntuサーバー構築入門</a>
   </h1>
   <div class="header_right">
     <a rel="nofollow" href="https://perlclub.net/account/create">会員登録</a>
@@ -93,6 +93,16 @@ sudo apt install -y perl
 <pre>
 perl -v
 </pre>
+<h3>Perlのモジュールのインストール</h3>
+<p>
+  デフォルトではインストールされていないが、必要性が高いPerlモジュールのインストールです。
+</p>
+<ul>
+  <li><a href="/blog/20200516081846.html">perl-docパッケージのインストール - perldocコマンド</a></li>
+  <li><a href="/blog/20200515081846.html">libio-socket-ssl-perlのインストール - PerlのIO::Socket::SSL</a></li>
+  <li><a href="/blog/20200606082859.html">libreadline-devのインストール - コマンド実行履歴を保存・検索するためのReadLineのライブラリ</a></li>
+  <li><a href="/blog/20200227174004.html">libterm-readline-gnu-perlのインストール - PerlのTerm::ReadLine::Gnuモジュール</a></li>
+</ul>
 <h3>Ubuntuバージョン12以下におけるPerlのインストール</h3>
 <p>
   aptコマンドは、Ubuntu 14から導入されたものですので、Ubuntuバージョン12以下の場合は、<a href="http://manpages.ubuntu.com/manpages/cosmic/ja/man8/apt-get.8.html">apt-get</a>を使いましょう。

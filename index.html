@@ -37,15 +37,15 @@
   gtag('config', 'G-313KMDYSPS');
 </script>
 
-<title>Ubuntu開発環境構築 - Perl Web開発環境構築</title>
-<meta name="description" content="Ubuntu開発環境構築は、LinuxディストリビューションのひとつであるUbuntuでPerl Web開発環境構築を行います。実務レベルのPerl Web開発環境を構築できることを目標とします。データ分析のための環境構築も、Web開発環境を構築すれば、だいたいできあがります。">
+<title>Ubuntuサーバー構築入門 - Ubuntuサーバーでゼロから環境構築</title>
+<meta name="description" content="Ubuntuサーバー構築入門は、LinuxディストリビューションのひとつであるUbuntuでゼロからサーバー構築をするための無料Web講座です。目標は、Webシステム開発環境の構築です。データ分析のためのデータベースの環境構築も、Web開発環境を構築すれば、だいたいできあがります。">
   </head>
   <body>
     <div class="container">
       <div class="header">
         <div class="header_main">
   <h1>
-    <a href="/"><img src="/images/logo.png">Ubuntu開発環境構築</a>
+    <a href="/"><img src="/images/logo.png">Ubuntuサーバー構築入門</a>
   </h1>
   <div class="header_right">
     <a rel="nofollow" href="https://perlclub.net/account/create">会員登録</a>
@@ -61,9 +61,9 @@
 
   </div>
   <div class="middle">
-    <h2><a href="/">Ubuntu開発環境構築 - Perl Web開発環境構築</a></h2>
+    <h2><a href="/">Ubuntuサーバー構築入門</a></h2>
 <p>
-  Ubuntu開発環境構築は、LinuxディストリビューションのひとつであるUbuntuでPerl Web開発環境構築を行います。実務レベルのPerl Web開発環境を構築できることを目標とします。データ分析のための環境構築も、Web開発環境を構築すれば、だいたいできあがります。
+  Ubuntuサーバー構築入門は、LinuxディストリビューションのひとつであるUbuntuでゼロからサーバー構築をするための無料Web講座です。目標は、Webシステム開発環境の構築です。データ分析のためのデータベースの環境構築も、Web開発環境を構築すれば、だいたいできあがります。
 </p>
 <div style="width:calc(100% - 30px);margin:10px auto;">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4525414114581084"
@@ -82,17 +82,17 @@
 
 
 <p>
-  Linux上に、スケーラブルで、リアルタイムWeb対応のWebアプリケーションを比較的簡単に構築できることは、Perl Webシステム開発の特徴です。また、Web開発環境を構築すれば、データ分析の環境も自動的に整います。
+  この講座では、Ubuntu上に、スケーラブルで、現代的なリアルタイムWeb対応のWebアプリケーションを構築してみます。
 </p>
 <p>
-  Ubuntu上にWebサーバーを構築、PerlでWebアプリケーションを作成、Webサーバーからリバースプロキシで、Webアプリケーションにつなぐ設定して、外部へ公開できるところまでを解説します。Webシステム開発の現場で実際に利用される内容が中心となっています。
+  Ubuntu上にWebサーバーをインストールし、Webアプリケーションを作成、WebサーバーからリバースプロキシでWebアプリケーションに接続し、外部へ公開するところまでを解説します。WebアプリケーションのサンプルとしてはPerlのWebフレームワークを使用します。
 </p>
 <p>
-  2021年8月10日現在、Ubuntuのバージョンは、Ubuntu 18で確認しています。特別な注記がない限り、Ubuntu 20、Ubuntu 16でも、動作すると想定します。
+  2021年11月17日現在、Ubuntuのバージョンは、Ubuntu 18で確認しています。特別な注記がない限り、Ubuntu 20、Ubuntu 16でも、動作すると想定します。
 </p>
-<ul>
-  <li><a href="https://www.youtube.com/watch?v=bxxTIbzXwyw">動画紹介</a></li>
-</ul>
+<p>
+  もしこの無料のUbuntu講座が良かったと感じたら他の人とシェアしてみませんか?
+</p>
 <h3>Ubuntuを利用できるようにする</h3>
 <p>
   Ubuntuを利用できるようにしましょう。
@@ -103,12 +103,6 @@
 <p>
   コマンドを実行できるコンソール画面を表示するところまで進んで、初期ユーザーでログインするところまで進みましょう。
 </p>
-<p>
-  VPSやクラウドサーバーを使った個別の手順は以下で公開しています。
-</p>
-<ul>
-  <li><a href="/blog/20200816052048.html">さくらVPS+Ubuntu 18+PerlでWebシステム開発環境を行う手順のまとめ</a></li>
-</ul>
 <h3>ユーザーの作成</h3>
 <p>
   次は、コンソール画面でユーザーを作成します。Webアプリケーションの実行ユーザー(myapp)を作成するのと、自分自身のユーザー(たとえばkimoto)の二つを作成してみましょう。
@@ -198,7 +192,7 @@
 </ul>
 <h3>パッケージのインストール</h3>
 <p>
-  PerlにおけるWebシステム開発に必要なパッケージをインストールしましょう。<a href="/blog/20200506174004.html">デフォルトパッケージ</a>では、足りないものをインストールしていきます。
+  Webシステム開発環境構築に必要なパッケージをインストールしましょう。<a href="/blog/20200506174004.html">デフォルトパッケージ</a>では、足りないものをインストールしていきます。
 </p>
 <p>
   インストールがうまくいかない場合があるので、最初にaptを最新のバージョンにしましょう。
@@ -211,7 +205,7 @@
 </p>
 <h4>コンパイラ・リンカ</h4>
 <p>
-  Perlのモジュールのインストールに必要なコンパイラ・リンカのインストール。
+  C言語・C++のコンパイラ・リンカのインストール。
 </p>
 <ul>
   <li><a href="/blog/20200514084132.html">makeのインストール</a></li>
@@ -248,17 +242,22 @@
 <ul>
   <li><a href="/blog/20200607082859.html">gitのインストール - Git分散リポジトリ管理システム</a></li>
 </ul>
-<h4>Perl</h4>
-<ul>
-  <li><a href="/blog/20200616085351.html">Perlのインストール</a></li>
-  <li><a href="/blog/20200516081846.html">perl-docパッケージのインストール - perldocコマンド</a></li>
-  <li><a href="/blog/20200515081846.html">libio-socket-ssl-perlのインストール - PerlのIO::Socket::SSL</a></li>
-  <li><a href="/blog/20200606082859.html">libreadline-devのインストール - コマンド実行履歴を保存・検索するためのReadLineのライブラリ</a></li>
-  <li><a href="/blog/20200227174004.html">libterm-readline-gnu-perlのインストール - PerlのTerm::ReadLine::Gnuモジュール</a></li>
-</ul>
 <h4>SSL証明書</h4>
 <ul>
   <li><a href="/blog/20200319174004.html">certbotのインストール - Let's EncryptのSSL証明書の取得と更新</a></li>
+</ul>
+<h4>プログラミング言語</h4>
+<p>
+  プログラミング言語のインストールです。ABC順。
+</p>
+<ul>
+  <li><a href="/blog/20200303174004.html">Javaのインストール</a></li>
+  <li><a href="/blog/20200302174004.html">nodejsのインストール</a></li>
+  <li><a href="/blog/20200616085351.html">Perlのインストール</a></li>
+  <li><a href="/blog/20200613085351.html">PHPのインストール</a></li>
+  <li><a href="/blog/20200301174004.html">Python 2のインストール</a></li>
+  <li><a href="/blog/20200228174004.html">Python 3のインストール</a></li>
+  <li><a href="/blog/20200304174004.html">Rubyのインストール</a></li>
 </ul>
 <h3>データ用ディレクトリの作成</h3>
 <p>
@@ -322,45 +321,6 @@ sudo mkdir /datadrive
 <ul>
   <li><a href="/blog/20200224174004.html">MariaDBの初期設定とユーザーの作成</a></li>
 </ul>
-<h3>Perl Web開発環境の構築</h3>
-<p>
-  安定性を求める場合は、CPANモジュールのインストールや警告表示などで不具合のない「perl-5.20.3」をインストール。
-</p>
-<p>
-  セキュアな最新版が良い場合は「perl-5.30.3」をインストール。
-</p>
-<ul>
-  <li><a href="/blog/20200413174004.html">ユーザーPerlとcpanmのインストール</a></li>
-</ul>
-<p>
-  次にWebアプリケーションをデプロイします。
-</p>
-<ul>
-  <li><a href="/blog/20200729134756.html">MojoliciousによるWebアプリケーションのデプロイ</a></li>
-</ul>
-<p>
-  バッチプログラムがWebアプリケーションのライブラリのパスを発見できるようにしておきましょう。Webアプリケーションに加えて、バッチプログラムを作成する場合の準備をしておきます。
-</p>
-<p>
-  「~/.bashrc」に追加しましょう。
-</p>
-<pre>
-vi ~/.bashrc
-</pre>
-<pre>
-export PERL5LIB=/home/myapp/webapp/lib
-</pre>
-<h3>ドメイン名の取得とDNSサーバーの設定</h3>
-<p>
-  ドメインを取得して、ドメイン名とサーバーIPアドレスを紐づけましょう。インターネット上でWebサイトを公開するためと、メール送信サーバーのポータビリティのある設定のために必要です。
-</p>
-<ul>
-  <li><a href="/blog/20200807062918.html">ドメイン名の取得とDNSサーバーの設定</a></li>
-</ul>
-<h3>メールアドレスの作成とDNSサーバーの設定</h3>
-<ul>
-  <li><a href="/blog/20200828123127.html">メールアドレスの作成とDNSサーバーの設定</a></li>
-</ul>
 <h3>cron</h3>
 <p>
   定期プログラム実行の常駐アプリケーションであるcronの起動確認を行います。
@@ -418,14 +378,63 @@ export PERL5LIB=/home/myapp/webapp/lib
   <li><a href="/blog/20200220174004.html">Apacheでmod_proxy_httpモジュールを有効にする</a></li>
   <li><a href="/blog/20200718090758.html">ApacheでWebSocketリバースプロキシのproxy_wstunnelモジュールを有効にする</a></li>
 </ul>
-<h4>リバースプロキシの設定</h4>
+<h3>Webアプリケーションの作成</h3>
 <p>
-  リバースプロキシは、Apacheで受けたHTTPリクエストを、他の場所に、透過的に渡す仕組みです。PerlでWebアプリケーションを作成した場合は、リバースプロキシは、HTTPリクエストを、Webアプリケーションに渡します。
+  Webアプリケーションの作成です。サンプルとしてPerlのWebフレームワークを使用しています。
+</p>
+<p>
+  安定性を求める場合は、CPANモジュールのインストールや警告表示などで不具合のない「perl-5.20.3」をインストール。
+</p>
+<p>
+  セキュアな最新版が良い場合は「perl-5.30.3」をインストール。
+</p>
+<ul>
+  <li><a href="/blog/20200413174004.html">ユーザーPerlとcpanmのインストール</a></li>
+</ul>
+<p>
+  次にWebアプリケーションをデプロイします。
+</p>
+<ul>
+  <li><a href="/blog/20200729134756.html">Webアプリケーションのデプロイ</a></li>
+</ul>
+<p>
+  バッチプログラムがWebアプリケーションのライブラリのパスを発見できるようにしておきましょう。Webアプリケーションに加えて、バッチプログラムを作成する場合の準備をしておきます。
+</p>
+<p>
+  「~/.bashrc」に追加しましょう。
+</p>
+<pre>
+vi ~/.bashrc
+</pre>
+<pre>
+export PERL5LIB=/home/myapp/webapp/lib
+</pre>
+<h3>ドメイン名の取得とDNSサーバーの設定</h3>
+<p>
+  ドメインを取得して、ドメイン名とサーバーIPアドレスを紐づけましょう。インターネット上でWebサイトを公開するためと、メール送信サーバーのポータビリティのある設定のために必要です。
+</p>
+<ul>
+  <li><a href="/blog/20200807062918.html">ドメイン名の取得とDNSサーバーの設定</a></li>
+</ul>
+<h3>メールアドレスの作成とDNSサーバーの設定</h3>
+<ul>
+  <li><a href="/blog/20200828123127.html">メールアドレスの作成とDNSサーバーの設定</a></li>
+</ul>
+<h3>メール送信</h3>
+<p>
+  メール送信を行うためにpostfixをインストールします。クラウドメールサービスに申し込んでメールを送信できるようにします。
+</p>
+<ul>
+  <li><a href="/blog/20200423174004.html">postfixのインストール - メール送信 sendmailコマンド</a></li>
+</ul>
+<h3>WebサーバーとWebアプリケーションの接続</h3>
+<p>
+  WebサーバーとWebアプリケーションの接続しましょう。リバースプロキシは、Webサーバーで受けたHTTPリクエストを、他のサーバーアプリケーションに、透過的に渡す仕組みです。Webアプリケーションを起動後、リバースプロキシを使って、HTTPリクエストを、Webアプリケーションに渡します。
 </p>
 <ul>
   <li><a href="/blog/20200306174004.html">WebアプリケーションをバーチャルホストとリバースプロキシでApacheから接続する</a>
 </ul>
-<h4>SSL証明書の取得とSSLの設定</h4>
+<h3>SSL証明書の取得とSSLの設定</h3>
 <p>
   HTTPSでリクエストを受けるために、SSL証明書の発行とSSLの設定を行います。
 </p>
@@ -438,61 +447,40 @@ export PERL5LIB=/home/myapp/webapp/lib
   OSが再起動したときにWebアプリケーションが自動起動する設定を行いましょう。
 </p>
 <ul>
-  <li><a href="/blog/20200901150837.html">Mojoliciousアプリケーションをsystemdへ登録</a></li>
+  <li><a href="/blog/20200901150837.html">Webアプリケーションをsystemdへ登録</a></li>
 </ul>
-<h3>メール送信</h3>
+<h3>VPSやパブリッククラウドで環境構築する手順</h3>
 <p>
-  メール送信を行うためにpostfixをインストールします。クラウドメールサービスに申し込んでメールを送信できるようにします。
+  VPSやクラウドサーバーを使った個別の手順は以下で公開しています。
 </p>
 <ul>
-  <li><a href="/blog/20200423174004.html">postfixのインストール - メール送信 sendmailコマンド</a></li>
+  <li><a href="/blog/20200816052048.html">さくらVPS+Ubuntu 18+PerlでWebシステム開発環境を行う手順のまとめ</a></li>
 </ul>
-<h3>すべての記事</h3>
+<h3>更新情報</h3>
 <ul>
   <li><a href="/all.html">すべての記事を見る</a></li>
-  <li><a href="/list.html">新着情報</a></li>
+  <li><a href="/list.html">新着記事</a></li>
+  <li><a href="https://twitter.com/hashtag/Perl%E3%82%AF%E3%83%A9%E3%83%96%E6%9B%B4%E6%96%B0%E6%83%85%E5%A0%B1">更新情報</a></li>
 </ul>
-<h3>Ubuntu関連講座</h3>
+<h3>Ubuntu関連情報</h3>
 <p>
-  Ubuntu関連講座です。
+  Ubuntuに関連する情報です。
 </p>
-<h4>Webアプリ開発入門</h4>
-<p>
-  Ubuntu上に開発環境構築が終わって、Webアプリ開発を始めたいならこちら。
-</p>
-<ul>
-  <li><a href="https://webapp.perlzemi.com/">Perl Webアプリ開発入門</a></li>
-</ul>
-<h4>HTML・CSS入門</h4>
-<p>
-  Webアプリ開発のためにHTML・CSSの基礎を学びたい方は、こちら。
-</p>
-<ul>
-  <li><a href="https://htmlcss.perlclub.net/">HTML・CSS入門 - HTML・CSS・JavaScriptの基本</a></li>
-</ul>
-<h4>Perlプログラミング入門</h4>
-<p>
-  プログラムが書けるようになるためにPerlの基礎を学ぶならこちら。
-</p>
-<ul>
-  <li><a href="https://perlzemi.com/">Perlゼミ - Perlプログラミング入門</a></li>
-</ul>
-<h4>Linuxサーバー管理入門</h4>
+<h4>Linuxサーバー管理</h4>
 <p>
   viテキストエディタや基本的なLinuxコマンド、Linuxの仕組みについて学びたい方はこちら。
 </p>
 <ul>
   <li><a href="https://linux.perlclub.net/">Linuxサーバー管理入門</a></li>
 </ul>
-<h4>Ubuntuの質問</h4>
+<h4>Linuxディストリビューション</h4>
 <p>
-  仲間と交流をしたり、Ubuntuの質問ができる会員限定のPerlクラブ・フォーラムがあります。Twitterのリプライ・ダイレクトメッセージ、Youtubeのコメント欄も利用できます。
+  Ubuntuと比較できるLinuxディストリビューションとしては、<a href="https://centos.perlzemi.com/">CentOS</a>、<a href="https://ja.wikipedia.org/wiki/Fedora">Fedora</a>、<a href="https://ja.wikipedia.org/wiki/Debian">Debian</a>、<a href="https://ja.wikipedia.org/wiki/Rocky_Linux">Rocky Linux</a>、<a href="https://ja.wikipedia.org/wiki/Red_Hat_Enterprise_Linux">Red Hat Enterprise Linux</a>などがあります。
 </p>
-<ul>
-  <li><a href="https://perlclub.net/forum">Perlクラブ・フォーラム</a>
-  <li><a href="https://twitter.com/perlzemi">Twitter</a>
-  <li><a href="https://www.youtube.com/channel/UCbeAS6ZXpSKqkzb-Nykb0ZQ">Youtube</a>
-</ul>
+<h4>スクリプト言語</h4>
+<p>
+  Ubuntuのサーバー管理で利用できるスクリプト言語には、<a href="https://perlzemi.com/">Perl</a>、<a href="https://ja.wikipedia.org/wiki/Python">Python</a>、<a href="https://ja.wikipedia.org/wiki/Ruby">Ruby</a>などがあります。
+</p>
 
   </div>
   <div class="bottom">
