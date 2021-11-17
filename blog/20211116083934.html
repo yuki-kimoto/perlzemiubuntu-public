@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<script type="text/javascript" src="/js/jquery-1.9.0.min.js"></script>
+<script type="text/javascript" src="/js/google-code-prettify/prettify.js"></script>
+<link  type="text/css" rel="stylesheet" href="/js/google-code-prettify/prettify.css"/>
+<script>
+  $(function(){
+    // google code prettifyの有効化
+    $("pre").addClass("prettyprint");
+    function init(event){
+      prettyPrint();
+    }
+    if(window.addEventListener)window.addEventListener("load",init,false);
+    else if(window.attachEvent)window.attachEvent("onload",init);
+    
+    $(".to-top").click(function() {
+      // ページの一番上までスクロールさせます。
+      $('body, html').animate({scrollTop: 0}, 300, 'linear');;
+    });
+  });
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-313KMDYSPS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-313KMDYSPS');
+</script>
+
+<title>ChromeDriverをインストールする - Ubuntuサーバー構築入門 - Ubuntuサーバーでゼロから環境構築</title>
+<meta name="description" content="Google ChromeブラウザをSeleniumを使ってプログラムから自動制御するためのChromeDriverをインストールしましょう。ChromeDriverのバイナリを直接配置します。64bit版のLinuxであることを想定します。Ubuntu 18で確認しています。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="header_main">
+  <h1>
+    <a href="/"><img src="/images/logo.png">Ubuntuサーバー構築入門</a>
+  </h1>
+  <div class="header_right">
+    <a rel="nofollow" href="https://perlclub.net/account/create">会員登録</a>
+  </div>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20211116083934.html">ChromeDriverをインストールする</a></h2>
+<p>
+  Google ChromeブラウザをSeleniumを使ってプログラムから自動制御するためのChromeDriverをインストールしましょう。ChromeDriverのバイナリを直接配置します。64bit版のLinuxであることを想定します。Ubuntu 18で確認しています。
+</p>
+<div style="width:calc(100% - 30px);margin:10px auto;">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4525414114581084"
+       crossorigin="anonymous"></script>
+  <!-- 最初の段落下 - ディスプレイ 横長 レスポンシブ -->
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-4525414114581084"
+       data-ad-slot="2828858335"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+
+<pre>
+google-chrome --version
+</pre>
+<p>
+  バージョン。
+</p>
+<pre>
+Google Chrome 96.0.4664.45
+</pre>
+<p>
+  ChromeDriverを<a href="https://chromedriver.chromium.org/downloads">ChromeDriverのダウンロードページ</a>からダウンロードしましょう。不具合を起こさないために、上記のChromeのバージョンと同じものをダウンロードしましょう。
+</p>
+<pre>
+cd /usr/local/src
+export CHROME_VERSION=96.0.4664.45
+sudo wget https://chromedriver.storage.googleapis.com/$CHROME_VERSION/chromedriver_linux64.zip
+sudo unzip chromedriver_linux64.zip
+sudo mv chromedriver /usr/local/bin/
+</pre>
+<p>
+  ChromeDriverのバージョン確認。
+</p>
+<pre>
+chromedriver --version
+</pre>
+<p>
+  バージョンの出力結果。
+</p>
+<pre>
+ChromeDriver 96.0.4664.45 (76e4c1bb2ab4671b8beba3444e61c0f17584b2fc-refs/branch-heads/4664@{#947})
+</pre>
+<h3>Google Chromeのインストール</h3>
+<p>
+  ChromeDriverはGoogle ChromeブラウザをSeleniumを使ってプログラムから自動制御するために必要になるものです。Google Chrome本体が別途必要です。
+</p>
+<ul>
+  <li><a href="/blog/20211117083934.html">Google Chromeのインストール</a></li>
+</ul>
+<h3>JavaScript対応のWebスクレイピングをプログラムから行うには?</h3>
+<p>
+  JavaScript対応のWebスクレイピングをプログラムから行うには、プログラミング言語で提供されているSeleniumライブラリが必要です。Perl - <a href="https://perlzemi.com/blog/20210105145700.html">Selenium::Remote::Driver</a>、PHP、Pyhton、RubyなどのSeleniumライブラリがあります。
+</p>
+
+  </div>
+  <div class="bottom">
+    <h3>関連情報</h3>
+
+<div style="margin:10px 0">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4525414114581084"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="autorelaxed"
+     data-ad-client="ca-pub-4525414114581084"
+     data-ad-slot="9163995495"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <div style="margin-bottom:30px">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4525414114581084"
+     crossorigin="anonymous"></script>
+<!-- ディスプレイ縦長 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4525414114581084"
+     data-ad-slot="4544919209"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+<div style="margin-bottom:30px;padding:0 8px;">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4525414114581084"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="autorelaxed"
+     data-ad-client="ca-pub-4525414114581084"
+     data-ad-slot="9163995495"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="perlri_link">
+  <a rel="nofollow" href="https://perlclub.net">Perlクラブ</a>
+</div>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4525414114581084"
+     crossorigin="anonymous"></script>
+     
+      </div>
+    </div>
+  </body>
+</html>

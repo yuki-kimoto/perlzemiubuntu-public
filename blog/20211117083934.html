@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/images/logo.png">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
+
+<script type="text/javascript" src="/js/jquery-1.9.0.min.js"></script>
+<script type="text/javascript" src="/js/google-code-prettify/prettify.js"></script>
+<link  type="text/css" rel="stylesheet" href="/js/google-code-prettify/prettify.css"/>
+<script>
+  $(function(){
+    // google code prettifyの有効化
+    $("pre").addClass("prettyprint");
+    function init(event){
+      prettyPrint();
+    }
+    if(window.addEventListener)window.addEventListener("load",init,false);
+    else if(window.attachEvent)window.attachEvent("onload",init);
+    
+    $(".to-top").click(function() {
+      // ページの一番上までスクロールさせます。
+      $('body, html').animate({scrollTop: 0}, 300, 'linear');;
+    });
+  });
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-313KMDYSPS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-313KMDYSPS');
+</script>
+
+<title>Google Chromeをインストールする - Ubuntuサーバー構築入門 - Ubuntuサーバーでゼロから環境構築</title>
+<meta name="description" content="Google Chromeをインストールします。Ubuntu 18で試しました。">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="header_main">
+  <h1>
+    <a href="/"><img src="/images/logo.png">Ubuntuサーバー構築入門</a>
+  </h1>
+  <div class="header_right">
+    <a rel="nofollow" href="https://perlclub.net/account/create">会員登録</a>
+  </div>
+</div>
+
+      </div>
+      <div class="main">
+        <div class="content">
+          <div class="entry">
+  <div class="top">
+    <!-- top -->
+
+  </div>
+  <div class="middle">
+    <h2><a href="/blog/20211117083934.html">Google Chromeをインストールする</a></h2>
+<p>
+  Google Chromeをインストールします。Ubuntu 18で試しました。
+</p>
+<div style="width:calc(100% - 30px);margin:10px auto;">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4525414114581084"
+       crossorigin="anonymous"></script>
+  <!-- 最初の段落下 - ディスプレイ 横長 レスポンシブ -->
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-4525414114581084"
+       data-ad-slot="2828858335"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+
+<p>
+  Google Chrome用のリポジトリを追加します。
+</p>
+<pre>
+sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" &gt;&gt; /etc/apt/sources.list.d/google-chrome.list'
+</pre>
+<p>
+  事前に必要なライブラリを追加します。
+</p>
+<pre>
+sudo apt install -y wget
+sudo apt install -y gnupg
+</pre>
+<p>
+  公開鍵を追加します。
+</p>
+<pre>
+sudo wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+</pre>
+<p>
+  Google Chrome用のリポジトリをアップデート。
+</p>
+<pre>
+sudo apt update
+</pre>
+<p>
+  Google Chromeをaptコマンドでインストール。
+</p>
+<pre>
+sudo apt install -y google-chrome-stable
+</pre>
+<p>
+  バージョン確認してみましょう。
+</p>
+<pre>
+google-chrome --version
+</pre>
+<p>
+  バージョンの出力結果です。
+</p>
+<pre>
+Google Chrome 96.0.4664.45
+</pre>
+<h3>Google Chromeをヘッドレス実行する</h3>
+<p>
+  ヘッドレス実行とはGUI画面なしでWebサイトのアクセスすることです。Google Chromeをヘッドレス実行してスクリーンショットを取得します。
+</p>
+<pre>
+google-chrome --disable-setuid-sandbox --no-sandbox --headless --disable-gpu --dump-dom https://www.chromestatus.com/
+</pre>
+<p>
+  画面にHTMLのツリーが表示されればOKです。
+</p>
+<h3>JavaScript対応のWebスクレイピングをPerlで行うには?</h3>
+<p>
+  JavaScript対応のWebスクレイピングをPerlで行うにはGoogle Chromeに加えて、<a href="/blog/20211116083934.html">ChromeDriverのインストール</a>と<a href="https://perlzemi.com/blog/20091116124667.html">Perlモジュール</a>の<a href="https://perlzemi.com/blog/20210105145700.html">Selenium::Remote::Driver</a>が必要です。
+</p>
+<p>
+  Google Chrome用のリポジトリを削除したい場合。
+</p>
+<h3>Google Chrome用のリポジトリを削除したい場合</h3>
+<p>
+  間違ったりなどして、Google Chrome用のリポジトリを削除したい場合の手順です。
+</p>
+<pre>
+sudo rm /etc/apt/sources.list.d/google-chrome.list
+</pre>
+
+  </div>
+  <div class="bottom">
+    <h3>関連情報</h3>
+
+<div style="margin:10px 0">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4525414114581084"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="autorelaxed"
+     data-ad-client="ca-pub-4525414114581084"
+     data-ad-slot="9163995495"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+  </div>
+</div>
+
+        </div>
+        <div class="side">
+          <div style="margin-bottom:30px">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4525414114581084"
+     crossorigin="anonymous"></script>
+<!-- ディスプレイ縦長 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4525414114581084"
+     data-ad-slot="4544919209"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+<div style="margin-bottom:30px;padding:0 8px;">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4525414114581084"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="autorelaxed"
+     data-ad-client="ca-pub-4525414114581084"
+     data-ad-slot="9163995495"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="perlri_link">
+  <a rel="nofollow" href="https://perlclub.net">Perlクラブ</a>
+</div>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4525414114581084"
+     crossorigin="anonymous"></script>
+     
+      </div>
+    </div>
+  </body>
+</html>
