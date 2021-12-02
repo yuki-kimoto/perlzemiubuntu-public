@@ -90,7 +90,7 @@ mkdir -p /datadrive/backup
 </pre>
 <h4>ファイルバックアップにはrsyncを使う</h4>
 <p>
-  ファイルのバックアップには<a href="https://linux.perlclub.net/blog/20190130171737.html">rsync</a>を使います。
+  ファイルのバックアップには<a href="https://linux.perlzemi.com/blog/20190130171737.html">rsync</a>を使います。
 </p>
 <pre>
 sudo rsync -e "ssh -p22" -av --delete /datadrive/ myapp@133.242.230.50:/datadrive/backup/datadrive/

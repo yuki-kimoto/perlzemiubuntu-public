@@ -140,7 +140,7 @@ drwxr-xr-x 2 root root  4096 May 26 14:59 sites-enabled
   まず、あなたが新しく作る設定ファイルは、apache2.confの中に書きたくなりますが、これは、デフォルトのまま置いておくことをお勧めします。
 </p>
 <p>
-  あなたが新しく作る設定ファイルは「conf-available」の中に作成します。「myapache2.conf」という名前で配置してみましょう。<a href="https://linux.perlclub.net/blog/20190401171737.html">viコマンド</a>で新規に作成します。
+  あなたが新しく作る設定ファイルは「conf-available」の中に作成します。「myapache2.conf」という名前で配置してみましょう。<a href="https://linux.perlzemi.com/blog/20190401171737.html">viコマンド</a>で新規に作成します。
 </p>
 <pre>
 sudo vi conf-available/myapache2.conf
@@ -156,13 +156,13 @@ sudo vi conf-available/myapache2.conf
 sudo a2enconf myapache2
 </pre>
 <p>
-  <a href="https://linux.perlclub.net/blog/20191126082723.html">ls</a>コマンドで「conf-enabled」の中を見てみます。
+  <a href="https://linux.perlzemi.com/blog/20191126082723.html">ls</a>コマンドで「conf-enabled」の中を見てみます。
 </p>
 <pre>
 ls -l conf-enabled
 </pre>
 <p>
-  すると<a href="https://linux.perlclub.net/blog/20200610092705.html">シンボリックリンク</a>が「conf-available/myapache2.conf」に対して作成されていることがわかります。
+  すると<a href="https://linux.perlzemi.com/blog/20200610092705.html">シンボリックリンク</a>が「conf-available/myapache2.conf」に対して作成されていることがわかります。
 </p>
 <pre>
 myapache2.conf -&gt; ../conf-available/myapache2.conf

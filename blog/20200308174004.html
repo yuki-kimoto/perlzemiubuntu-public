@@ -112,7 +112,7 @@
 </p>
 <h4>環境変数PATHの設定</h4>
 <p>
-  環境変数PATHの設定しましょう。まず、現在のPATHを調べます。<a href="https://linux.perlclub.net/blog/20190102171737.html">env</a>コマンドと<a href="https://linux.perlclub.net/blog/20200602093211.html">grep</a>コマンドでPATHを表示します。PATHという名前を含む環境変数が複数あるので、<a href="https://perlzemi.com/blog/20100827127859.html">Perlの正規表現</a>を使ってPATHだけに絞り込んでいます。
+  環境変数PATHの設定しましょう。まず、現在のPATHを調べます。<a href="https://linux.perlzemi.com/blog/20190102171737.html">env</a>コマンドと<a href="https://linux.perlzemi.com/blog/20200602093211.html">grep</a>コマンドでPATHを表示します。PATHという名前を含む環境変数が複数あるので、<a href="https://perlzemi.com/blog/20100827127859.html">Perlの正規表現</a>を使ってPATHだけに絞り込んでいます。
 </p>
 <pre>
 env | grep -P '^PATH='

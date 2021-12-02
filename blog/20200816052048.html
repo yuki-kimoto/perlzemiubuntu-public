@@ -363,7 +363,7 @@ Password:
 ubuntu@tk2-250-35845:~$
 </pre>
 <p>
-  この状態になれば、<a href="https://linux.perlclub.net/blog/20200211081227.html">Linuxのコマンド</a>が実行できます。
+  この状態になれば、<a href="https://linux.perlzemi.com/blog/20200211081227.html">Linuxのコマンド</a>が実行できます。
 </p>
 <h3>Webアプリケーション用のユーザーの追加</h3>
 <p>
@@ -412,7 +412,7 @@ sudo gpasswd -a myapp sudo
   SSHクライアントでSSHサーバーに接続してコマンド実行するツールに、Windowsの場合はTeraTermがあります。
 </p>
 <ul>
-  <li><a href="https://linux.perlclub.net/blog/20200525082545.html">Linuxサーバーにコマンドを送る - TeraTermのインストールと使い方</a></li>
+  <li><a href="https://linux.perlzemi.com/blog/20200525082545.html">Linuxサーバーにコマンドを送る - TeraTermのインストールと使い方</a></li>
 </ul>
 <p>
   <a href="https://www.atmarkit.co.jp/ait/articles/1006/25/news095.html">PuTTY</a>などの他のWindowsで動くSSHクライアントもありますので、お好みで。
@@ -428,7 +428,7 @@ sudo gpasswd -a myapp sudo
   SCPクライアントとして、Windowsの場合はWinSCPがあります。
 </p>
 <ul>
-  <li><a href="https://linux.perlclub.net/blog/20200520082545.html">Linuxサーバー上のファイルを編集 - WinSCPのインストールと使い方</a></li>
+  <li><a href="https://linux.perlzemi.com/blog/20200520082545.html">Linuxサーバー上のファイルを編集 - WinSCPのインストールと使い方</a></li>
 </ul>
 <p>
   MacにもWindowsのWinSCPの代わりになるようなソフトウェアがあるので、インストールしましょう。
@@ -554,7 +554,7 @@ sudo apt install -y certbot
   Webアプリケーションがデータを保存するためのデータ用のディレクトリを作成しましょう。「myapp」ユーザーだけではなく、他の開発ユーザーも書き込めるように設定しておきます。
 </p>
 <p>
-  「/datadrive」を<a href="https://linux.perlclub.net/blog/20191211133524.html">mkdir</a>コマンドでデータ用ディレクトリを作成します。
+  「/datadrive」を<a href="https://linux.perlzemi.com/blog/20191211133524.html">mkdir</a>コマンドでデータ用ディレクトリを作成します。
 </p>
 <pre>
 sudo mkdir /datadrive
@@ -613,7 +613,7 @@ sudo systemctl status redis-server
 </p>
 <h4>Redis設定ファイルの編集</h4>
 <p>
-  Redis設定ファイルを<a href="https://linux.perlclub.net/blog/20190401171737.html">viエディタ</a>で編集します。間違った場合のためにバックアップもとっておきます。
+  Redis設定ファイルを<a href="https://linux.perlzemi.com/blog/20190401171737.html">viエディタ</a>で編集します。間違った場合のためにバックアップもとっておきます。
 </p>
 <pre>
 sudo cp /etc/redis/redis.conf /etc/redis/redis.conf.bak
@@ -678,13 +678,13 @@ quit
 </pre>
 <h4>データベースの作成</h4>
 <p>
-  ここでは、Webアプリケーション用の<a href="https://mariadb.perlclub.net/blog/20200521082643.html">データベースを作成</a>します。データベース名は、myappdbにしておきます。データベース名の変更には、少し工夫はいりますが、後でデータベース名の変更は可能です。
+  ここでは、Webアプリケーション用の<a href="https://mariadb.perlzemi.com/blog/20200521082643.html">データベースを作成</a>します。データベース名は、myappdbにしておきます。データベース名の変更には、少し工夫はいりますが、後でデータベース名の変更は可能です。
 </p>
 <pre>
 create database myappdb;
 </pre>
 <p>
-  作成したデータベースを確認するために、<a href="https://mariadb.perlclub.net/blog/20200518082643.html">データベースの一覧</a>を表示します。
+  作成したデータベースを確認するために、<a href="https://mariadb.perlzemi.com/blog/20200518082643.html">データベースの一覧</a>を表示します。
 </p>
 <pre>
 show databases;
@@ -947,7 +947,7 @@ sudo systemctl status apache2
   この設定ファイルのディレクトリについては、以下のページで詳しく解説しています。
 </p>
 <p>
-  サイトのドメイン名(ここではbuild-sakuravps-ubuntu18.perlclub.net)に「.conf」を付けた名前で、<a href="https://linux.perlclub.net/blog/20190401171737.html">vi</a>コマンドで、設定ファイルを作成しましょう。
+  サイトのドメイン名(ここではbuild-sakuravps-ubuntu18.perlclub.net)に「.conf」を付けた名前で、<a href="https://linux.perlzemi.com/blog/20190401171737.html">vi</a>コマンドで、設定ファイルを作成しましょう。
 </p>
 <pre>
 cd /etc/apache2/sites-available
@@ -1069,7 +1069,7 @@ sudo certbot renew -q --no-self-upgrade --post-hook "systemctl reload apache2"
   まずSSLの基本設定ファイルを作成します。これは、後でWebアプリケーションが増えた場合に共通して使うことを想定しています。
 </p>
 <p>
-  「conf-available/ssl-basic.conf」というファイル名で<a href="https://linux.perlclub.net/blog/20190401171737.html">viエディタ</a>で作成します。
+  「conf-available/ssl-basic.conf」というファイル名で<a href="https://linux.perlzemi.com/blog/20190401171737.html">viエディタ</a>で作成します。
 </p>
 <pre>
 cd /etc/apache2
@@ -1188,7 +1188,7 @@ MAILTO=kimoto_test@perlclub.net
 sudo vi /lib/systemd/system/webapp.service
 </pre>
 <p>
-  <a href="https://linux.perlclub.net/blog/20190401171737.html">vi</a>コマンド開いて以下の内容を書き込んでください。
+  <a href="https://linux.perlzemi.com/blog/20190401171737.html">vi</a>コマンド開いて以下の内容を書き込んでください。
 </p>
 <pre>
 [Unit]
@@ -1313,7 +1313,7 @@ sudo apt install -y postfix
 </p>
 <h4>postfixの設定ファイルの編集</h4>
 <p>
-  postfixの設定ファイルを<a href="https://linux.perlclub.net/blog/20190401171737.html">vi</a>コマンドで編集します。
+  postfixの設定ファイルを<a href="https://linux.perlzemi.com/blog/20190401171737.html">vi</a>コマンドで編集します。
 </p>
 <pre>
 sudo vi /etc/postfix/main.cf

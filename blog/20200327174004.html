@@ -111,7 +111,7 @@ sudo gpasswd -a yamada myapp-group
 </pre>
 <h4>データディレクトリ以下にあるファイルの所有者グループを再帰的にmyapp-groupに変更</h4>
 <p>
-  データディレクトリ以下にあるファイルの所有者グループを<a href="https://linux.perlclub.net/blog/20200604095018.html">chgrp</a>コマンドで再帰的にmyapp-groupに変更
+  データディレクトリ以下にあるファイルの所有者グループを<a href="https://linux.perlzemi.com/blog/20200604095018.html">chgrp</a>コマンドで再帰的にmyapp-groupに変更
 </p>
 <pre>
 sudo chgrp -R myapp-group /datadrive
@@ -125,7 +125,7 @@ sudo chmod 775 /datadrive
 </pre>
 <h4>データディレクトリに特別なパーミッションSGIDを設定</h4>
 <p>
-  データディレクトリに特別なパーミッションSGIDを<a href="https://linux.perlclub.net/blog/20200519082545.html">chmod</a>コマンドで設定します。
+  データディレクトリに特別なパーミッションSGIDを<a href="https://linux.perlzemi.com/blog/20200519082545.html">chmod</a>コマンドで設定します。
 </p>
 <pre>
 sudo chmod g+s /datadrive

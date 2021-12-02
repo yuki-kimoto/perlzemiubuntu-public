@@ -206,7 +206,7 @@ sudo certbot renew -q --no-self-upgrade --post-hook "systemctl reload apache2"
 sudo crontab
 </pre>
 <p>
-  crontabが起動したら、以下の内容を記述しましょう。<a href="https://linux.perlclub.net/blog/20190401171737.html">vi</a>の使い方はこちら。
+  crontabが起動したら、以下の内容を記述しましょう。<a href="https://linux.perlzemi.com/blog/20190401171737.html">vi</a>の使い方はこちら。
 </p>
 <pre>
 0 9 * * 1 certbot renew -q --no-self-upgrade --post-hook "systemctl reload apache2"
