@@ -24,7 +24,7 @@
     background:white;
   }
   .header_main {
-    max-width:1030px;
+    max-width:860px;
     display:flex;
     margin:0 auto;
   }
@@ -126,6 +126,28 @@
     opacity:0.8;
   }
 
+  .footer-services {
+    background:#ecefec;
+    padding-top:18px;
+    padding-bottom:18px;
+  }
+  .footer-services ul {
+    max-width:860px;
+    margin:0 auto;
+    display:flex;
+    flex-wrap:wrap;
+  }
+
+  .footer-services li {
+    width:33.3%;
+    list-style:none;
+  }
+  .footer-services a {
+    text-decoration:none;
+    font-size:16px;
+    line-height:2;
+  }
+
   .youtube_block {
     width:calc(100% - 30px);
     margin:0 auto;
@@ -151,7 +173,7 @@
   
   /* main */
   .main {
-    max-width:1030px;
+    max-width:860px;
     width:100%;
     margin: 0 auto;
     display:flex;
@@ -160,7 +182,7 @@
   
   /* content */
   .content {
-    width:calc(100% - 320px);
+    width:100%;
   }
   
   /* entry */
@@ -176,6 +198,7 @@
   /* サイドバー */
   .side {
     width:320px;
+    display:none;
   }
   .side_list {
     margin-top:15px;
@@ -395,7 +418,7 @@
   
 
 /* Tablet and Smart phone */
-@media only screen and (max-width:1030px) {
+@media only screen and (max-width:860px) {
   .content {
     margin:0;
     padding:0;
