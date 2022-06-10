@@ -19,7 +19,7 @@
 
   /* ヘッダ */
   .header {
-    border-bottom:2px solid #cccccc;
+    border-bottom:2px solid var(--theme_color);
     margin-bottom:10px;
     background:white;
   }
