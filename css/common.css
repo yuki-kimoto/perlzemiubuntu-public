@@ -56,16 +56,12 @@
   .header_right {
     width:25%;
     text-align:right;
+    padding-top:8px;
   }
   .header_right a,.header_right a:visited {
-    display:inline-block;
-    background:#FF4DA0;
-    color:white;
-    text-decoration:none;
-    padding:15px 25px 10px 25px;
-    text-align:center;
-    font-weight:bold;
-    height:100%;
+  }
+  .header_right img {
+    width:35px;
   }
   
   /* フッタ */
